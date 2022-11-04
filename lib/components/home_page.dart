@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:home_page/screens/Drawer/form_drawer.dart';
+import 'package:home_page/screens/GamePlay/listLevel.dart';
+import 'package:home_page/screens/GamePlay/listRoom.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -124,7 +126,9 @@ class _HomePageState extends State<HomePage> {
                     height: 70,
                     width: 200,
                     child: ElevatedButton(
-                        onPressed: (() {}),
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>LevelList()));
+                        },
                         child:
                             Text("Chơi đơn", style: TextStyle(fontSize: 18))),
                   ),
@@ -135,7 +139,9 @@ class _HomePageState extends State<HomePage> {
                     height: 70,
                     width: 200,
                     child: ElevatedButton(
-                        onPressed: (() {}),
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => listRoom()));
+                        },
                         child: Text(
                           "Chơi Đối Kháng",
                           style: TextStyle(fontSize: 18),
