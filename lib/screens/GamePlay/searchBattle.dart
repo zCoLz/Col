@@ -29,7 +29,7 @@ class _searchBattleState extends State<SearchBattle> {
     return Scaffold(
       appBar: AppBar(
         title: Text(''),
-        leading: IconButton(onPressed: (){}, icon: Icon(Icons.chevron_left,size: 40,)), 
+        leading: IconButton(onPressed: (){ Navigator.pop(context);}, icon: Icon(Icons.chevron_left,size: 40,)), 
          actions: [
             Padding(padding: EdgeInsets.only(right:15), child:
             IconButton(onPressed: (){}, icon: Icon(Icons.power_settings_new,size: 35,)))

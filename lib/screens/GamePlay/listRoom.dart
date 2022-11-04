@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_page/screens/GamePlay/searchBattle.dart';
 
 class listRoom extends StatefulWidget{
     listRoom({super.key});
@@ -18,19 +19,7 @@ class _listRoomState extends State<listRoom>{
         child: TextButton(onPressed: (){}, child: Align(alignment: Alignment.centerLeft, child: Text(title,style: TextStyle(fontWeight: FontWeight.w600,color: Colors.black),),),),
         decoration: BoxDecoration(border: Border.all(width: 3)),
       );
-    }
-    Widget button(String title){
-      return Container(
-        width: MediaQuery.of(context).size.width/3.1,
-        height: MediaQuery.of(context).size.width/9,
-        margin: EdgeInsets.all(20),
-        child: TextButton(
-                style: TextButton.styleFrom(foregroundColor: Colors.black),
-              onPressed: (){
-              }, 
-            child: Text(title,style: TextStyle(color: Colors.black,fontSize: 17,fontWeight: FontWeight.w600),),),
-            decoration: BoxDecoration(color: Colors.white,border: Border.all(width: 2),boxShadow: [BoxShadow(color: Colors.black,offset: Offset(3,3))]),);
-    }
+    }           
       return Scaffold(
         appBar: AppBar(title: Text(''),
         leading: IconButton(onPressed: (){
@@ -77,8 +66,26 @@ class _listRoomState extends State<listRoom>{
           ),Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              button('Tạo phòng'),
-              button('Tìm nhanh')
+              Container(
+        width: MediaQuery.of(context).size.width/3.1,
+        height: MediaQuery.of(context).size.width/9,
+        margin: EdgeInsets.all(20),
+        child: TextButton(
+                style: TextButton.styleFrom(foregroundColor: Colors.black),
+              onPressed: (){}, 
+            child: Text('Tạo phòng',style: TextStyle(color: Colors.black,fontSize: 17,fontWeight: FontWeight.w600),),),
+            decoration: BoxDecoration(color: Colors.white,border: Border.all(width: 2),boxShadow: [BoxShadow(color: Colors.black,offset: Offset(3,3))]),),
+             Container(
+        width: MediaQuery.of(context).size.width/3.1,
+        height: MediaQuery.of(context).size.width/9,
+        margin: EdgeInsets.all(20),
+        child: TextButton(
+                style: TextButton.styleFrom(foregroundColor: Colors.black),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>SearchBattle()));
+              }, 
+            child: Text('Tìm nhanh',style: TextStyle(color: Colors.black,fontSize: 17,fontWeight: FontWeight.w600),),),
+            decoration: BoxDecoration(color: Colors.white,border: Border.all(width: 2),boxShadow: [BoxShadow(color: Colors.black,offset: Offset(3,3))]),),
             ],
           ),])),Container(
               margin: EdgeInsets.fromLTRB(10, 0, 10, 5),
