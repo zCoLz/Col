@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_page/components/home_page.dart';
 import 'package:home_page/screens/Login/form_login_signup.dart';
 import 'package:home_page/screens/Login/page_OTP.dart';
 import 'package:home_page/screens/Login/page_login.dart';
@@ -52,7 +53,7 @@ class _PageDrawerState extends State<PageDrawer> {
             onTap: () {
               Navigator.of(context).popUntil((route) => route.isFirst);
               Navigator.push(context,
-                  MaterialPageRoute(builder: ((context) => PageOTP())));
+                  MaterialPageRoute(builder: ((context) => HomePage())));
             },
           ),
           ListTile(
