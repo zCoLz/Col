@@ -18,7 +18,6 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           centerTitle: true,
           title: Text(""),
-         
           actions: [
             IconButton(
                 onPressed: (() {
@@ -44,10 +43,15 @@ class _HomePageState extends State<HomePage> {
                 tooltip: 'Close app',
                 icon: Icon(Icons.power_settings_new)),
           ],
-        ),drawer: PageDrawer(),
+        ),
+        drawer: PageDrawer(),
         backgroundColor: Colors.cyan[300],
         body: Container(
           alignment: Alignment.center,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("acssets/background2.jpg"),
+                  fit: BoxFit.cover)),
           child: Column(children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
@@ -86,6 +90,7 @@ class _HomePageState extends State<HomePage> {
                               Icon(
                                 Icons.monetization_on_rounded,
                                 size: 30,
+                                color: Colors.yellow,
                               ),
                               Text(
                                 "100",
@@ -127,7 +132,10 @@ class _HomePageState extends State<HomePage> {
                     width: 200,
                     child: ElevatedButton(
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>LevelList()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LevelList()));
                         },
                         child:
                             Text("Chơi đơn", style: TextStyle(fontSize: 18))),
@@ -140,7 +148,10 @@ class _HomePageState extends State<HomePage> {
                     width: 200,
                     child: ElevatedButton(
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => listRoom()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => listRoom()));
                         },
                         child: Text(
                           "Chơi Đối Kháng",
