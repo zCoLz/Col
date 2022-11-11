@@ -28,8 +28,11 @@ class _listRoomState extends State<listRoom>{
         actions: [
            Padding(padding: EdgeInsets.only(right:15), child:
             IconButton(onPressed: (){}, icon: Icon(Icons.power_settings_new,size: 35,)))
-        ],),backgroundColor: Colors.cyan.shade300,
-        body: Container(
+        ],),
+        body: Container(decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("acssets/background2.jpg"),
+                    fit: BoxFit.cover)),
           child: Column(children: [
            Expanded(child:  Column(
           children: [ Container(

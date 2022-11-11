@@ -20,8 +20,12 @@ class _PageCartState extends State<PageCart> {
         ],
       ),
       drawer: PageDrawer(),
-      backgroundColor: Colors.cyan[300],
+
       body: Container(
+        decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("acssets/background2.jpg"),
+                    fit: BoxFit.cover)),
         child: Column(children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),

@@ -19,8 +19,11 @@ class _PageNotiState extends State<PageNoti> {
         ],
       ),
       drawer: PageDrawer(),
-      backgroundColor: Colors.cyan[300],
-      body: Center(child: Text("HomeNoti",style: TextStyle(fontSize: 40),),)
+   
+      body: Container(decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("acssets/background2.jpg"),
+                    fit: BoxFit.cover)),child: Center(child: Text("HomeNoti",style: TextStyle(fontSize: 40),),))
     );
   }
 }
