@@ -33,9 +33,11 @@ class _LevelListStateState extends State<LevelList> {
                         size: 35,
                       )))
             ]),
-        backgroundColor: Colors.cyan.shade300,
-        body: Container(
-            margin: EdgeInsets.fromLTRB(0, 40, 0, 0),
+        body: Container(decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("acssets/background2.jpg"),
+                    fit: BoxFit.cover)),
+            padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
             child: GridView.builder(
               gridDelegate:
                   SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),

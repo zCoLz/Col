@@ -12,8 +12,11 @@ class _PageOTPState extends State<PageOTP> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.cyan[300],
       body: Container(
+        decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("acssets/background2.jpg"),
+                    fit: BoxFit.cover)),
         alignment: Alignment.center,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

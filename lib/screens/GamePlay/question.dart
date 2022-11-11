@@ -49,8 +49,11 @@ class _QuestionState extends State<Question> {
                 size: 40,
               )),
         ),
-        backgroundColor: Colors.cyan.shade300,
         body: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("acssets/background2.jpg"),
+                  fit: BoxFit.cover)),
           height: MediaQuery.of(context).size.height,
           margin: EdgeInsets.fromLTRB(20, 50, 20, 10),
           child: Column(
