@@ -90,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                                 Icon(
                                   Icons.monetization_on_rounded,
                                   size: 30,
-                                  color: Colors.yellow,
+                                  color: Colors.orange,
                                 ),
                                 Text(
                                   "100",
