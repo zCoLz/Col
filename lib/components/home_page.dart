@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
                           );
                         });
                   }),
-                  tooltip: 'Close app',
+                  tooltip: 'Close App',
                   icon: Icon(Icons.power_settings_new)),
             ],
           ),
