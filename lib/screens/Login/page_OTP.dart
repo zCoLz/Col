@@ -14,7 +14,7 @@ class _PageOTPState extends State<PageOTP> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: components().background_image,
+        decoration: Layout().background_image,
         child: Scaffold(
           backgroundColor: Colors.transparent,
           body: SingleChildScrollView(

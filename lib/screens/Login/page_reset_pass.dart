@@ -14,7 +14,7 @@ class _ResetPassState extends State<ResetPass> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: components().background_image,
+        decoration: Layout().background_image,
         alignment: Alignment.center,
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           //image

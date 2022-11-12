@@ -14,7 +14,7 @@ class _HomePage_Login_SignUpState extends State<HomePage_Login_SignUp> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: components().background_image,
+      decoration: Layout().background_image,
       child: Scaffold(
         backgroundColor: Colors.transparent,
           body: Container(

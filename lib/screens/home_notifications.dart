@@ -21,7 +21,7 @@ class _PageNotiState extends State<PageNoti> {
       ),
       drawer: PageDrawer(),
    
-      body: Container(decoration:components().background_image,child: Center(child: Text("HomeNoti",style: TextStyle(fontSize: 40),),))
+      body: Container(decoration:Layout().background_image,child: Center(child: Text("HomeNoti",style: TextStyle(fontSize: 40),),))
     );
   }
 }

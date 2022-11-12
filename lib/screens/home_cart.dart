@@ -23,7 +23,7 @@ class _PageCartState extends State<PageCart> {
       drawer: PageDrawer(),
 
       body: Container(
-        decoration: components().background_image,
+        decoration: Layout().background_image,
         child: Column(children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),

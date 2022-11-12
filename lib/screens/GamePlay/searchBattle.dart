@@ -52,7 +52,7 @@ class _searchBattleState extends State<SearchBattle> {
               onPressed: (){}, 
             child: Text('Bắt đầu',style: TextStyle(color: Colors.black,fontSize: 17,fontWeight: FontWeight.w600),),),
             decoration: BoxDecoration(color: Colors.white,border: Border.all(width: 2),boxShadow: [BoxShadow(color: Colors.black,offset: Offset(3,3))]),)
-      ],),),decoration: components().background_image,),
+      ],),),decoration: Layout().background_image,),
       );
     }
 }

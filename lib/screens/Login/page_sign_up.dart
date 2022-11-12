@@ -12,7 +12,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: components().background_image,
+      decoration: Layout().background_image,
       child: Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: Colors.transparent,

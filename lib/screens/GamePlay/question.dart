@@ -30,7 +30,7 @@ class _QuestionState extends State<Question> {
       );
     }
     return Container(
-        decoration: components().background_image,
+        decoration: Layout().background_image,
         child: Scaffold(
             backgroundColor: Colors.transparent,
             appBar: AppBar(

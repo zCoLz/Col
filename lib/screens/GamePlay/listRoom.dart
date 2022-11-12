@@ -30,7 +30,7 @@ class _listRoomState extends State<listRoom>{
            Padding(padding: EdgeInsets.only(right:15), child:
             IconButton(onPressed: (){}, icon: Icon(Icons.power_settings_new,size: 35,)))
         ],),
-        body: Container(decoration: components().background_image,
+        body: Container(decoration: Layout().background_image,
           child: Column(children: [
            Expanded(child:  Column(
           children: [ Container(

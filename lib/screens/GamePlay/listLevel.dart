@@ -34,7 +34,7 @@ class _LevelListStateState extends State<LevelList> {
                         size: 35,
                       )))
             ]),
-        body: Container(decoration: components().background_image,
+        body: Container(decoration: Layout().background_image,
             padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
             child: GridView.builder(
               gridDelegate:
