@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                     Icon(
                       Icons.energy_savings_leaf,
                       size: 35,
-                      color: Colors.red,
+                      color: Colors.yellow,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 200),
