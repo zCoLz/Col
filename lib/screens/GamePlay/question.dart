@@ -24,7 +24,7 @@ class _QuestionState extends State<Question> {
               style: TextStyle(color: Colors.black, fontSize: 17),
             )),
         decoration: BoxDecoration(
-            color: Colors.white70,
+            color: Colors.white10,
             border: Border.all(width: 3),
             borderRadius: BorderRadius.circular(40)),
       );
