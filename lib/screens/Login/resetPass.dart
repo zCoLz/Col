@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:home_page/main.dart';
 import 'package:home_page/screens/Login/page_forgetpass.dart';
+import 'package:home_page/screens/Login/page_login.dart';
 import 'package:home_page/screens/home.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class PageResetPass extends StatefulWidget {
+  const PageResetPass({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<PageResetPass> createState() => _PageResetPassState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _PageResetPassState extends State<PageResetPass> {
   TextEditingController accountController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
   @override
@@ -60,9 +61,9 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
+                  padding: const EdgeInsets.only(bottom: 40),
                   child: Text(
-                    "Đăng nhập",
+                    "Đặt lại mật khẩu",
                     style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -72,46 +73,41 @@ class _LoginPageState extends State<LoginPage> {
                     TextFormField(
                       controller: accountController,
                       decoration: InputDecoration(
+                          suffixIcon: Icon(Icons.remove_red_eye_sharp),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15)),
-                          labelText: "Tài khoản"),
+                          labelText: "Mật khẩu mới"),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10),
+                      padding: const EdgeInsets.only(top: 20),
                       child: TextFormField(
                         controller: passwordController,
                         decoration: InputDecoration(
                             suffixIcon: Icon(Icons.remove_red_eye_sharp),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15)),
-                            labelText: "Mật khẩu"),
+                            labelText: "Nhập lại mật khẩu"),
                       ),
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                          onPressed: (() {
-                            Navigator.push(context,MaterialPageRoute(builder: (context)=>PageForgetPass()));
-                          }),
-                          child: Text(
-                            "Quên mật khẩu",
-                            style: TextStyle(fontSize: 16, color: Colors.black),
-                          )),
                     ),
                     SizedBox(
                       width: double.infinity,
-                      height: 50,
-                      child: ElevatedButton(
-                          onPressed: (() {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Home()));
-                          }),
-                          child: Text(
-                            "Đăng nhập",
-                            style: TextStyle(fontSize: 18),
-                          )),
+                      height: 75,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: ElevatedButton(
+                            onPressed: (() {
+                              
+                              Navigator.of(context).popUntil((route) => route.isFirst);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginPage()));
+                            }),
+                            child: Text(
+                              "Xác nhận",
+                              style: TextStyle(fontSize: 18),
+                            )),
+                      ),
                     )
                   ],
                 )),
