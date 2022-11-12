@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_page/components/Layout.dart';
 
 class ResetPass extends StatefulWidget {
   const ResetPass({super.key});
@@ -13,10 +14,7 @@ class _ResetPassState extends State<ResetPass> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("acssets/background2.jpg"),
-                    fit: BoxFit.cover)),
+        decoration: components().background_image,
         alignment: Alignment.center,
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           //image

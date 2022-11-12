@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_page/components/Layout.dart';
 import 'package:home_page/screens/Login/page_login.dart';
 import 'package:home_page/screens/Login/page_sign_up.dart';
 
@@ -13,10 +14,7 @@ class _HomePage_Login_SignUpState extends State<HomePage_Login_SignUp> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("acssets/background2.jpg"),
-                      fit: BoxFit.cover)),
+      decoration: components().background_image,
       child: Scaffold(
         backgroundColor: Colors.transparent,
           body: Container(
