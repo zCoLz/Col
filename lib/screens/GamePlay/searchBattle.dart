@@ -37,7 +37,6 @@ class _searchBattleState extends State<SearchBattle> {
       body:  Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        color: Colors.cyan.shade300,
         child: SingleChildScrollView(child: Column(
           children: <Widget>[
             avatarBattle(),
@@ -46,12 +45,16 @@ class _searchBattleState extends State<SearchBattle> {
             Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 100),child: Text('Ngẫu nhiên',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),),
             Container(
               width: MediaQuery.of(context).size.width/3,
+              height: MediaQuery.of(context).size.width/8.5,
               child: TextButton(
                 style: TextButton.styleFrom(foregroundColor: Colors.black),
               onPressed: (){}, 
             child: Text('Bắt đầu',style: TextStyle(color: Colors.black,fontSize: 17,fontWeight: FontWeight.w600),),),
             decoration: BoxDecoration(color: Colors.white,border: Border.all(width: 2),boxShadow: [BoxShadow(color: Colors.black,offset: Offset(3,3))]),)
-      ],),))
+      ],),),decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("acssets/background2.jpg"),
+                    fit: BoxFit.cover)),),
       );
     }
 }
