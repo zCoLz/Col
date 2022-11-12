@@ -28,7 +28,6 @@ class _QuestionState extends State<Question> {
             borderRadius: BorderRadius.circular(40)),
       );
     }
-
     return Container(
         decoration: BoxDecoration(
             image: DecorationImage(
