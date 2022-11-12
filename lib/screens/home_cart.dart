@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_page/components/Layout.dart';
 import 'package:home_page/screens/Drawer/form_drawer.dart';
 
 class PageCart extends StatefulWidget {
@@ -22,10 +23,7 @@ class _PageCartState extends State<PageCart> {
       drawer: PageDrawer(),
 
       body: Container(
-        decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("acssets/background2.jpg"),
-                    fit: BoxFit.cover)),
+        decoration: components().background_image,
         child: Column(children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_page/components/Layout.dart';
 import 'package:home_page/screens/Drawer/form_drawer.dart';
 
 class PageNoti extends StatefulWidget {
@@ -20,10 +21,7 @@ class _PageNotiState extends State<PageNoti> {
       ),
       drawer: PageDrawer(),
    
-      body: Container(decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("acssets/background2.jpg"),
-                    fit: BoxFit.cover)),child: Center(child: Text("HomeNoti",style: TextStyle(fontSize: 40),),))
+      body: Container(decoration:components().background_image,child: Center(child: Text("HomeNoti",style: TextStyle(fontSize: 40),),))
     );
   }
 }

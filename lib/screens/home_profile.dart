@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_page/components/Layout.dart';
 import 'package:home_page/screens/Drawer/form_drawer.dart';
 
 class PageProfile extends StatefulWidget {
@@ -13,9 +14,7 @@ class _PageProfileState extends State<PageProfile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage("acssets/background2.jpg"), fit: BoxFit.fill)),
+      decoration: components().background_image,
       child: Scaffold(
         backgroundColor: Colors.transparent,
           resizeToAvoidBottomInset: true,
