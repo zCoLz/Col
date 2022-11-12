@@ -16,7 +16,7 @@ class _QuestionState extends State<Question> {
         margin: EdgeInsets.fromLTRB(0, 20, 0, 20),
         child: TextButton(
             style: TextButton.styleFrom(
-                minimumSize: Size(MediaQuery.of(context).size.width / 2.6, 35)),
+                minimumSize: Size(MediaQuery.of(context).size.width/2.6, 35)),
             onPressed: () {},
             child: Text(
               title,
@@ -56,12 +56,14 @@ class _QuestionState extends State<Question> {
                   )),
             ),
             body: Container(
-              height: MediaQuery.of(context).size.height,
-              margin: EdgeInsets.fromLTRB(20, 50, 20, 10),
               child: Column(
                 children: <Widget>[
-                  Expanded(
-                    child: Column(children: [
+                   Expanded( 
+                    child: Container( 
+                      height: MediaQuery.of(context).size.height,
+                      margin: EdgeInsets.fromLTRB(20, 50, 20,5),
+                      child: 
+                    Column(children: [
                       Row(
                         children: [
                           Expanded(
@@ -99,42 +101,22 @@ class _QuestionState extends State<Question> {
                           buttonAnswer('Đáp án 4')
                         ],
                       ),
-                    ]),
+                    ]),)
                   ),
                   Container(
-                      margin: EdgeInsets.fromLTRB(10, 0, 10, 5),
-                      child: Row(
-                        children: [
-                          Expanded(
-                              child: Row(
-                            children: [
-                              Icon(
-                                Icons.monetization_on_rounded,
-                                color: Colors.yellow,
-                                size: 30,
-                              ),
-                              Text(
-                                '100',
-                                style: TextStyle(fontSize: 18),
-                              ),
-                              Padding(padding: EdgeInsets.only(left: 15)),
-                              Icon(
-                                Icons.diamond_rounded,
-                                size: 30,
-                                color: Colors.red,
-                              ),
-                              Text(
-                                '100',
-                                style: TextStyle(fontSize: 18),
-                              )
-                            ],
-                          )),
-                          Icon(
-                            Icons.info_sharp,
-                            size: 40,
-                          )
-                        ],
-                      ))
+                    margin: EdgeInsets.fromLTRB(10, 0, 10, 5),
+                child:
+                Row(
+                children: [
+                Expanded(child: Row(children: [
+                  Icon(Icons.monetization_on_rounded,color: Colors.yellow,size: 30,),
+                  Text('100',style: TextStyle(fontSize: 18),),
+                  Padding(padding: EdgeInsets.only(left: 15)),
+                  Icon(Icons.diamond_rounded,size: 30,color: Colors.red,),
+                  Text('100',style: TextStyle(fontSize: 18),)
+                ],)),
+               IconButton(onPressed: (){}, icon: Icon(Icons.info_sharp,size: 40,))
+              ],))
                 ],
               ),
             )));
