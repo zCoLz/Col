@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_page/components/Layout.dart';
 import 'package:home_page/components/home_page.dart';
 import 'package:home_page/model/dbContext.dart';
 
@@ -33,10 +34,7 @@ class _LevelListStateState extends State<LevelList> {
                         size: 35,
                       )))
             ]),
-        body: Container(decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("acssets/background2.jpg"),
-                    fit: BoxFit.cover)),
+        body: Container(decoration: components().background_image,
             padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
             child: GridView.builder(
               gridDelegate:

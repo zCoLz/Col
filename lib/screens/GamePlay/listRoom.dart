@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_page/components/Layout.dart';
 import 'package:home_page/screens/GamePlay/searchBattle.dart';
 
 class listRoom extends StatefulWidget{
@@ -29,10 +30,7 @@ class _listRoomState extends State<listRoom>{
            Padding(padding: EdgeInsets.only(right:15), child:
             IconButton(onPressed: (){}, icon: Icon(Icons.power_settings_new,size: 35,)))
         ],),
-        body: Container(decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("acssets/background2.jpg"),
-                    fit: BoxFit.cover)),
+        body: Container(decoration: components().background_image,
           child: Column(children: [
            Expanded(child:  Column(
           children: [ Container(

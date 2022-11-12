@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_page/components/Layout.dart';
 import 'package:home_page/screens/GamePlay/listLevel.dart';
 
 class Question extends StatefulWidget {
@@ -29,10 +30,7 @@ class _QuestionState extends State<Question> {
       );
     }
     return Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("acssets/background2.jpg"),
-                fit: BoxFit.cover)),
+        decoration: components().background_image,
         child: Scaffold(
             backgroundColor: Colors.transparent,
             appBar: AppBar(
