@@ -47,7 +47,7 @@ class _LevelStateState extends State<Level> {
                               fontStyle: FontStyle.italic,
                               fontWeight: FontWeight.w600,
                               fontSize: 16,
-                              color: Colors.black),
+                              color: Colors.purple),
                         ),
                       ]))
             ],
