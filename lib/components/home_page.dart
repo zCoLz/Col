@@ -20,7 +20,6 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
-   
             centerTitle: true,
             title: Text(""),
             actions: [
@@ -52,7 +51,6 @@ class _HomePageState extends State<HomePage> {
           drawer: PageDrawer(),
           body: Container(
             alignment: Alignment.center,
-            
             child: Column(children: [
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
@@ -74,12 +72,13 @@ class _HomePageState extends State<HomePage> {
                                 Icon(
                                   Icons.diamond,
                                   size: 30,
-                                  color: Colors.red,
+                                  color: Colors.pink,
                                 ),
                                 Text(
                                   "100",
                                   style: TextStyle(
-                                      fontSize: 18, fontWeight: FontWeight.bold),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ],
                             ),
@@ -96,7 +95,8 @@ class _HomePageState extends State<HomePage> {
                                 Text(
                                   "100",
                                   style: TextStyle(
-                                      fontSize: 18, fontWeight: FontWeight.bold),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ],
                             ),
