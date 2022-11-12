@@ -29,7 +29,13 @@ class _QuestionState extends State<Question> {
       );
     }
 
-    return Scaffold(
+    return Container(  
+      decoration: BoxDecoration(
+        image: DecorationImage(
+        image: AssetImage("acssets/background2.jpg"),
+      fit: BoxFit.cover)),
+      child:Scaffold(
+        backgroundColor: Colors.transparent,
         appBar: AppBar(
           centerTitle: true,
           title: Text(
@@ -50,10 +56,6 @@ class _QuestionState extends State<Question> {
               )),
         ),
         body: Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("acssets/background2.jpg"),
-                  fit: BoxFit.cover)),
           height: MediaQuery.of(context).size.height,
           margin: EdgeInsets.fromLTRB(20, 50, 20, 10),
           child: Column(
@@ -135,6 +137,6 @@ class _QuestionState extends State<Question> {
                   ))
             ],
           ),
-        ));
+        )));
   }
 }
