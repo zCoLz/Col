@@ -102,7 +102,7 @@ class _listRoomState extends State<listRoom>{
                   Icon(Icons.diamond_rounded,size: 30,color: Colors.red,),
                   Text('100',style: TextStyle(fontSize: 18),)
                 ],)),
-               IconButton(onPressed: (){}, icon: Icon(Icons.info_sharp,size: 40,))
+                Icon(Icons.info_sharp,size: 40,)
               ],))]),
       ));
   }
