@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_page/screens/Login/resetPass.dart';
 
 class PageOTP extends StatefulWidget {
   const PageOTP({super.key});
@@ -11,54 +12,86 @@ class _PageOTPState extends State<PageOTP> {
   TextEditingController OTPController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
+    return Container(
         decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("acssets/background2.jpg"),
-                    fit: BoxFit.cover)),
-        alignment: Alignment.center,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              margin: const EdgeInsets.only(bottom: 50),
-              child: Image.asset(
-                'acssets/2.png',
-                width: 150,
-                height: 150,
-                fit: BoxFit.cover,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(0.0),
-              child: Text(
-                "Nhập OTP",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-              ),
-            ),
-            Container(
-              child: Padding(
-                padding: const EdgeInsets.all(40.0),
-                child: TextField(
-                    controller: OTPController,
-                    textAlign: TextAlign.left,
-                    decoration: InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 2, color: Colors.black)),
-                        hintText: 'Nhập OTP',
-                        hintStyle: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 16,
-                            fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.bold))),
-              ),
-            ),
-            ElevatedButton(onPressed: (() {}), child: Text("Đăng nhập"))
-          ],
+          image: DecorationImage(
+              image: AssetImage("acssets/background2.jpg"), fit: BoxFit.fill),
         ),
-      ),
-    );
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SingleChildScrollView(
+              child: Container(
+            margin: EdgeInsets.only(top: 50),
+            padding: EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            "acssets/2.png",
+                            height: MediaQuery.of(context).size.height * 0.16,
+                            width: MediaQuery.of(context).size.width * 0.32,
+                            fit: BoxFit.cover,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(185, 0, 0, 90),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: Icon(Icons.close)),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: Text(
+                    "Nhập mã OTP",
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Form(
+                    child: Column(
+                  children: [
+                    TextFormField(
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15)),
+                          labelText: "Nhập mã OTP"),
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 55,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: ElevatedButton(
+                            onPressed: (() {
+                              Navigator.push(context,MaterialPageRoute(builder: ((context) => PageResetPass())));
+                            }),
+                            child: Text(
+                              "Đặt lại mật khẩu",
+                              style: TextStyle(fontSize: 18),
+                            )),
+                      ),
+                    )
+                  ],
+                )),
+              ],
+            ),
+          )),
+        ));
   }
 }

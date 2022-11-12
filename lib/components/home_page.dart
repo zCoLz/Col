@@ -14,154 +14,158 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(""),
-          actions: [
-            IconButton(
-                onPressed: (() {
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: Text("Save and Exit ?"),
-                          content: Text("Bạn có muốn thoát khỏi A"),
-                          actions: [
-                            FloatingActionButton(
-                              onPressed: () => Navigator.pop(context, false),
-                              child: Text('No'),
+    return Container(
+      decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("acssets/background2.jpg"),
+                    fit: BoxFit.cover)),
+      child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+   
+            centerTitle: true,
+            title: Text(""),
+            actions: [
+              IconButton(
+                  onPressed: (() {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text("Save and Exit ?"),
+                            content: Text("Bạn có muốn thoát khỏi A"),
+                            actions: [
+                              FloatingActionButton(
+                                onPressed: () => Navigator.pop(context, false),
+                                child: Text('No'),
+                              ),
+                              FloatingActionButton(
+                                onPressed: () => exit(0),
+                                child: Text('Yes'),
+                              ),
+                            ],
+                          );
+                        });
+                  }),
+                  tooltip: 'Close app',
+                  icon: Icon(Icons.power_settings_new)),
+            ],
+          ),
+          drawer: PageDrawer(),
+          body: Container(
+            alignment: Alignment.center,
+            
+            child: Column(children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.energy_savings_leaf,
+                      size: 35,
+                      color: Colors.green,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 200),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.diamond,
+                                  size: 30,
+                                  color: Colors.red,
+                                ),
+                                Text(
+                                  "100",
+                                  style: TextStyle(
+                                      fontSize: 18, fontWeight: FontWeight.bold),
+                                ),
+                              ],
                             ),
-                            FloatingActionButton(
-                              onPressed: () => exit(0),
-                              child: Text('Yes'),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.monetization_on_rounded,
+                                  size: 30,
+                                  color: Colors.yellow,
+                                ),
+                                Text(
+                                  "100",
+                                  style: TextStyle(
+                                      fontSize: 18, fontWeight: FontWeight.bold),
+                                ),
+                              ],
                             ),
-                          ],
-                        );
-                      });
-                }),
-                tooltip: 'Close app',
-                icon: Icon(Icons.power_settings_new)),
-          ],
-        ),
-        drawer: PageDrawer(),
-        backgroundColor: Colors.cyan[300],
-        body: Container(
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("acssets/background2.jpg"),
-                  fit: BoxFit.cover)),
-          child: Column(children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
-              child: Row(
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Column(
                 children: [
-                  Icon(
-                    Icons.energy_savings_leaf,
-                    size: 35,
-                    color: Colors.green,
-                  ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 200),
+                    padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
                     child: Row(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.diamond,
-                                size: 30,
-                                color: Colors.red,
-                              ),
-                              Text(
-                                "100",
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.monetization_on_rounded,
-                                size: 30,
-                                color: Colors.yellow,
-                              ),
-                              Text(
-                                "100",
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                        ),
+                        Text(
+                          "20/20",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 15),
+                        )
                       ],
                     ),
                   )
                 ],
               ),
-            ),
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
-                  child: Row(
-                    children: [
-                      Text(
-                        "20/20",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 15),
-                      )
-                    ],
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 170),
+                    child: SizedBox(
+                      height: 70,
+                      width: 200,
+                      child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LevelList()));
+                          },
+                          child:
+                              Text("Chơi đơn", style: TextStyle(fontSize: 18))),
+                    ),
                   ),
-                )
-              ],
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 170),
-                  child: SizedBox(
-                    height: 70,
-                    width: 200,
-                    child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LevelList()));
-                        },
-                        child:
-                            Text("Chơi đơn", style: TextStyle(fontSize: 18))),
+                  Padding(
+                    padding: const EdgeInsets.all(30.0),
+                    child: SizedBox(
+                      height: 70,
+                      width: 200,
+                      child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => listRoom()));
+                          },
+                          child: Text(
+                            "Chơi Đối Kháng",
+                            style: TextStyle(fontSize: 18),
+                          )),
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(30.0),
-                  child: SizedBox(
-                    height: 70,
-                    width: 200,
-                    child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => listRoom()));
-                        },
-                        child: Text(
-                          "Chơi Đối Kháng",
-                          style: TextStyle(fontSize: 18),
-                        )),
-                  ),
-                ),
-              ],
-            ),
-          ]),
-        ));
+                ],
+              ),
+            ]),
+          )),
+    );
   }
 }

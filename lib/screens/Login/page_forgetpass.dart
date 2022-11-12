@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:home_page/main.dart';
-import 'package:home_page/screens/Login/page_forgetpass.dart';
-import 'package:home_page/screens/home.dart';
+import 'package:home_page/screens/Login/page_OTP.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class PageForgetPass extends StatefulWidget {
+  const PageForgetPass({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<PageForgetPass> createState() => _PageForgetPassState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  TextEditingController accountController = new TextEditingController();
-  TextEditingController passwordController = new TextEditingController();
+class _PageForgetPassState extends State<PageForgetPass> {
+  TextEditingController OTPController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -62,56 +59,48 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: Text(
-                    "Đăng nhập",
-                    style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+                    "Quên mật khẩu",
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                   ),
                 ),
+                 Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: Text(
+                    "Cho chúng tôi biết số điện thoại bạn đã đắng ký tài khoản?",
+                    style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),
+                  ),
+                ),
+                 Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: Text(
+                    "Chúng tôi sẽ gửi mã OTP về SMS cho bạn",
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                
                 Form(
                     child: Column(
                   children: [
                     TextFormField(
-                      controller: accountController,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15)),
-                          labelText: "Tài khoản"),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: TextFormField(
-                        controller: passwordController,
-                        decoration: InputDecoration(
-                            suffixIcon: Icon(Icons.remove_red_eye_sharp),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15)),
-                            labelText: "Mật khẩu"),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                          onPressed: (() {
-                            Navigator.push(context,MaterialPageRoute(builder: (context)=>PageForgetPass()));
-                          }),
-                          child: Text(
-                            "Quên mật khẩu",
-                            style: TextStyle(fontSize: 16, color: Colors.black),
-                          )),
+                          labelText: "Nhập số điện thoại"),
                     ),
                     SizedBox(
                       width: double.infinity,
-                      height: 50,
-                      child: ElevatedButton(
-                          onPressed: (() {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Home()));
-                          }),
-                          child: Text(
-                            "Đăng nhập",
-                            style: TextStyle(fontSize: 18),
-                          )),
+                      height: 55,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: ElevatedButton(
+                            onPressed: (() {
+                              Navigator.push(context, MaterialPageRoute(builder: ((context) => PageOTP())));
+                            }),
+                            child: Text(
+                              "Gửi OTP",
+                              style: TextStyle(fontSize: 18),
+                            )),
+                      ),
                     )
                   ],
                 )),
