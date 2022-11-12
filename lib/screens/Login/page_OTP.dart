@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_page/components/Layout.dart';
 import 'package:home_page/screens/Login/resetPass.dart';
 
 class PageOTP extends StatefulWidget {
@@ -13,10 +14,7 @@ class _PageOTPState extends State<PageOTP> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage("acssets/background2.jpg"), fit: BoxFit.fill),
-        ),
+        decoration: Layout().background_image,
         child: Scaffold(
           backgroundColor: Colors.transparent,
           body: SingleChildScrollView(

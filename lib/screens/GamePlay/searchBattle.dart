@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_page/components/Layout.dart';
 class SearchBattle extends StatefulWidget {
   const SearchBattle({super.key});
   @override
@@ -51,10 +52,7 @@ class _searchBattleState extends State<SearchBattle> {
               onPressed: (){}, 
             child: Text('Bắt đầu',style: TextStyle(color: Colors.black,fontSize: 17,fontWeight: FontWeight.w600),),),
             decoration: BoxDecoration(color: Colors.white,border: Border.all(width: 2),boxShadow: [BoxShadow(color: Colors.black,offset: Offset(3,3))]),)
-      ],),),decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("acssets/background2.jpg"),
-                    fit: BoxFit.cover)),),
+      ],),),decoration: Layout().background_image,),
       );
     }
 }

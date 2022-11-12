@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_page/components/Layout.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -11,10 +12,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage("acssets/background2.jpg"), fit: BoxFit.fill),
-      ),
+      decoration: Layout().background_image,
       child: Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: Colors.transparent,

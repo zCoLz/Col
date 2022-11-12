@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_page/components/Layout.dart';
 import 'package:home_page/main.dart';
 import 'package:home_page/screens/Login/page_forgetpass.dart';
 import 'package:home_page/screens/Login/page_login.dart';
@@ -17,10 +18,7 @@ class _PageResetPassState extends State<PageResetPass> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage("acssets/background2.jpg"), fit: BoxFit.fill),
-        ),
+        decoration:Layout().background_image,
         child: Scaffold(
           backgroundColor: Colors.transparent,
           body: SingleChildScrollView(
