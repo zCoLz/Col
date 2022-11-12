@@ -139,7 +139,7 @@ class _HomePageState extends State<HomePage> {
                                     builder: (context) => LevelList()));
                           },
                           child:
-                              Text("Chơi đơn", style: TextStyle(fontSize: 18))),
+                              Text("Chơi Đơn", style: TextStyle(fontSize: 18))),
                     ),
                   ),
                   Padding(
