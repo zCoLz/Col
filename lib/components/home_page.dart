@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
                                 Icon(
                                   Icons.diamond,
                                   size: 30,
-                                  color: Colors.pink,
+                                  color: Colors.green,
                                 ),
                                 Text(
                                   "100",
