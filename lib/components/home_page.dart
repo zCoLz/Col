@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                     Icon(
                       Icons.energy_savings_leaf,
                       size: 35,
-                      color: Colors.yellow,
+                      color: Colors.green,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 200),
@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
                                 Icon(
                                   Icons.diamond,
                                   size: 30,
-                                  color: Colors.green,
+                                  color: Colors.red,
                                 ),
                                 Text(
                                   "100",
@@ -90,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                                 Icon(
                                   Icons.monetization_on_rounded,
                                   size: 30,
-                                  color: Colors.orange,
+                                  color: Colors.yellow,
                                 ),
                                 Text(
                                   "100",
