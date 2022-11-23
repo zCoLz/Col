@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_page/screens/GamePlay/difficult.dart';
 import 'package:home_page/screens/GamePlay/question.dart';
 
 import '../model/dbContext.dart';
@@ -19,7 +20,7 @@ class _LevelStateState extends State<Level> {
         onPressed: (() {
           if (levelInfo.unClock == null) {
             Navigator.push(
-                context, MaterialPageRoute(builder: ((context) => Question())));
+                context, MaterialPageRoute(builder: ((context) => Difficult())));
           }
         }),
         child: Container(
