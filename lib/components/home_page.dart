@@ -20,7 +20,6 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
-   
             centerTitle: true,
             title: Text(""),
             actions: [
@@ -45,14 +44,13 @@ class _HomePageState extends State<HomePage> {
                           );
                         });
                   }),
-                  tooltip: 'Close app',
+                  tooltip: 'Close App',
                   icon: Icon(Icons.power_settings_new)),
             ],
           ),
           drawer: PageDrawer(),
           body: Container(
             alignment: Alignment.center,
-            
             child: Column(children: [
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
@@ -79,7 +77,8 @@ class _HomePageState extends State<HomePage> {
                                 Text(
                                   "100",
                                   style: TextStyle(
-                                      fontSize: 18, fontWeight: FontWeight.bold),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ],
                             ),
@@ -96,7 +95,8 @@ class _HomePageState extends State<HomePage> {
                                 Text(
                                   "100",
                                   style: TextStyle(
-                                      fontSize: 18, fontWeight: FontWeight.bold),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ],
                             ),
@@ -139,7 +139,7 @@ class _HomePageState extends State<HomePage> {
                                     builder: (context) => LevelList()));
                           },
                           child:
-                              Text("Chơi đơn", style: TextStyle(fontSize: 18))),
+                              Text("Chơi Đơn", style: TextStyle(fontSize: 18))),
                     ),
                   ),
                   Padding(

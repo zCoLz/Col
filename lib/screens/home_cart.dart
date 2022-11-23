@@ -98,9 +98,9 @@ class _PageCartState extends State<PageCart> {
             padding: const EdgeInsets.all(8.0),
             child: Container(
               child: Material(
+                color: Colors.grey.withOpacity(0.8),
                 child: ListTile(
                     title: const Text('Vật phẩm gợi ý',style: TextStyle(fontWeight: FontWeight.bold),),
-                    tileColor: Colors.orange,
                     leading: Padding(
                       padding: const EdgeInsets.only(top: 8),
                       child: Icon(Icons.contact_support,size: 30,color: Colors.black,),
@@ -115,9 +115,9 @@ class _PageCartState extends State<PageCart> {
             padding: const EdgeInsets.all(8.0),
             child: Container(
               child: Material(
+                color: Colors.grey.withOpacity(0.8),
                 child: ListTile(
                     title: const Text('Vật phẩm đáp án từ BOT',style: TextStyle(fontWeight: FontWeight.bold)),
-                    tileColor: Colors.orange,
                     leading: Padding(
                       padding: const EdgeInsets.only(top: 8),
                       child: Icon(Icons.hearing,size: 30,color: Colors.black, ),
@@ -132,9 +132,9 @@ class _PageCartState extends State<PageCart> {
             padding: const EdgeInsets.all(8.0),
             child: Container(
               child: Material(
+                color: Colors.grey.withOpacity(0.8),
                 child: ListTile(
                     title: const Text('Vật phẩm 50/50',style: TextStyle(fontWeight: FontWeight.bold)),
-                    tileColor: Colors.orange,
                     leading: Padding(
                       padding: const EdgeInsets.only(top: 8),
                       child: Icon(Icons.star_half,size: 30,color: Colors.black,),
@@ -149,9 +149,9 @@ class _PageCartState extends State<PageCart> {
             padding: const EdgeInsets.all(8.0),
             child: Container(
               child: Material(
+                color: Colors.grey.withOpacity(0.8),
                 child: ListTile(
                     title: const Text('Vật phẩm hiển thị đáp án đúng*',style: TextStyle(fontWeight: FontWeight.bold)),
-                    tileColor: Colors.orange,
                     leading: Padding(
                       padding: const EdgeInsets.only(top: 8),
                       child: Icon(Icons.star,size: 30,color: Colors.black,),
@@ -166,9 +166,9 @@ class _PageCartState extends State<PageCart> {
             padding: const EdgeInsets.all(8.0),
             child: Container(
               child: Material(
+                color: Colors.grey.withOpacity(0.8),
                 child: ListTile(
                     title: const Text('Vật phẩm thẻ đổi tên',style: TextStyle(fontWeight: FontWeight.bold)),
-                    tileColor: Colors.orange,
                     leading: Padding(
                       padding: const EdgeInsets.only(top: 8),
                       child: Icon(Icons.contact_support,size: 30,color: Colors.black,),
@@ -183,9 +183,9 @@ class _PageCartState extends State<PageCart> {
             padding: const EdgeInsets.all(8.0),
             child: Container(
               child: Material(
+                color: Colors.grey.withOpacity(0.8),
                 child: ListTile(
                     title: const Text('Hình nền và ảnh hồ sơ',style: TextStyle(fontWeight: FontWeight.bold)),
-                    tileColor: Colors.orange,
                     leading: Padding(
                       padding: const EdgeInsets.only(top: 8),
                       child: Icon(Icons.crop_original,size: 30,color: Colors.black,),

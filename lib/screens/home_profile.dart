@@ -10,7 +10,11 @@ class PageProfile extends StatefulWidget {
 }
 
 class _PageProfileState extends State<PageProfile> {
-  TextEditingController _controller = TextEditingController();
+  TextEditingController _controller  = TextEditingController();
+  TextEditingController _account = TextEditingController();
+    TextEditingController _pasword = TextEditingController();
+      TextEditingController _phone = TextEditingController();
+  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -45,7 +49,7 @@ class _PageProfileState extends State<PageProfile> {
                     keyboardType: TextInputType.text,
                     style: TextStyle(fontSize: 20, color: Colors.black),
                     decoration: InputDecoration(
-                        labelText: "Số điện thoại",
+                        labelText: "Số điện thoại",hintText: "0130584xxx",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                         )),
@@ -57,7 +61,8 @@ class _PageProfileState extends State<PageProfile> {
                     keyboardType: TextInputType.text,
                     style: TextStyle(fontSize: 20, color: Colors.black),
                     decoration: InputDecoration(
-                        labelText: "Số điện thoại",
+                        labelText: "Tài khoản",
+                        hintText: "QuangThieuEm",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                         )),
@@ -69,7 +74,8 @@ class _PageProfileState extends State<PageProfile> {
                     keyboardType: TextInputType.text,
                     style: TextStyle(fontSize: 20, color: Colors.black),
                     decoration: InputDecoration(
-                        labelText: "Số điện thoại",
+                        labelText: "Mật khẩu",
+                        hintText: "********",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                         )),

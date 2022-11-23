@@ -14,8 +14,10 @@ class _QuestionBattleState extends State<QuestionBattle> {
   Widget build(BuildContext context) {
     Widget buttonAnswer(String title) {
       return Container(
+        height: MediaQuery.of(context).size.height/16,
         margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
         child: TextButton(
+          
             style: TextButton.styleFrom(
                 minimumSize: Size(MediaQuery.of(context).size.width/1.2, 35)),
             onPressed: () {},
@@ -58,6 +60,7 @@ class _QuestionBattleState extends State<QuestionBattle> {
                    Expanded( 
                     child: Container( 
                       height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
                       margin: EdgeInsets.fromLTRB(20, 20, 20,5),
                       child: 
                     Column(children: [
