@@ -11,9 +11,9 @@ class PageProfile extends StatefulWidget {
 
 class _PageProfileState extends State<PageProfile> {
   TextEditingController _controller  = TextEditingController();
-  TextEditingController _account = TextEditingController();
-    TextEditingController _pasword = TextEditingController();
-      TextEditingController _phone = TextEditingController();
+  TextEditingController _account = TextEditingController(text: 'QuangThieuEm');
+    TextEditingController _pasword = TextEditingController(text: '**********');
+      TextEditingController _phone = TextEditingController(text: '0130584xxx');
   
   @override
   Widget build(BuildContext context) {
@@ -43,44 +43,63 @@ class _PageProfileState extends State<PageProfile> {
                   style: TextStyle(fontSize: 30),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  
+                  padding: const EdgeInsets.fromLTRB(5 , 20, 5, 0),
                   child: TextField(
-                    controller: _controller,
+                    controller: _phone,
                     keyboardType: TextInputType.text,
                     style: TextStyle(fontSize: 20, color: Colors.black),
+                    
                     decoration: InputDecoration(
-                        labelText: "Số điện thoại",hintText: "0130584xxx",
+                      
+                        labelText: "Số điện thoại",
+                        
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                         )),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.fromLTRB(5 , 20, 5, 0),
                   child: TextField(
+                    controller: _account,
                     keyboardType: TextInputType.text,
                     style: TextStyle(fontSize: 20, color: Colors.black),
                     decoration: InputDecoration(
                         labelText: "Tài khoản",
-                        hintText: "QuangThieuEm",
+                        hintText: _account.text,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                         )),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.fromLTRB(5 , 20, 5, 0),
                   child: TextField(
+                    controller: _pasword,
                     keyboardType: TextInputType.text,
                     style: TextStyle(fontSize: 20, color: Colors.black),
                     decoration: InputDecoration(
                         labelText: "Mật khẩu",
-                        hintText: "********",
+                        hintText: _pasword.text,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                         )),
                   ),
-                )
+                  
+                ),
+                
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(5 , 20, 5, 0),
+                  child: SizedBox(
+                    width: 200,
+                    height: 50,
+                    child: ElevatedButton(
+                              onPressed: (() {
+
+                              }), child: Text("Xác nhận",style: TextStyle(fontSize: 20),)),
+                  ),
+                ),
               ]),
             ),
           )
