@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:home_page/components/Layout.dart';
-import 'package:home_page/screens/GamePlay/listLevel.dart';
-
+import 'package:bottom_drawer/bottom_drawer.dart';
 class Question extends StatefulWidget {
   Question({super.key});
 
@@ -10,6 +9,10 @@ class Question extends StatefulWidget {
 }
 
 class _QuestionState extends State<Question> {
+    double _headerHeight = 55.0;
+  double _bodyHeight = 250.0;
+  bool flag = false;
+  BottomDrawerController _controller = BottomDrawerController();
   @override
   Widget build(BuildContext context) {
     Widget buttonAnswer(String title) {
@@ -54,53 +57,82 @@ class _QuestionState extends State<Question> {
                   )),
             ),
             body: Container(
-              child: Column(
-                children: <Widget>[
-                  Expanded(
-                      child: Container(
-                    height: MediaQuery.of(context).size.height,
-                    margin: EdgeInsets.fromLTRB(20, 50, 20, 5),
-                    child: Column(children: [
-                      Row(
-                        children: [
-                          Expanded(
-                              child: Text(
-                            'Điểm 00',
-                            style: TextStyle(fontSize: 23),
-                          )),
-                          Text(
-                            'Thời gian : 30s',
-                            style: TextStyle(fontSize: 23),
-                          )
-                        ],
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 30, 0, 50),
-                        child: Text(
-                          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          buttonAnswer('Đáp án 1'),
-                          buttonAnswer('Đáp án 2')
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          buttonAnswer('Đáp án 3'),
-                          buttonAnswer('Đáp án 4')
-                        ],
-                      ),
-                    ]),
-                  )),
-                  Container(
+              child: Stack(
+                children: [
+                  Column(
+                    children: <Widget>[
+                      Expanded(
+                          child: Container(
+                        height: MediaQuery.of(context).size.height,
+                        margin: EdgeInsets.fromLTRB(20, 50, 20, 5),
+                        child: Column(children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                  child: Text(
+                                'Điểm 00',
+                                style: TextStyle(fontSize: 23),
+                              )),
+                              Text(
+                                'Thời gian : 30s',
+                                style: TextStyle(fontSize: 23),
+                              )
+                            ],
+                          ),
+                          Container(
+                            margin: EdgeInsets.fromLTRB(0, 30, 0, 50),
+                            child: Text(
+                              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              buttonAnswer('Đáp án 1'),
+                              buttonAnswer('Đáp án 2')
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              buttonAnswer('Đáp án 3'),
+                              buttonAnswer('Đáp án 4')
+                            ],
+                          ),
+                        ]),
+                      )),
+                    ],
+                  ),
+                   _buildBottomDrawer(context)
+                ],
+              ),
+            )));
+  }
+   Widget _buildBottomDrawer(BuildContext context) {
+    return BottomDrawer(
+      header: _buildBottomDrawerHead(context),
+      body: _buildBottomDrawerBody(context),
+      headerHeight: _headerHeight,
+      drawerHeight: _bodyHeight,
+      color: Colors.white.withOpacity(0.5),
+      controller: _controller,
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.15),
+          blurRadius: 60,
+          spreadRadius: 5,
+          offset: const Offset(2, -6), // changes position of shadow
+        ),
+      ],
+    );
+  }
+
+  Widget _buildBottomDrawerHead(BuildContext context){
+     return Container(
                       margin: EdgeInsets.fromLTRB(10, 0, 10, 5),
                       child: Row(
                         children: [
@@ -129,15 +161,63 @@ class _QuestionState extends State<Question> {
                             ],
                           )),
                           IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                setState(() {
+                                  if(flag==false){
+                                    _controller.open();
+                                    flag=true;
+                                  }
+                                  else{
+                                    _controller.close();
+                                    flag=false;
+                                  }
+                                });
+                              },
                               icon: Icon(
                                 Icons.info_sharp,
                                 size: 40,
                               ))
                         ],
-                      ))
+                      ));
+  }
+  Widget ideal(IconData icon,String label){
+    return Container(
+      width: MediaQuery.of(context).size.width/2.2,
+      height: MediaQuery.of(context).size.width/7,
+      margin: EdgeInsets.fromLTRB(0, 10, 0 , 20),
+      child:  TextButton(onPressed: (){}, child:Row(
+                    children: [
+                      Icon(icon,color: Colors.black,size: 40,),
+                      Text(label,style: TextStyle(color: Colors.black,fontSize: 13))
+                    ],
+                  ),)
+    );
+  }
+  Widget _buildBottomDrawerBody(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: _bodyHeight,
+      child: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 10,horizontal: 5),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  ideal(Icons.question_mark, 'Gợi ý'),
+                 ideal(Icons.star, 'Hiển thị đáp án đúng')
                 ],
               ),
-            )));
-  }
+              Row(
+                children: [
+                   ideal(Icons.hearing_rounded, 'Nghe Bot chọn'),
+                 ideal(Icons.star_half_outlined, '50/50')
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+}
 }
