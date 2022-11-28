@@ -32,23 +32,28 @@ class _PutMoneyState extends State<PutMoney> {
         margin: EdgeInsets.symmetric(vertical: 40,horizontal: 20),
         child: Column(
           children: [
-            Row(
+            TextButton(onPressed: (){},
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.black.withOpacity(0),
+              padding: EdgeInsets.all(5),
+              ),
+             child: Row(
               children: [
-                Icon(Icons.account_circle,size: 80,),
+               Padding(padding: EdgeInsets.only(right: 10),child: Icon(Icons.account_circle,size: 80,color: Colors.black,),),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
                         Icon(Icons.diamond_outlined,color: Colors.red,size: 30,),
-                        Padding(padding: EdgeInsets.only(left: 5),child: Text('100',style: TextStyle(fontSize: 18),))
+                        Padding(padding: EdgeInsets.only(left: 5),child: Text('100',style: TextStyle(fontSize: 18,color: Colors.black),))
                       ],
                     ),
-                    Text('Quang thieu Em',style: TextStyle(fontWeight: FontWeight.w600,fontSize: 20),)
+                    Text('Quang thieu Em',style: TextStyle(fontWeight: FontWeight.w600,fontSize: 20,color: Colors.black),)
                   ],
                 )
               ],
-            ),
+            ),),
             Padding(padding: EdgeInsets.only(top: 70),
                child: line),
             putMoney('Thẻ tín dụng hoặc thẻ ghi nợ', Icons.add_card_outlined),
