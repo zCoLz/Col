@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:home_page/components/home_page.dart';
-import 'package:home_page/screens/Drawer/pageRank.dart';
+import 'package:home_page/screens/TabBar/pageRank.dart';
 import 'package:home_page/screens/Login/form_login_signup.dart';
 import 'package:home_page/screens/Login/page_OTP.dart';
-import 'package:home_page/screens/Login/page_login.dart';
+import 'package:home_page/screens/TabBar/presonRank.dart';
+import 'package:home_page/screens/TabBar/putMoney.dart';
+import 'package:home_page/screens/TabBar/ranking.dart';
+import 'package:home_page/screens/TabBar/setting.dart';
 import 'package:home_page/screens/home.dart';
 
 class PageDrawer extends StatefulWidget {
@@ -31,7 +33,7 @@ class _PageDrawerState extends State<PageDrawer> {
                         padding: const EdgeInsets.only(left: 20),
                         child: Row(
                           children: [
-                            Text("Quang THieu U",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                            Text("Quang Thieu Em",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
                           ],
                         ),
                       ),
@@ -39,7 +41,7 @@ class _PageDrawerState extends State<PageDrawer> {
                          padding: const EdgeInsets.only(right: 75),
                          child: Row(
                           children: [
-                            Text("Cấp 0",style: TextStyle(fontSize: 15),),
+                            Text("Cấp 10",style: TextStyle(fontSize: 15),),
                           ],
                       ),
                        ),
@@ -47,6 +49,19 @@ class _PageDrawerState extends State<PageDrawer> {
                   ),
                 ],
               ),
+               Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Row( 
+                      children:[
+                   Padding(padding: EdgeInsets.only(left: 10),
+                   child: Text('Rank : ',style: TextStyle(fontSize: 18),)),
+                  Image(image:  AssetImage('acssets/Rank/RankBac.png'),
+                  width: MediaQuery.of(context).size.width/5.5,),
+                  ])),
+                  Text('Điểm : 1995',style: TextStyle(fontSize: 15),)
+                  ])
             ]),
           ),
           ListTile(
@@ -59,12 +74,30 @@ class _PageDrawerState extends State<PageDrawer> {
             },
           ),
           ListTile(
+             leading: const Icon(Icons.present_to_all_rounded),
+            title: Text("Rank cá nhân"),
+            onTap: () {
+              Navigator.of(context).popUntil((route) => route.isFirst);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: ((context) => PresonalRank())));
+                  }
+          ),
+          ListTile(
             leading: const Icon(Icons.bar_chart_rounded ),
-            title: Text("Bảng xếp hạng"),
+            title: Text("Bảng điểm"),
             onTap: () {
               Navigator.of(context).popUntil((route) => route.isFirst);
               Navigator.push(context,
                   MaterialPageRoute(builder: ((context) => PageRank())));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.stacked_bar_chart_sharp),
+            title: Text('Bảng xếp hạng'),
+             onTap: () {
+              Navigator.of(context).popUntil((route) => route.isFirst);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: ((context) => Ranking())));
             },
           ),
           ListTile(
@@ -74,6 +107,22 @@ class _PageDrawerState extends State<PageDrawer> {
               Navigator.of(context).popUntil((route) => route.isFirst);
               Navigator.push(context,
                   MaterialPageRoute(builder: ((context) => PageOTP())));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.monetization_on_rounded),
+            title: Text('Nạp tiền'),
+            onTap: () {
+              Navigator.of(context).popUntil((route) => route.isFirst);
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>PutMoney()));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.settings),
+            title: Text('Cài đặt'),
+            onTap: () {
+              Navigator.of(context).popUntil((route) => route.isFirst);
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>Setting()));
             },
           ),
           ListTile(
