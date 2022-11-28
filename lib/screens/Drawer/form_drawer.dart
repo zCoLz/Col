@@ -5,6 +5,7 @@ import 'package:home_page/screens/TabBar/pageRank.dart';
 import 'package:home_page/screens/Login/form_login_signup.dart';
 import 'package:home_page/screens/Login/page_OTP.dart';
 import 'package:home_page/screens/TabBar/presonRank.dart';
+import 'package:home_page/screens/TabBar/ranking.dart';
 import 'package:home_page/screens/TabBar/setting.dart';
 import 'package:home_page/screens/home.dart';
 
@@ -84,11 +85,20 @@ class _PageDrawerState extends State<PageDrawer> {
           ),
           ListTile(
             leading: const Icon(Icons.bar_chart_rounded ),
-            title: Text("Bảng xếp hạng"),
+            title: Text("Bảng điểm"),
             onTap: () {
               Navigator.of(context).popUntil((route) => route.isFirst);
               Navigator.push(context,
                   MaterialPageRoute(builder: ((context) => PageRank())));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.stacked_bar_chart_sharp),
+            title: Text('Bảng xếp hạng'),
+             onTap: () {
+              Navigator.of(context).popUntil((route) => route.isFirst);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: ((context) => Ranking())));
             },
           ),
           ListTile(

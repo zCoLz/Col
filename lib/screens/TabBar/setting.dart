@@ -25,7 +25,6 @@ class _SettingState extends State<Setting> {
                       child:Text(label,style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600),))),
-                       if(check !=null)
                           ToggleButton(check: check,)
                   ],
                 ),
@@ -49,7 +48,18 @@ class _SettingState extends State<Setting> {
               Padding(padding: EdgeInsets.only(top: 30),
               child: box('Thông báo',false), ),
               box('Giao diện', true),
-              box('Giới thiệu',null)
+              TextButton(onPressed: (){},child: Container(
+                width: MediaQuery.of(context).size.width/1.1,
+                height: MediaQuery.of(context).size.width/8,
+                padding: EdgeInsets.only(left: 10),
+                alignment: Alignment.centerLeft,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(width: 2)
+                ),
+                child: Text('Giới thiệu',
+                style: TextStyle(fontWeight: FontWeight.w600,color: Colors.black,fontSize: 18),),),
+              )
             ],
           ),
          ),
