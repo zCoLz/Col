@@ -33,7 +33,7 @@ class _DifficultState extends State<Difficult> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 5, 0, 40),
+                    padding: const EdgeInsets.fromLTRB(5, 20, 0, 40),
                     child: Text('Chủ đề : Công nghệ thông tin',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
                   ),
                   Container(
@@ -43,7 +43,7 @@ class _DifficultState extends State<Difficult> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image(
-                    image: AssetImage('acssets/randomQuestion.jpg'),
+                    image: AssetImage('acssets/level/title1.jpg'),
                     width: MediaQuery.of(context).size.width / 2.5,
                     height: MediaQuery.of(context).size.width / 2.5,
                     ),
@@ -53,7 +53,7 @@ class _DifficultState extends State<Difficult> {
                     ),
                     Container(
                       margin: EdgeInsets.only(bottom: 20,top: 50),
-              width: MediaQuery.of(context).size.width/3,
+              width: MediaQuery.of(context).size.width/2.7,
               height: MediaQuery.of(context).size.width/8.5,
               child: TextButton(
                 style: TextButton.styleFrom(foregroundColor: Colors.black),
@@ -64,7 +64,7 @@ class _DifficultState extends State<Difficult> {
             decoration: BoxDecoration(color: Colors.blue,border: Border.all(width: 2),boxShadow: [BoxShadow(color: Colors.black,offset: Offset(3,3))]),),
             Container(
               margin: EdgeInsets.only(bottom: 20,top: 20),
-              width: MediaQuery.of(context).size.width/3,
+              width: MediaQuery.of(context).size.width/2.7,
               height: MediaQuery.of(context).size.width/8.5,
               child: TextButton(
                 style: TextButton.styleFrom(foregroundColor: Colors.black),
@@ -75,7 +75,7 @@ class _DifficultState extends State<Difficult> {
             decoration: BoxDecoration(color: Colors.blue,border: Border.all(width: 2),boxShadow: [BoxShadow(color: Colors.black,offset: Offset(3,3))]),),
             Container(
               margin: EdgeInsets.only(bottom: 20,top: 20),
-              width: MediaQuery.of(context).size.width/3,
+              width: MediaQuery.of(context).size.width/2.7,
               height: MediaQuery.of(context).size.width/8.5,
               child: TextButton(
                 style: TextButton.styleFrom(foregroundColor: Colors.black),
