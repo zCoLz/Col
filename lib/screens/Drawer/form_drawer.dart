@@ -1,10 +1,9 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:home_page/screens/TabBar/pageRank.dart';
 import 'package:home_page/screens/Login/form_login_signup.dart';
 import 'package:home_page/screens/Login/page_OTP.dart';
 import 'package:home_page/screens/TabBar/presonRank.dart';
+import 'package:home_page/screens/TabBar/putMoney.dart';
 import 'package:home_page/screens/TabBar/ranking.dart';
 import 'package:home_page/screens/TabBar/setting.dart';
 import 'package:home_page/screens/home.dart';
@@ -108,6 +107,14 @@ class _PageDrawerState extends State<PageDrawer> {
               Navigator.of(context).popUntil((route) => route.isFirst);
               Navigator.push(context,
                   MaterialPageRoute(builder: ((context) => PageOTP())));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.monetization_on_rounded),
+            title: Text('Nạp tiền'),
+            onTap: () {
+              Navigator.of(context).popUntil((route) => route.isFirst);
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>PutMoney()));
             },
           ),
           ListTile(
