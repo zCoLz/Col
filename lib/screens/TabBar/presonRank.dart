@@ -20,10 +20,17 @@ class _PersonalRankState extends State<PresonalRank> {
          drawer: PageDrawer(),
          body: Container(
           alignment: Alignment.topCenter,
-          margin: EdgeInsets.only(top: MediaQuery.of(context).size.height/6),
+          margin: EdgeInsets.only(top: MediaQuery.of(context).size.height/9),
             child: Column(
               children: [
-                Image(image: AssetImage('acssets/Rank/RankBac.png')),
+                Container(
+                  padding: EdgeInsets.all(10),
+                  margin: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.black12.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(59)
+                  )
+                  ,child: Image(image: AssetImage('acssets/Rank/RankBac.png'))),
                 Text('Quang thieu Em',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
                 Padding(padding: EdgeInsets.all(20) ,
                   child: Text('Điểm : 1995',style: TextStyle(fontWeight: FontWeight.w600,fontSize: 17),))
