@@ -33,11 +33,7 @@ class _DifficultState extends State<Difficult> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.fromLTRB(5, 5, 0, 40),
-                    child: Text(
-                      'Chủ đề : Công nghệ thông tin',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                    ),
+                    child: Text('Chủ đề : Công nghệ thông tin',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width,
@@ -46,105 +42,47 @@ class _DifficultState extends State<Difficult> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image(
-                          image: AssetImage('acssets/randomQuestion.jpg'),
-                          width: MediaQuery.of(context).size.width / 2.5,
-                          height: MediaQuery.of(context).size.width / 2.5,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 30),
-                          child: Text(
-                            'Ải 1',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 20, top: 50),
-                          width: MediaQuery.of(context).size.width / 3,
-                          height: MediaQuery.of(context).size.width / 8.5,
-                          child: TextButton(
-                            style: TextButton.styleFrom(
-                                foregroundColor: Colors.black),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Question()));
-                            },
-                            child: Text(
-                              'Dễ',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                          decoration: BoxDecoration(
-                              color: Colors.blue,
-                              border: Border.all(width: 2),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black, offset: Offset(3, 3))
-                              ]),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 20, top: 20),
-                          width: MediaQuery.of(context).size.width / 3,
-                          height: MediaQuery.of(context).size.width / 8.5,
-                          child: TextButton(
-                            style: TextButton.styleFrom(
-                                foregroundColor: Colors.black),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Question()));
-                            },
-                            child: Text(
-                              'Trung bình',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                          decoration: BoxDecoration(
-                              color: Colors.blue,
-                              border: Border.all(width: 2),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black, offset: Offset(3, 3))
-                              ]),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 20, top: 20),
-                          width: MediaQuery.of(context).size.width / 3,
-                          height: MediaQuery.of(context).size.width / 8.5,
-                          child: TextButton(
-                            style: TextButton.styleFrom(
-                                foregroundColor: Colors.black),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Question()));
-                            },
-                            child: Text(
-                              'Khó',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                          decoration: BoxDecoration(
-                              color: Colors.blue,
-                              border: Border.all(width: 2),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black, offset: Offset(3, 3))
-                              ]),
-                        )
+                    image: AssetImage('acssets/randomQuestion.jpg'),
+                    width: MediaQuery.of(context).size.width / 2.5,
+                    height: MediaQuery.of(context).size.width / 2.5,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top:30),
+                      child: Text('Ải 1',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(bottom: 20,top: 50),
+              width: MediaQuery.of(context).size.width/3,
+              height: MediaQuery.of(context).size.width/8.5,
+              child: TextButton(
+                style: TextButton.styleFrom(foregroundColor: Colors.black),
+              onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>Question()));
+              }, 
+            child: Text('Dễ',style: TextStyle(color: Colors.white,fontSize: 17,fontWeight: FontWeight.w600),),),
+            decoration: BoxDecoration(color: Colors.blue,border: Border.all(width: 2),boxShadow: [BoxShadow(color: Colors.black,offset: Offset(3,3))]),),
+            Container(
+              margin: EdgeInsets.only(bottom: 20,top: 20),
+              width: MediaQuery.of(context).size.width/3,
+              height: MediaQuery.of(context).size.width/8.5,
+              child: TextButton(
+                style: TextButton.styleFrom(foregroundColor: Colors.black),
+              onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>Question()));
+              }, 
+            child: Text('Trung bình',style: TextStyle(color: Colors.white,fontSize: 17,fontWeight: FontWeight.w600),),),
+            decoration: BoxDecoration(color: Colors.blue,border: Border.all(width: 2),boxShadow: [BoxShadow(color: Colors.black,offset: Offset(3,3))]),),
+            Container(
+              margin: EdgeInsets.only(bottom: 20,top: 20),
+              width: MediaQuery.of(context).size.width/3,
+              height: MediaQuery.of(context).size.width/8.5,
+              child: TextButton(
+                style: TextButton.styleFrom(foregroundColor: Colors.black),
+              onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>Question()));
+              }, 
+            child: Text('Khó',style: TextStyle(color: Colors.white,fontSize: 17,fontWeight: FontWeight.w600),),),
+            decoration: BoxDecoration(color: Colors.blue,border: Border.all(width: 2),boxShadow: [BoxShadow(color: Colors.black,offset: Offset(3,3))]),)
                       ],
                     ),
                   )
