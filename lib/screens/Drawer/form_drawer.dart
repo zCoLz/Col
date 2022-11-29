@@ -75,12 +75,30 @@ class _PageDrawerState extends State<PageDrawer> {
             },
           ),
           ListTile(
+             leading: const Icon(Icons.present_to_all_rounded),
+            title: Text("Rank cá nhân"),
+            onTap: () {
+              Navigator.of(context).popUntil((route) => route.isFirst);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: ((context) => PresonalRank())));
+                  }
+          ),
+          ListTile(
             leading: const Icon(Icons.bar_chart_rounded ),
-            title: Text("Bảng xếp hạng"),
+            title: Text("Bảng điểm"),
             onTap: () {
               Navigator.of(context).popUntil((route) => route.isFirst);
               Navigator.push(context,
                   MaterialPageRoute(builder: ((context) => PageRank())));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.stacked_bar_chart_sharp),
+            title: Text('Bảng xếp hạng'),
+             onTap: () {
+              Navigator.of(context).popUntil((route) => route.isFirst);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: ((context) => Ranking())));
             },
           ),
           ListTile(
@@ -90,6 +108,22 @@ class _PageDrawerState extends State<PageDrawer> {
               Navigator.of(context).popUntil((route) => route.isFirst);
               Navigator.push(context,
                   MaterialPageRoute(builder: ((context) => PageRank())));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.monetization_on_rounded),
+            title: Text('Nạp tiền'),
+            onTap: () {
+              Navigator.of(context).popUntil((route) => route.isFirst);
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>PutMoney()));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.settings),
+            title: Text('Cài đặt'),
+            onTap: () {
+              Navigator.of(context).popUntil((route) => route.isFirst);
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>Setting()));
             },
           ),
           ListTile(
