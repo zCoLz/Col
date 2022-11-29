@@ -143,6 +143,22 @@ class _PageDrawerState extends State<PageDrawer> {
             },
           ),
           ListTile(
+            leading: Icon(Icons.monetization_on_rounded),
+            title: Text('Nạp tiền'),
+            onTap: () {
+              Navigator.of(context).popUntil((route) => route.isFirst);
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>PutMoney()));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.settings),
+            title: Text('Cài đặt'),
+            onTap: () {
+              Navigator.of(context).popUntil((route) => route.isFirst);
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>Setting()));
+            },
+          ),
+          ListTile(
             leading: const Icon(Icons.logout),
             title: Text("Đăng xuất",style: TextStyle(fontSize: 18),),
             onTap: () {
