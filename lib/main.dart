@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:home_page/screens/Login/page_login.dart';
 import 'package:home_page/screens/Login/form_login_signup.dart';
@@ -6,8 +7,10 @@ import 'package:home_page/screens/home_notifications.dart';
 import 'package:home_page/components/home_page.dart';
 import 'package:home_page/screens/home_profile.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main(List<String> args) async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -24,4 +27,4 @@ class MyApp extends StatelessWidget {
       home: HomePage_Login_SignUp(),
     );
   }
-}
+} 

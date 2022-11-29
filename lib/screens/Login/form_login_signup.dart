@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:home_page/components/Layout.dart';
 import 'package:home_page/screens/Login/page_login.dart';
 import 'package:home_page/screens/Login/page_sign_up.dart';
-
 class HomePage_Login_SignUp extends StatefulWidget {
   const HomePage_Login_SignUp({super.key});
 
@@ -52,9 +51,15 @@ class _HomePage_Login_SignUpState extends State<HomePage_Login_SignUp> {
                       width: 200,
                       height: 50,
                       child: ElevatedButton(
-                          onPressed: (() {
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUpPage()));
-                          }), child: Text("Đăng ký",style: TextStyle(fontSize: 18),)),
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUpPage()))
+                            .then((value) {
+                              if(value!=null){
+                                final snackBar = SnackBar(content: Text(value));
+                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              }
+                            });
+                          }, child: Text("Đăng ký",style: TextStyle(fontSize: 18),)),
                     ),
                   )),
                 ],

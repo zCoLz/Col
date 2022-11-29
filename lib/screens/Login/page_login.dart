@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:home_page/components/Layout.dart';
+import 'package:home_page/components/home_page.dart';
 import 'package:home_page/main.dart';
 import 'package:home_page/screens/Login/page_forgetpass.dart';
 import 'package:home_page/screens/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -12,8 +14,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController accountController = new TextEditingController();
-  TextEditingController passwordController = new TextEditingController();
+  TextEditingController txtEmail = TextEditingController();
+  TextEditingController txtPass = TextEditingController();
+  final _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -68,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: Column(
                   children: [
                     TextFormField(
-                      controller: accountController,
+                      controller: txtEmail,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15)),
@@ -77,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: TextFormField(
-                        controller: passwordController,
+                        controller: txtPass,
                         decoration: InputDecoration(
                             suffixIcon: Icon(Icons.remove_red_eye_sharp),
                             border: OutlineInputBorder(
@@ -89,7 +92,10 @@ class _LoginPageState extends State<LoginPage> {
                       alignment: Alignment.centerRight,
                       child: TextButton(
                           onPressed: (() {
-                            Navigator.push(context,MaterialPageRoute(builder: (context)=>PageForgetPass()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PageForgetPass()));
                           }),
                           child: Text(
                             "Quên mật khẩu",
@@ -100,12 +106,32 @@ class _LoginPageState extends State<LoginPage> {
                       width: double.infinity,
                       height: 50,
                       child: ElevatedButton(
-                          onPressed: (() {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Home()));
-                          }),
+                          onPressed: () {
+                            // try {
+                            //   final _user = _auth.signInWithEmailAndPassword(
+                            //       email: txtEmail.text, password: txtPass.text);
+                            //   _auth.authStateChanges().listen((event) {
+                            //     if (event != null) {
+                            //       txtEmail.clear();
+                            //       txtPass.clear();
+                            //       Navigator.pushNamedAndRemoveUntil(
+                            //           context, 'home', (route) => false);
+                            //     } else {
+                            //       final snackbar = SnackBar(
+                            //           content: Text(
+                            //               'Email hoặc mật khẩu không chính xác'));
+                            //       ScaffoldMessenger.of(context)
+                            //           .showSnackBar(snackbar);
+                            //     }
+                            //   });
+                            // } catch (e) {
+                            //   final snackBar = SnackBar(
+                            //       content: Text('Lỗi kết nối đến Server'));
+                            //   ScaffoldMessenger.of(context)
+                            //       .showSnackBar(snackBar);
+                            // }
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+                          },
                           child: Text(
                             "Đăng nhập",
                             style: TextStyle(fontSize: 18),
