@@ -16,7 +16,7 @@ class _HomePage_Login_SignUpState extends State<HomePage_Login_SignUp> {
     return Container(
       decoration: Layout().background_image,
       child: Scaffold(
-        backgroundColor: Colors.transparent,
+          backgroundColor: Colors.transparent,
           body: Container(
               alignment: Alignment.center,
               child: Column(
@@ -35,14 +35,21 @@ class _HomePage_Login_SignUpState extends State<HomePage_Login_SignUp> {
                       child: Padding(
                     padding: const EdgeInsets.all(10),
                     child: SizedBox(
-                      
                       width: 200,
                       height: 50,
                       child: ElevatedButton(
                           onPressed: (() {
-                            Navigator.of(context).popUntil((route) => route.isFirst);
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
-                          }), child: Text("Đăng nhập",style: TextStyle(fontSize: 18),)),
+                            Navigator.of(context)
+                                .popUntil((route) => route.isFirst);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginPage()));
+                          }),
+                          child: Text(
+                            "Đăng nhập",
+                            style: TextStyle(fontSize: 18),
+                          )),
                     ),
                   )),
                   Container(
@@ -53,8 +60,22 @@ class _HomePage_Login_SignUpState extends State<HomePage_Login_SignUp> {
                       height: 50,
                       child: ElevatedButton(
                           onPressed: (() {
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUpPage()));
-                          }), child: Text("Đăng ký",style: TextStyle(fontSize: 18),)),
+                            Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SignUpPage()))
+                                .then((value) {
+                              if (value != null) {
+                                final snackBar = SnackBar(content: Text(value));
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              }
+                            });
+                          }),
+                          child: Text(
+                            "Đăng ký",
+                            style: TextStyle(fontSize: 18),
+                          )),
                     ),
                   )),
                 ],
