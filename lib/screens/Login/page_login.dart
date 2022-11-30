@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:home_page/components/Layout.dart';
 import 'package:home_page/main.dart';
@@ -12,8 +13,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController accountController = new TextEditingController();
-  TextEditingController passwordController = new TextEditingController();
+  TextEditingController txtEmail = new TextEditingController();
+  TextEditingController txtPass = new TextEditingController();
+  final _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -68,16 +70,16 @@ class _LoginPageState extends State<LoginPage> {
                     child: Column(
                   children: [
                     TextFormField(
-                      controller: accountController,
+                      controller: txtEmail,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15)),
-                          labelText: "Tài khoản"),
+                          labelText: "Nhập Email"),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: TextFormField(
-                        controller: passwordController,
+                        controller: txtPass,
                         decoration: InputDecoration(
                             suffixIcon: Icon(Icons.remove_red_eye_sharp),
                             border: OutlineInputBorder(
@@ -100,12 +102,32 @@ class _LoginPageState extends State<LoginPage> {
                       width: double.infinity,
                       height: 50,
                       child: ElevatedButton(
-                          onPressed: (() {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Home()));
-                          }),
+                          onPressed: () {
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => Home()));
+                            try {
+                              final _user = _auth.signInWithEmailAndPassword(email: txtEmail.text, password: txtPass.text);
+                              _auth.authStateChanges().listen((event) {
+                                if(event != null)
+                                {
+                                  txtEmail.clear();
+                                  txtPass.clear();
+                                 Navigator.pushNamedAndRemoveUntil(context, 'home', (route) => false);
+                                }
+                                else{
+                                  final snackBar = SnackBar(content: Text('Email hoặc Mật Khẩu Không Đúng'));
+                                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                }
+                              });
+                            }
+                            catch(e)
+                            {
+                              final snackBar = SnackBar(content: Text('Lỗi Kết Nối Đến Server'));
+                                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                            }
+                          },
                           child: Text(
                             "Đăng nhập",
                             style: TextStyle(fontSize: 18),
