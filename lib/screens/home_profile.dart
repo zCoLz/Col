@@ -11,9 +11,9 @@ class PageProfile extends StatefulWidget {
 
 class _PageProfileState extends State<PageProfile> {
   TextEditingController _controller  = TextEditingController();
-  TextEditingController _account = TextEditingController();
-    TextEditingController _pasword = TextEditingController();
-      TextEditingController _phone = TextEditingController();
+  TextEditingController _account = TextEditingController(text: "Quang@gmail.com");
+    TextEditingController _pasword = TextEditingController(text: "*******");
+      TextEditingController _phone = TextEditingController(text: "01564613xx");
   
   @override
   Widget build(BuildContext context) {
@@ -45,11 +45,11 @@ class _PageProfileState extends State<PageProfile> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextField(
-                    controller: _controller,
+                    controller: _phone,
                     keyboardType: TextInputType.text,
                     style: TextStyle(fontSize: 20, color: Colors.black),
                     decoration: InputDecoration(
-                        labelText: "Số điện thoại",hintText: "0130584xxx",
+                        labelText: "Số điện thoại",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                         )),
@@ -58,11 +58,11 @@ class _PageProfileState extends State<PageProfile> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextField(
+                    controller: _account,
                     keyboardType: TextInputType.text,
                     style: TextStyle(fontSize: 20, color: Colors.black),
                     decoration: InputDecoration(
                         labelText: "Tài khoản",
-                        hintText: "QuangThieuEm",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                         )),
@@ -71,11 +71,11 @@ class _PageProfileState extends State<PageProfile> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextField(
+                    controller: _pasword,
                     keyboardType: TextInputType.text,
                     style: TextStyle(fontSize: 20, color: Colors.black),
                     decoration: InputDecoration(
                         labelText: "Mật khẩu",
-                        hintText: "********",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                         )),

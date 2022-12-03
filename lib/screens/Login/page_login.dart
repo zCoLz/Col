@@ -103,30 +103,30 @@ class _LoginPageState extends State<LoginPage> {
                       height: 50,
                       child: ElevatedButton(
                           onPressed: () {
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => Home()));
-                            try {
-                              final _user = _auth.signInWithEmailAndPassword(email: txtEmail.text, password: txtPass.text);
-                              _auth.authStateChanges().listen((event) {
-                                if(event != null)
-                                {
-                                  txtEmail.clear();
-                                  txtPass.clear();
-                                 Navigator.pushNamedAndRemoveUntil(context, 'home', (route) => false);
-                                }
-                                else{
-                                  final snackBar = SnackBar(content: Text('Email hoặc Mật Khẩu Không Đúng'));
-                                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                }
-                              });
-                            }
-                            catch(e)
-                            {
-                              final snackBar = SnackBar(content: Text('Lỗi Kết Nối Đến Server'));
-                                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                            }
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Home()));
+                            // try {
+                            //   final _user = _auth.signInWithEmailAndPassword(email: txtEmail.text, password: txtPass.text);
+                            //   _auth.authStateChanges().listen((event) {
+                            //     if(event != null)
+                            //     {
+                            //       txtEmail.clear();
+                            //       txtPass.clear();
+                            //      Navigator.pushNamedAndRemoveUntil(context, 'home', (route) => false);
+                            //     }
+                            //     else{
+                            //       final snackBar = SnackBar(content: Text('Email hoặc Mật Khẩu Không Đúng'));
+                            //       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                            //     }
+                            //   });
+                            // }
+                            // catch(e)
+                            // {
+                            //   final snackBar = SnackBar(content: Text('Lỗi Kết Nối Đến Server'));
+                            //       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                            // }
                           },
                           child: Text(
                             "Đăng nhập",
