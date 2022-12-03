@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:home_page/components/Layout.dart';
 import 'package:home_page/screens/GamePlay/listLevel.dart';
+import 'package:home_page/screens/TabBar/battleHistory.dart';
 
 class QuestionBattle extends StatefulWidget {
   QuestionBattle({super.key});
@@ -20,7 +21,9 @@ class _QuestionBattleState extends State<QuestionBattle> {
           
             style: TextButton.styleFrom(
                 minimumSize: Size(MediaQuery.of(context).size.width/1.2, 35)),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: ((context) => BattleHistory())));
+            },
             child: Text(
               title,
               style: TextStyle(color: Colors.black, fontSize: 17),

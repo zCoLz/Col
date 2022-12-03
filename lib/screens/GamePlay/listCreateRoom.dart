@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:home_page/components/Layout.dart';
 import 'package:home_page/screens/GamePlay/questionBattle.dart';
-class SearchBattle extends StatefulWidget {
-  const SearchBattle({super.key});
+class CreateRoom extends StatefulWidget {
+  const CreateRoom({super.key});
   @override
-  State<SearchBattle> createState() => _searchBattleState();
+  State<CreateRoom> createState() => _CreateRoomState();
 }
-class _searchBattleState extends State<SearchBattle> {
+class _CreateRoomState extends State<CreateRoom> {
   @override
   Widget build(BuildContext context) { 
     Widget avatar(String images,String userName){
@@ -26,7 +26,7 @@ class _searchBattleState extends State<SearchBattle> {
               children: <Widget>[
                 avatar('minhdeptrai.jpg', 'Nhựt Minh'),
                 Image(image: AssetImage("acssets/vs.png"),width: MediaQuery.of(context).size.width/4,),
-                avatar('quangthieuU.jpg', 'Minh Quang'),
+                avatar('wait.png', '?'),
                ],));
     }
     return Scaffold(
@@ -43,7 +43,7 @@ class _searchBattleState extends State<SearchBattle> {
         child: SingleChildScrollView(child: Column(
           children: <Widget>[
             avatarBattle(),
-            Text('00:10s',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
+            Text('00:00s',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
             Image(image: AssetImage('acssets/randomQuestion.jpg'),width:MediaQuery.of(context).size.width/3,),
             Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 100),child: Text('Ngẫu nhiên',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),),
             Container(
