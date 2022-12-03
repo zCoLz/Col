@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:home_page/screens/TabBar/battleHistory.dart';
+import 'package:home_page/screens/TabBar/history.dart';
 import 'package:home_page/screens/TabBar/pageRank.dart';
 import 'package:home_page/screens/Login/form_login_signup.dart';
 import 'package:home_page/screens/Login/page_OTP.dart';
@@ -107,7 +108,7 @@ class _PageDrawerState extends State<PageDrawer> {
             onTap: () {
               Navigator.of(context).popUntil((route) => route.isFirst);
               Navigator.push(context,
-                  MaterialPageRoute(builder: ((context) => BattleHistory())));
+                  MaterialPageRoute(builder: ((context) => History())));
             },
           ),
           ListTile(

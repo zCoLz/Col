@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:home_page/components/Layout.dart';
+import 'package:home_page/screens/GamePlay/listCreateRoom.dart';
 import 'package:home_page/screens/GamePlay/searchBattle.dart';
 
 class listRoom extends StatefulWidget{
@@ -73,7 +74,9 @@ class _listRoomState extends State<listRoom>{
         margin: EdgeInsets.all(20),
         child: TextButton(
                 style: TextButton.styleFrom(foregroundColor: Colors.black),
-              onPressed: (){}, 
+              onPressed: (){
+                Navigator.push(context,MaterialPageRoute(builder: (context) => CreateRoom()));
+              }, 
             child: Text('Tạo phòng',style: TextStyle(color: Colors.black,fontSize: 17,fontWeight: FontWeight.w600),),),
             decoration: BoxDecoration(color: Colors.white,border: Border.all(width: 2),boxShadow: [BoxShadow(color: Colors.black,offset: Offset(3,3))]),),
              Container(
