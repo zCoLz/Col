@@ -92,6 +92,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   padding: const EdgeInsets.only(top: 10),
                                   child: TextFormField(
                                     controller: txtEmail,
+                                    keyboardType: TextInputType.emailAddress,
                                     style: TextStyle(
                                         fontSize: 20, color: Colors.black),
                                     decoration: InputDecoration(
@@ -105,6 +106,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   padding: const EdgeInsets.only(top: 10.0),
                                   child: TextFormField(
                                     controller: txtPass,
+                                    obscureText: true,
                                     style: TextStyle(
                                         fontSize: 20, color: Colors.black),
                                     decoration: InputDecoration(
@@ -129,12 +131,18 @@ class _SignUpPageState extends State<SignUpPage> {
                                   child: Padding(
                                     padding: const EdgeInsets.only(top: 15),
                                     child: ElevatedButton(
-                                        onPressed: () async {
+                                        onPressed: () async{
+                                          if(txtEmail.text==''||txtPass.text==''){
+                                            final snackBar = SnackBar(
+                                                content:
+                                                    Text('Không được bỏ trống Email và Password'));
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(snackBar);
+                                          }
+                                          else{
                                           try {
-                                            final newUser = _auth
-                                                .createUserWithEmailAndPassword(
-                                                    email: txtEmail.text,
-                                                    password: txtPass.text);
+                                            final newUser =_auth.createUserWithEmailAndPassword(email:txtEmail.text , password: txtPass.text)
+                                            ;
                                             if (newUser != null) {
                                               Navigator.pop(context,
                                                   'Đăng Ký Thành Công!');
@@ -152,7 +160,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(snackBar);
                                           }
-                                        },
+                                          }}
+                                        ,
                                         child: Text(
                                           "Đăng ký",
                                           style: TextStyle(fontSize: 20),

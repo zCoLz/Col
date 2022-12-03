@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:home_page/components/Layout.dart';
-import 'package:home_page/main.dart';
+import 'package:home_page/screens/Login/form_login_signup.dart';
 import 'package:home_page/screens/Login/page_forgetpass.dart';
-import 'package:home_page/screens/home.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -51,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                           IconButton(
                               onPressed: () {
-                                Navigator.pop(context);
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage_Login_SignUp()));
                               },
                               icon: Icon(Icons.close)),
                         ],
@@ -71,6 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     TextFormField(
                       controller: txtEmail,
+                      keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15)),
@@ -80,6 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                       padding: const EdgeInsets.only(top: 10),
                       child: TextFormField(
                         controller: txtPass,
+                        obscureText: true,
                         decoration: InputDecoration(
                             suffixIcon: Icon(Icons.remove_red_eye_sharp),
                             border: OutlineInputBorder(
@@ -102,22 +103,31 @@ class _LoginPageState extends State<LoginPage> {
                       width: double.infinity,
                       height: 50,
                       child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async{
                             // Navigator.push(
                             //     context,
                             //     MaterialPageRoute(
                             //         builder: (context) => Home()));
+                             if(txtEmail.text==''||txtPass.text==''){
+                                 final snackBar = SnackBar(backgroundColor: Colors.white,content: Text('Không được bỏ trống email và password',
+                                 style: TextStyle(fontSize: 18,color: Colors.red,fontWeight: FontWeight.w500),));
+                                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              }
+                              else{
                             try {
-                              final _user = _auth.signInWithEmailAndPassword(email: txtEmail.text, password: txtPass.text);
-                              _auth.authStateChanges().listen((event) {
+                             
+                              final _user =  _auth.signInWithEmailAndPassword(email: txtEmail.text, password: txtPass.text);
+                                 _auth.userChanges().listen((event) {
                                 if(event != null)
                                 {
                                   txtEmail.clear();
                                   txtPass.clear();
-                                 Navigator.pushNamedAndRemoveUntil(context, 'home', (route) => false);
+                                  final snackbar = SnackBar(content: Text('Đăng nhập thành công'));
+                                  ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                                  Navigator.pushNamedAndRemoveUntil(context,'home', (route) => false);
                                 }
                                 else{
-                                  final snackBar = SnackBar(content: Text('Email hoặc Mật Khẩu Không Đúng'));
+                                  final snackBar = SnackBar(content: Text('Email hoặc mật khẩu không đúng',));
                                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                 }
                               });
@@ -127,9 +137,10 @@ class _LoginPageState extends State<LoginPage> {
                               final snackBar = SnackBar(content: Text('Lỗi Kết Nối Đến Server'));
                                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                             }
-                          },
+                            }}
+                          ,
                           child: Text(
-                            "Đăng nhập",
+                           'Đăng nhập',
                             style: TextStyle(fontSize: 18),
                           )),
                     )

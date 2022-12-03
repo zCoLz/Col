@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:home_page/screens/TabBar/battleHistory.dart';
 import 'package:home_page/screens/TabBar/pageRank.dart';
@@ -130,9 +131,11 @@ class _PageDrawerState extends State<PageDrawer> {
             leading: const Icon(Icons.logout),
             title: Text("Đăng xuất"),
             onTap: () {
-              Navigator.of(context).popUntil((route) => route.isFirst);
+              FirebaseAuth.instance.signOut();
+              /* Navigator.of(context).popUntil((route) => route.isFirst);
               Navigator.push(context,
-                  MaterialPageRoute(builder: ((context) => HomePage_Login_SignUp())));
+                  MaterialPageRoute(builder: ((context) => HomePage_Login_SignUp()))); */
+                  Navigator.pushNamedAndRemoveUntil(context, 'welcome', (route) => false);
             },
           ),
         ],
