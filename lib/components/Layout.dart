@@ -1,3 +1,7 @@
+import 'dart:ffi';
+import 'dart:math';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Layout {
@@ -7,3 +11,10 @@ class Layout {
                     fit: BoxFit.cover)
     );
 }
+class level{
+    setLevel(int XP){
+    double  level = (sqrt (100 * (XP+ 25)) + 50) / 100;
+        return  level.toInt();
+    }
+}
+//level = (sqrt (100 (2experience + 25)) + 50) / 100 và kinh nghiệm = (level ^ 2 + level) / 2 * 100- (level * 100)
