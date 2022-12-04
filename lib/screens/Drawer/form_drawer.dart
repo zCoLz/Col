@@ -35,6 +35,7 @@ class _PageDrawerState extends State<PageDrawer> {
               stream: userDB,
               builder: (context, snapshot) {
                 var user = snapshot.data!.docs;
+                Rank().setRank(user[0]['rankScore']);
                 return Column(children: [
                   Row(
                     children: [
@@ -57,7 +58,7 @@ class _PageDrawerState extends State<PageDrawer> {
                              padding: const EdgeInsets.only(right: 75,left: 10),
                              child: Row(
                               children: [
-                                Text("Cấp ${level().setLevel(user[0]['exp'])}",style: TextStyle(fontSize: 15),),
+                                Text("Cấp ${Level().setLevel(user[0]['exp'])}",style: TextStyle(fontSize: 15),),
                               ],
                           ),
                            ),
@@ -73,7 +74,7 @@ class _PageDrawerState extends State<PageDrawer> {
                           children:[
                        Padding(padding: EdgeInsets.only(left: 10),
                        child: Text('Rank : ',style: TextStyle(fontSize: 18),)),
-                      if(user[0]['rank'].toString()=='')
+                      if(user[0]['rankScore']==0)
                         Padding(
                           padding: const EdgeInsets.fromLTRB(0, 20, 20, 20),
                           child: Text('Chưa có Rank',style: TextStyle(fontSize: 16),),

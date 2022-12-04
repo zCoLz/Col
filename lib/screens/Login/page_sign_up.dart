@@ -142,8 +142,18 @@ class _SignUpPageState extends State<SignUpPage> {
                                                 .showSnackBar(snackBar);
                                           }
                                           else{
+                                            var check =  await _auth.fetchSignInMethodsForEmail(txtEmail.text);
+                                           if(check.contains('password')){
+                                               final snackBar = SnackBar(
+                                                  content: Text('Tài Khoản Này đã tồn tại'));
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(snackBar);
+                                           }
+                                           else{
                                           try {
-                                            final newUser =_auth.createUserWithEmailAndPassword(email:txtEmail.text , password: txtPass.text);
+                                            final newUser =_auth
+                                            .createUserWithEmailAndPassword(email:txtEmail.text , password: txtPass.text)
+                                            ;
                                             if (newUser != null) {
                                               //final user=  _auth.currentUser;
                                               
@@ -162,7 +172,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(snackBar);
                                           }
-                                          }}
+                                          }}}
                                         ,
                                         child: Text(
                                           "Đăng ký",
