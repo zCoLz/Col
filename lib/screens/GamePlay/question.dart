@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:home_page/components/Layout.dart';
 import 'package:bottom_drawer/bottom_drawer.dart';
+
 class Question extends StatefulWidget {
   Question({super.key});
 
@@ -9,7 +10,7 @@ class Question extends StatefulWidget {
 }
 
 class _QuestionState extends State<Question> {
-    double _headerHeight = 55.0;
+  double _headerHeight = 55.0;
   double _bodyHeight = 250.0;
   bool flag = false;
   BottomDrawerController _controller = BottomDrawerController();
@@ -107,12 +108,13 @@ class _QuestionState extends State<Question> {
                       )),
                     ],
                   ),
-                   _buildBottomDrawer(context)
+                  _buildBottomDrawer(context)
                 ],
               ),
             )));
   }
-   Widget _buildBottomDrawer(BuildContext context) {
+
+  Widget _buildBottomDrawer(BuildContext context) {
     return BottomDrawer(
       header: _buildBottomDrawerHead(context),
       body: _buildBottomDrawerBody(context),
@@ -131,87 +133,94 @@ class _QuestionState extends State<Question> {
     );
   }
 
-  Widget _buildBottomDrawerHead(BuildContext context){
-     return Container(
-                      margin: EdgeInsets.fromLTRB(10, 0, 10, 5),
-                      child: Row(
-                        children: [
-                          Expanded(
-                              child: Row(
-                            children: [
-                              Icon(
-                                Icons.monetization_on_rounded,
-                                color: Colors.yellow,
-                                size: 30,
-                              ),
-                              Text(
-                                '100',
-                                style: TextStyle(fontSize: 18),
-                              ),
-                              Padding(padding: EdgeInsets.only(left: 15)),
-                              Icon(
-                                Icons.diamond_rounded,
-                                size: 30,
-                                color: Colors.red,
-                              ),
-                              Text(
-                                '100',
-                                style: TextStyle(fontSize: 18),
-                              )
-                            ],
-                          )),
-                          IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  if(flag==false){
-                                    _controller.open();
-                                    flag=true;
-                                  }
-                                  else{
-                                    _controller.close();
-                                    flag=false;
-                                  }
-                                });
-                              },
-                              icon: Icon(
-                                Icons.info_sharp,
-                                size: 40,
-                              ))
-                        ],
-                      ));
-  }
-  Widget ideal(IconData icon,String label){
+  Widget _buildBottomDrawerHead(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width/2.2,
-      height: MediaQuery.of(context).size.width/7,
-      margin: EdgeInsets.fromLTRB(0, 10, 0 , 20),
-      child:  TextButton(onPressed: (){}, child:Row(
-                    children: [
-                      Icon(icon,color: Colors.black,size: 40,),
-                      Text(label,style: TextStyle(color: Colors.black,fontSize: 13))
-                    ],
-                  ),)
-    );
+        margin: EdgeInsets.fromLTRB(10, 0, 10, 5),
+        child: Row(
+          children: [
+            Expanded(
+                child: Row(
+              children: [
+                Icon(
+                  Icons.monetization_on_rounded,
+                  color: Colors.yellow,
+                  size: 30,
+                ),
+                Text(
+                  '100',
+                  style: TextStyle(fontSize: 18),
+                ),
+                Padding(padding: EdgeInsets.only(left: 15)),
+                Icon(
+                  Icons.diamond_rounded,
+                  size: 30,
+                  color: Colors.red,
+                ),
+                Text(
+                  '100',
+                  style: TextStyle(fontSize: 18),
+                )
+              ],
+            )),
+            IconButton(
+                onPressed: () {
+                  setState(() {
+                    if (flag == false) {
+                      _controller.open();
+                      flag = true;
+                    } else {
+                      _controller.close();
+                      flag = false;
+                    }
+                  });
+                },
+                icon: Icon(
+                  Icons.info_sharp,
+                  size: 40,
+                ))
+          ],
+        ));
   }
+
+  Widget ideal(IconData icon, String label) {
+    return Container(
+        width: MediaQuery.of(context).size.width / 2.2,
+        height: MediaQuery.of(context).size.width / 7,
+        margin: EdgeInsets.fromLTRB(0, 10, 0, 20),
+        child: TextButton(
+          onPressed: () {},
+          child: Row(
+            children: [
+              Icon(
+                icon,
+                color: Colors.black,
+                size: 40,
+              ),
+              Text(label, style: TextStyle(color: Colors.black, fontSize: 13))
+            ],
+          ),
+        ));
+  }
+
   Widget _buildBottomDrawerBody(BuildContext context) {
     return Container(
       width: double.infinity,
       height: _bodyHeight,
       child: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.symmetric(vertical: 10,horizontal: 5),
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
           child: Column(
             children: [
               Row(
                 children: [
                   ideal(Icons.question_mark, 'Gợi ý'),
-                 ideal(Icons.star, 'Hiển thị đáp án đúng')
+                  ideal(Icons.star, 'Hiển thị đáp án đúng')
                 ],
               ),
               Row(
                 children: [
-                   ideal(Icons.hearing_rounded, 'Nghe Bot chọn'),
-                 ideal(Icons.star_half_outlined, '50/50')
+                  ideal(Icons.hearing_rounded, 'Nghe Bot chọn'),
+                  ideal(Icons.star_half_outlined, '50/50')
                 ],
               )
             ],
@@ -219,5 +228,5 @@ class _QuestionState extends State<Question> {
         ),
       ),
     );
-}
+  }
 }

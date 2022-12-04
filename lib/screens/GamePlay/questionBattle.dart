@@ -15,25 +15,26 @@ class _QuestionBattleState extends State<QuestionBattle> {
   Widget build(BuildContext context) {
     Widget buttonAnswer(String title) {
       return Container(
-        height: MediaQuery.of(context).size.height/16,
+        height: MediaQuery.of(context).size.height / 16,
         margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
         child: TextButton(
-          
             style: TextButton.styleFrom(
-                minimumSize: Size(MediaQuery.of(context).size.width/1.2, 35)),
+                minimumSize: Size(MediaQuery.of(context).size.width / 1.2, 35)),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: ((context) => BattleHistory())));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: ((context) => BattleHistory())));
             },
             child: Text(
               title,
               style: TextStyle(color: Colors.black, fontSize: 17),
             )),
         decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.8),
-            border: Border.all(width: 1),
-            ),
+          color: Colors.white.withOpacity(0.8),
+          border: Border.all(width: 1),
+        ),
       );
     }
+
     return Container(
         decoration: Layout().background_image,
         child: Scaffold(
@@ -60,29 +61,56 @@ class _QuestionBattleState extends State<QuestionBattle> {
             body: Container(
               child: Column(
                 children: <Widget>[
-                   Expanded( 
-                    child: Container( 
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
-                      margin: EdgeInsets.fromLTRB(20, 20, 20,5),
-                      child: 
-                    Column(children: [
+                  Expanded(
+                      child: Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    margin: EdgeInsets.fromLTRB(20, 20, 20, 5),
+                    child: Column(children: [
                       Row(
                         children: [
-                        Column(
-                          children: [
-                            Text("Điểm : 10",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
-                            Padding(padding: EdgeInsets.fromLTRB(0, 5, 0, 0) ,child:Icon(Icons.account_circle,size: 80,)),
-                            Text("Quang thieu U",style: TextStyle(fontSize: 19,fontWeight: FontWeight.w500),)
-                          ],
-                        ),
-                        Image(image: AssetImage("acssets/vs.png"),width: MediaQuery.of(context).size.width/4,)
-                        ,
-                        Expanded(child: Column(
-                          children: [
-                            Text("Điểm : 10",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
-                            Padding(padding: EdgeInsets.fromLTRB(0, 5, 0, 0) ,child:Icon(Icons.account_circle,size: 80,)),
-                            Text("Quang thieu U",style: TextStyle(fontSize: 19,fontWeight: FontWeight.w500),)
+                          Column(
+                            children: [
+                              Text(
+                                "Điểm : 10",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w500),
+                              ),
+                              Padding(
+                                  padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                                  child: Icon(
+                                    Icons.account_circle,
+                                    size: 80,
+                                  )),
+                              Text(
+                                "Quang thieu U",
+                                style: TextStyle(
+                                    fontSize: 19, fontWeight: FontWeight.w500),
+                              )
+                            ],
+                          ),
+                          Image(
+                            image: AssetImage("acssets/vs.png"),
+                            width: MediaQuery.of(context).size.width / 4,
+                          ),
+                          Expanded(
+                              child: Column(children: [
+                            Text(
+                              "Điểm : 10",
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w500),
+                            ),
+                            Padding(
+                                padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                                child: Icon(
+                                  Icons.account_circle,
+                                  size: 80,
+                                )),
+                            Text(
+                              "Quang thieu U",
+                              style: TextStyle(
+                                  fontSize: 19, fontWeight: FontWeight.w500),
+                            )
                           ])),
                         ],
                       ),
@@ -96,25 +124,33 @@ class _QuestionBattleState extends State<QuestionBattle> {
                               fontWeight: FontWeight.bold),
                         ),
                       ),
-                          buttonAnswer('Đáp án 1'),
-                          buttonAnswer('Đáp án 2'),
-                          buttonAnswer('Đáp án 3'),
-                          buttonAnswer('Đáp án 4')
-                    ]),)
-                  ),
+                      buttonAnswer('Đáp án 1'),
+                      buttonAnswer('Đáp án 2'),
+                      buttonAnswer('Đáp án 3'),
+                      buttonAnswer('Đáp án 4')
+                    ]),
+                  )),
                   Container(
-                    margin: EdgeInsets.fromLTRB(10, 0, 10, 5),
-                child:
-                Row(
-                children: [
-                Expanded(child: Row(children: [
-                  Text(
-                    'Thời gian : 30s',
-                     style: TextStyle(fontSize: 20),
-                      )
-                ],)),
-               IconButton(onPressed: (){}, icon: Icon(Icons.info_sharp,size: 40,))
-              ],))
+                      margin: EdgeInsets.fromLTRB(10, 0, 10, 5),
+                      child: Row(
+                        children: [
+                          Expanded(
+                              child: Row(
+                            children: [
+                              Text(
+                                'Thời gian : 30s',
+                                style: TextStyle(fontSize: 20),
+                              )
+                            ],
+                          )),
+                          IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.info_sharp,
+                                size: 40,
+                              ))
+                        ],
+                      ))
                 ],
               ),
             )));
