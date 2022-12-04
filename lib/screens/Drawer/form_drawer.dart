@@ -1,10 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:home_page/screens/TabBar/battleHistory.dart';
+import 'package:home_page/components/Layout.dart';
 import 'package:home_page/screens/TabBar/history.dart';
 import 'package:home_page/screens/TabBar/pageRank.dart';
-import 'package:home_page/screens/Login/form_login_signup.dart';
-import 'package:home_page/screens/Login/page_OTP.dart';
 import 'package:home_page/screens/TabBar/presonRank.dart';
 import 'package:home_page/screens/TabBar/putMoney.dart';
 import 'package:home_page/screens/TabBar/ranking.dart';
@@ -19,53 +18,76 @@ class PageDrawer extends StatefulWidget {
 }
 
 class _PageDrawerState extends State<PageDrawer> {
+  final _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
+     final _login =  _auth.currentUser;
+    final userDB = FirebaseFirestore.instance.collection('users')
+    .where('email',isEqualTo: _login!.email)
+    .snapshots();
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
           DrawerHeader(
             decoration: BoxDecoration(color: Colors.blue),
-            child: Column(children: [
-              Row(
-                children: [Icon(Icons.account_circle,size: 60,), 
-                  Column(
+            child: StreamBuilder<QuerySnapshot>(
+              stream: userDB,
+              builder: (context, snapshot) {
+                var user = snapshot.data!.docs;
+                Rank().setRank(user[0]['rankScore']);
+                return Column(children: [
+                  Row(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: Row(
-                          children: [
-                            Text("Quang Thieu Em",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                          ],
-                        ),
+                      if(user[0]['userImages'].toString()=='null')
+                        CircleAvatar(child: Text(user[0]['name'].toString().substring(0,1).toUpperCase(),
+                        style: TextStyle(fontSize: 25)),)
+                      else  Icon(Icons.account_circle,size: 60,), 
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Row(
+                              children: [
+                                Text(user[0]['name'].toString(),textAlign: TextAlign.left,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                              ],
+                            ),
+                          ),
+                           Padding(
+                             padding: const EdgeInsets.only(right: 75,left: 10),
+                             child: Row(
+                              children: [
+                                Text("Cấp ${Level().setLevel(user[0]['exp'])}",style: TextStyle(fontSize: 15),),
+                              ],
+                          ),
+                           ),
+                        ],
                       ),
-                       Padding(
-                         padding: const EdgeInsets.only(right: 75),
-                         child: Row(
-                          children: [
-                            Text("Cấp 10",style: TextStyle(fontSize: 15),),
-                          ],
-                      ),
-                       ),
                     ],
                   ),
-                ],
-              ),
-               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Row( 
-                      children:[
-                   Padding(padding: EdgeInsets.only(left: 10),
-                   child: Text('Rank : ',style: TextStyle(fontSize: 18),)),
-                  Image(image:  AssetImage('acssets/Rank/RankBac.png'),
-                  width: MediaQuery.of(context).size.width/5.5,),
-                  ])),
-                  Text('Điểm : 1995',style: TextStyle(fontSize: 15),)
-                  ])
-            ]),
+                   Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Row( 
+                          children:[
+                       Padding(padding: EdgeInsets.only(left: 10),
+                       child: Text('Rank : ',style: TextStyle(fontSize: 18),)),
+                      if(user[0]['rankScore']==0)
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 20, 20, 20),
+                          child: Text('Chưa có Rank',style: TextStyle(fontSize: 16),),
+                        )
+                      else
+                        Image(image:  AssetImage('acssets/Rank/${user[0]['rank'].toString()}'),
+                      width: MediaQuery.of(context).size.width/5.5,),
+                      ])),
+                      Text('Điểm : ' + user[0]['rankScore'].toString(),style: TextStyle(fontSize: 15),)
+                      ])
+                ]);
+              }
+            ),
           ),
           ListTile(
             leading: const Icon(Icons.home),

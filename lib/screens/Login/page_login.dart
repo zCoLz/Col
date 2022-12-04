@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:home_page/components/Layout.dart';
+import 'package:home_page/model/dbContext.dart';
 import 'package:home_page/screens/Login/form_login_signup.dart';
 import 'package:home_page/screens/Login/page_forgetpass.dart';
 
@@ -117,9 +118,11 @@ class _LoginPageState extends State<LoginPage> {
                             try {
                              
                               final _user =  _auth.signInWithEmailAndPassword(email: txtEmail.text, password: txtPass.text);
-                                 _auth.userChanges().listen((event) {
+                                 _auth.userChanges().listen((event) async {
                                 if(event != null)
                                 {
+                                  final user=  _auth.currentUser;
+                                  await fireDb().createUser(user!.displayName.toString(),user.email.toString(),user.photoURL.toString(),user.uid.toString(),);
                                   txtEmail.clear();
                                   txtPass.clear();
                                   final snackbar = SnackBar(content: Text('Đăng nhập thành công'));
