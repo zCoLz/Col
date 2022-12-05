@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:home_page/screens/home_cart.dart';
 import 'package:home_page/screens/home_notifications.dart';
@@ -21,8 +22,10 @@ class _HomeState extends State<Home> {
   ];
   final PageStorageBucket _bucket = PageStorageBucket();
   Widget currentScreen = HomePage();
+  
   @override
   Widget build(BuildContext context) {
+   
     return Scaffold(
       body: PageStorage(
         child: currentScreen,

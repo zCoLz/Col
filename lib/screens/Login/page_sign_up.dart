@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:home_page/components/Layout.dart';
+import 'package:home_page/model/dbContext.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -15,6 +16,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
+    
     return Container(
       decoration: Layout().background_image,
       child: Scaffold(
@@ -92,6 +94,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   padding: const EdgeInsets.only(top: 10),
                                   child: TextFormField(
                                     controller: txtEmail,
+                                    keyboardType: TextInputType.emailAddress,
                                     style: TextStyle(
                                         fontSize: 20, color: Colors.black),
                                     decoration: InputDecoration(
@@ -105,6 +108,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   padding: const EdgeInsets.only(top: 10.0),
                                   child: TextFormField(
                                     controller: txtPass,
+                                    obscureText: true,
                                     style: TextStyle(
                                         fontSize: 20, color: Colors.black),
                                     decoration: InputDecoration(
@@ -129,19 +133,35 @@ class _SignUpPageState extends State<SignUpPage> {
                                   child: Padding(
                                     padding: const EdgeInsets.only(top: 15),
                                     child: ElevatedButton(
-                                        onPressed: () async {
+                                        onPressed: () async{
+                                          if(txtEmail.text==''||txtPass.text==''){
+                                            final snackBar = SnackBar(
+                                                content:
+                                                    Text('Không được bỏ trống Email và Password'));
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(snackBar);
+                                          }
+                                          else{
+                                            var check =  await _auth.fetchSignInMethodsForEmail(txtEmail.text);
+                                           if(check.contains('password')){
+                                               final snackBar = SnackBar(
+                                                  content: Text('Tài Khoản Này đã tồn tại'));
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(snackBar);
+                                           }
+                                           else{
                                           try {
-                                            final newUser = _auth
-                                                .createUserWithEmailAndPassword(
-                                                    email: txtEmail.text,
-                                                    password: txtPass.text);
+                                            final newUser =_auth
+                                            .createUserWithEmailAndPassword(email:txtEmail.text , password: txtPass.text)
+                                            ;
                                             if (newUser != null) {
+                                              //final user=  _auth.currentUser;
+                                              
                                               Navigator.pop(context,
                                                   'Đăng Ký Thành Công!');
                                             } else {
                                               final snackBar = SnackBar(
-                                                  content: Text(
-                                                      'Tài Khoản Này Không Hợp Lệ'));
+                                                  content: Text('Tài Khoản Này Không Hợp Lệ'));
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(snackBar);
                                             }
@@ -152,7 +172,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(snackBar);
                                           }
-                                        },
+                                          }}}
+                                        ,
                                         child: Text(
                                           "Đăng ký",
                                           style: TextStyle(fontSize: 20),
