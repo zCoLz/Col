@@ -122,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                                 if(event != null)
                                 {
                                   final user=  _auth.currentUser;
-                                  await fireDb().createUser(user!.displayName.toString(),user.email.toString(),user.photoURL.toString(),user.uid.toString(),);
+                                  await fireDb().createUser(user!.displayName.toString(),user.email.toString(),user.uid.toString(),);
                                   txtEmail.clear();
                                   txtPass.clear();
                                   final snackbar = SnackBar(content: Text('Đăng nhập thành công'));
