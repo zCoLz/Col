@@ -46,21 +46,54 @@ class fireDb{
      int number = objectname.nextInt(1000);
      var newRoom = {
         'id' : number,
-        'player 1' : {
+        'player_1' : {
            'email' : user['email'],
            'name' : user['name'],
+           'userImages' : user['userImages'],
            'score' : 0
             },
-         'player 2' : {
+            'player_2' : {
            'email' : '',
            'name' : '',
+           'userImages' : '',
            'score' : 0
          },
-        'created' : user['created']
+        'created' : DateTime.now()
      };
     await FirebaseFirestore.instance.collection('room').doc(number.toString()).set(newRoom);
     return number;
   }
+  joinRoom(int id,var user)async{
+    var user_2 ={
+    'player_2' : {
+           'email' : user['email'],
+           'name' : user['name'],
+           'userImages' : user['userImages'],
+           'score' : 0
+         },
+    };
+    await FirebaseFirestore.instance.collection('room').doc(id.toString()).update(user_2);
+  }
+  leaveRoom(int? id)async{
+    var user={
+      'player_2' : {
+           'email' : '',
+           'name' : '',
+           'userImages' : '',
+           'score' : 0
+         },
+    };
+    await FirebaseFirestore.instance.collection('room').doc(id.toString()).update(user);
+  }
+  Future<bool> check(int? id)async{
+      String user = ''; 
+    await FirebaseFirestore.instance.collection('room').where('id',isEqualTo: id).get().then((value) => {
+        user = value.docs[0]['player_2'].toString()
+  });
+    if(user==null)
+      return false;
+    return true;
+    }
   Future<bool> getuser()async{
     final User? user_current = _auth.currentUser;
     String user = ''; 
