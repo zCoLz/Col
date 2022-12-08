@@ -27,7 +27,7 @@ class _PageProfileState extends State<PageProfile> {
       child: StreamBuilder<QuerySnapshot>(
         stream: user,//user,
         builder: (context, snapshot) {
-            _name.text = snapshot.data!.docs[0]['name'].toString();
+          if(snapshot.hasData){ _name.text = snapshot.data!.docs[0]['name'].toString();
             _account.text = snapshot.data!.docs[0]['email'].toString();
             var imgae = snapshot.data!.docs[0]['userImages'].toString();
           return Scaffold(
@@ -170,6 +170,9 @@ class _PageProfileState extends State<PageProfile> {
               //     )),
               //   ]),
               );
+        }else{
+          return Center(child: CircularProgressIndicator(),);
+        }
         }
       ),
     );

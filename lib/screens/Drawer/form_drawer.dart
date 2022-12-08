@@ -37,6 +37,7 @@ class _PageDrawerState extends State<PageDrawer> {
             child: StreamBuilder<QuerySnapshot>(
               stream: userDB,
               builder: (context, snapshot) {
+                if(snapshot.hasData){
                 var user = snapshot.data!.docs;
                 fireDb().setRank(user[0]['rankScore']);
                 fireDb().setLevel(user[0]['exp']);
@@ -97,6 +98,11 @@ class _PageDrawerState extends State<PageDrawer> {
                       Text('Điểm : ' + user[0]['rankScore'].toString(),style: TextStyle(fontSize: 15),)
                       ])
                 ]);
+              }else{
+                return Center(
+                    child: CircularProgressIndicator(),
+                  );
+              }
               }
             ),
           ),

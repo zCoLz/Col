@@ -18,18 +18,20 @@ class _listRoomState extends State<listRoom>{
   final _firestore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
-    Widget content(String title){
+    Widget content(String title, Function? on()){
       return  Container(
         width: MediaQuery.of(context).size.width/1.2,
         height: MediaQuery.of(context).size.width/10,
         margin: EdgeInsets.all(10),
-        child: TextButton(onPressed: (){}, child: Align(alignment: Alignment.centerLeft, child: Text(title,style: TextStyle(fontWeight: FontWeight.w600,color: Colors.black),),),),
+        child: TextButton(onPressed: on, child: Align(alignment: Alignment.centerLeft, child: Text(title,style: TextStyle(fontWeight: FontWeight.w600,color: Colors.black),),),),
         decoration: BoxDecoration(border: Border.all(width: 3)),
       );
     }           
       return StreamBuilder<QuerySnapshot>(
         stream: _firestore.collection('users').where('email',isEqualTo: _auth.currentUser!.email).snapshots(),
         builder: (context, snapshot) {
+          if(snapshot.hasData){
+          var user = snapshot.data!.docs;
           return Scaffold(
             appBar: AppBar(title: Text(''),
             leading: IconButton(onPressed: (){
@@ -53,25 +55,35 @@ class _listRoomState extends State<listRoom>{
                       child: Text('Danh sách phòng',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700),),
                       decoration: BoxDecoration(border: Border.all(width: 3)),
                     ),
-                    Container(
-                      width: MediaQuery.of(context).size.width/1.2,
-                      height: MediaQuery.of(context).size.height/2.3,
-                      child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          content('Phòng 1'),
-                          content('Phòng 2'),
-                          content('Phòng 3'),
-                          content('Phòng 4'),
-                          content('Phòng 5'),
-                          content('Phòng 6'),
-                          content('Phòng 7'),
-                          content('Phòng 8'),
-                          content('Phòng 9'),
-                        ],
-                      ),
+                    StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance.collection('room').where('player_1.email',isNotEqualTo: _auth.currentUser!.email).snapshots(),
+                      builder: (context, snapshot) {
+                        if(snapshot.hasData){
+                        return Container(
+                          width: MediaQuery.of(context).size.width/1.2,
+                          height: MediaQuery.of(context).size.height/2.3,
+                          child:ListView.builder(
+                            itemCount: snapshot.data!.docs.length,
+                            itemBuilder: (context, index) {
+                              var id = snapshot.data!.docs[index]['id'];
+                              return  content('Phòng ' + index.toString(), ()
+                              {
+                                var user_2 = {
+                                'email' : _auth.currentUser!.email,
+                                'name' : user[0]['name'],
+                                'userImages' : user[0]['userImages']
+                              };
+                                fireDb().joinRoom(id,user_2);
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>CreateRoom(id: id,user_two: user_2,)));
+                              }); 
+                            },
+                          )
+                        ,decoration: BoxDecoration(border: Border.all(width: 3)),);
+                      }else{
+                        return Center(child: CircularProgressIndicator(),);
+                      }
+                      }
                     )
-                    ,decoration: BoxDecoration(border: Border.all(width: 3)),)
                 ],),decoration: BoxDecoration(color: Colors.white,border: Border.all(width: 3)),
               ),Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -86,10 +98,10 @@ class _listRoomState extends State<listRoom>{
                     var user = {
                       'email' : _auth.currentUser!.email,
                       'name' : snapshot.data!.docs[0]['name'],
-                      'created' : DateTime.now()
+                      'userImages' : snapshot.data!.docs[0]['userImages']
                     };
                     var id = await fireDb().createRoom(user);
-                    Navigator.push(context,MaterialPageRoute(builder: (context) => CreateRoom(id: id.toString())));
+                    Navigator.push(context,MaterialPageRoute(builder: (context) => CreateRoom(id: id)));
                   }, 
                 child: Text('Tạo phòng',style: TextStyle(color: Colors.black,fontSize: 17,fontWeight: FontWeight.w600),),),
                 decoration: BoxDecoration(color: Colors.white,border: Border.all(width: 2),boxShadow: [BoxShadow(color: Colors.black,offset: Offset(3,3))]),),
@@ -120,6 +132,9 @@ class _listRoomState extends State<listRoom>{
                     Icon(Icons.info_sharp,size: 40,)
                   ],))]),
           ));
+        }else{
+          return Center(child: CircularProgressIndicator(),);
+        }
         }
       );
   }
