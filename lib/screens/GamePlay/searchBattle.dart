@@ -52,7 +52,7 @@ class _searchBattleState extends State<SearchBattle> {
               child: TextButton(
                 style: TextButton.styleFrom(foregroundColor: Colors.black),
               onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => QuestionBattle()));
+                //Navigator.push(context, MaterialPageRoute(builder: (context) => QuestionBattle()));
               }, 
             child: Text('Bắt đầu',style: TextStyle(color: Colors.black,fontSize: 17,fontWeight: FontWeight.w600),),),
             decoration: BoxDecoration(color: Colors.white,border: Border.all(width: 2),boxShadow: [BoxShadow(color: Colors.black,offset: Offset(3,3))]),)

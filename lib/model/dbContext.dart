@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:home_page/components/levelDesign.dart';
 import 'package:home_page/model/level.dart';
 import 'package:home_page/screens/GamePlay/listCreateRoom.dart';
+import 'package:http/http.dart';
 class DbContext{
     static List<Level> lstLevel = new List<Level>.filled(1, Level(level: LevelInfo(unClock: null,images: '',title: '')),growable: true);
     void createLevel(){
@@ -44,19 +45,24 @@ class fireDb{
   createRoom(var user)async{
      Random objectname = Random();
      int number = objectname.nextInt(1000);
+     while(await getRoom(number)){
+        number = objectname.nextInt(1000);
+     }
      var newRoom = {
         'id' : number,
         'player_1' : {
            'email' : user['email'],
            'name' : user['name'],
            'userImages' : user['userImages'],
-           'score' : 0
+           'score' : 0,
+           'ready' : false
             },
             'player_2' : {
            'email' : '',
            'name' : '',
            'userImages' : '',
-           'score' : 0
+           'score' : 0,
+           'ready' : false
          },
         'created' : DateTime.now()
      };
@@ -69,10 +75,25 @@ class fireDb{
            'email' : user['email'],
            'name' : user['name'],
            'userImages' : user['userImages'],
-           'score' : 0
+           'score' : 0,
+           'ready':false
          },
     };
     await FirebaseFirestore.instance.collection('rooms').doc(id.toString()).update(user_2);
+  }
+  getReady(int id,bool check)async{
+    if(check==false) check = true;
+    else check = false;
+     var ready = {
+        'player_2.ready' : check
+     };
+    await FirebaseFirestore.instance.collection('rooms').doc(id.toString()).update(ready);
+  }
+  getPlay(int id,bool check)async{
+    var ready = {
+        'player_1.ready' : check
+     };
+     await FirebaseFirestore.instance.collection('rooms').doc(id.toString()).update(ready);
   }
   leaveRoom(int? id)async{
     var user={
@@ -80,7 +101,8 @@ class fireDb{
            'email' : '',
            'name' : '',
            'userImages' : '',
-           'score' : 0
+           'score' : 0,
+           'ready' : false
          },
     };
     await FirebaseFirestore.instance.collection('rooms').doc(id.toString()).update(user);
@@ -94,6 +116,14 @@ class fireDb{
       return false;
     return true;
     }
+  Future<bool> getRoom(int id)async{
+    String romId = '';
+    await FirebaseFirestore.instance.collection('rooms').doc(id.toString()).get().then((value) => {
+      romId = value.data().toString()
+    });
+    if(romId=='null') return false;
+    return true;
+  }
   Future<bool> getuser()async{
     final User? user_current = _auth.currentUser;
     String user = ''; 
