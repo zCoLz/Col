@@ -23,7 +23,7 @@ class _CreateRoomState extends State<CreateRoom> {
       var images = '';
       var name='';
           return StreamBuilder<QuerySnapshot>(
-            stream: _firestore.collection('room').where('id',isEqualTo: widget.id).snapshots(),
+            stream: _firestore.collection('rooms').where('id',isEqualTo: widget.id).snapshots(),
             builder: (context, snapshot) {
               if(snapshot.hasData){
                 try{
@@ -62,16 +62,17 @@ class _CreateRoomState extends State<CreateRoom> {
                ],));
     }
     return StreamBuilder<QuerySnapshot>(
-      stream: _firestore.collection('room').where('id',isEqualTo: widget.id).snapshots(),
+      stream: _firestore.collection('rooms').where('id',isEqualTo: widget.id).snapshots(),
       builder: (context, snapshot) {
-        if(snapshot.hasError) return Center(child: CircularProgressIndicator(),);
+        if(snapshot.hasData){
+        try{
         return Scaffold(
           appBar: AppBar(
             title: Text(''),
             leading: IconButton(onPressed: ()async{ 
               if(snapshot.data!.docs[0]['player_1.email']==_auth.currentUser!.email){
                  Navigator.pop(context);
-                _firestore.collection('room').doc(widget.id.toString()).delete();
+                _firestore.collection('rooms').doc(widget.id.toString()).delete();
                 }
               if(snapshot.data!.docs[0]['player_2.email']==_auth.currentUser!.email){
                 Navigator.pop(context);
@@ -92,18 +93,20 @@ class _CreateRoomState extends State<CreateRoom> {
                 Text('00:00s',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
                 Image(image: AssetImage('acssets/randomQuestion.jpg'),width:MediaQuery.of(context).size.width/3,),
                 Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 100),child: Text('Ngẫu nhiên',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),),
-                Container(
-                  width: MediaQuery.of(context).size.width/3,
-                  height: MediaQuery.of(context).size.width/8.5,
-                  child: TextButton(
-                    style: TextButton.styleFrom(foregroundColor: Colors.black),
-                  onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => QuestionBattle()));
-                  }, 
-                child: Text('Bắt đầu',style: TextStyle(color: Colors.black,fontSize: 17,fontWeight: FontWeight.w600),),),
-                decoration: BoxDecoration(color: Colors.white,border: Border.all(width: 2),boxShadow: [BoxShadow(color: Colors.black,offset: Offset(3,3))]),)
+                roomReady(snapshot.data!.docs[0]['player_1.email'], snapshot.data!.docs[0]['player_2.email'])
           ],),),decoration: Layout().background_image,),
           );
+          }catch(e){
+            return Container(
+              width: MediaQuery.of(context).size.width,
+              child: Center(child: 
+                    ElevatedButton(onPressed: () => Navigator.pop(context),child: 
+                    Text('Chủ phòng đã thoát, Nhấn để thoát'),),
+                    ),decoration: Layout().background_image,
+            );
+          }
+          }
+          else return Center(child: CircularProgressIndicator());
       }
     );
     }
@@ -111,7 +114,7 @@ class _CreateRoomState extends State<CreateRoom> {
            var images = '';
             var name ='';
           return StreamBuilder<QuerySnapshot>(
-            stream: _firestore.collection('room').where('id',isEqualTo: widget.id).snapshots(),
+            stream: _firestore.collection('rooms').where('id',isEqualTo: widget.id).snapshots(),
             builder: (context, snapshot) {
               if(snapshot.hasData){
                 try{
@@ -154,7 +157,27 @@ class _CreateRoomState extends State<CreateRoom> {
               return Center(child: CircularProgressIndicator(),);
             }
             }
-          );
-          
+          );          
 }
+  Widget roomReady(String email_1,String email_2){
+    String button='';
+    bool flag = false;
+    Function() click=(){};
+    if(email_1==_auth.currentUser!.email){
+        button ='Bắt đầu';
+    }
+    else {
+      button = 'Sẵn sàng';
+    }
+    return Container(
+                  width: MediaQuery.of(context).size.width/3,
+                  height: MediaQuery.of(context).size.width/8.5,
+                  child: TextButton(
+                    style: TextButton.styleFrom(foregroundColor: Colors.black),
+                  onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> QuestionBattle()));
+                  }, 
+                child: Text(button,style: TextStyle(color: Colors.black,fontSize: 17,fontWeight: FontWeight.w600),),),
+                decoration: BoxDecoration(color: Colors.white,border: Border.all(width: 2),boxShadow: [BoxShadow(color: Colors.black,offset: Offset(3,3))]),);
+  }
 }

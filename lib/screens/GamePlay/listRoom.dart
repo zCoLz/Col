@@ -56,7 +56,7 @@ class _listRoomState extends State<listRoom>{
                       decoration: BoxDecoration(border: Border.all(width: 3)),
                     ),
                     StreamBuilder<QuerySnapshot>(
-                      stream: FirebaseFirestore.instance.collection('room').where('player_1.email',isNotEqualTo: _auth.currentUser!.email).snapshots(),
+                      stream: FirebaseFirestore.instance.collection('rooms').where('player_1.email',isNotEqualTo: _auth.currentUser!.email).snapshots(),
                       builder: (context, snapshot) {
                         if(snapshot.hasData){
                         return Container(
@@ -66,7 +66,7 @@ class _listRoomState extends State<listRoom>{
                             itemCount: snapshot.data!.docs.length,
                             itemBuilder: (context, index) {
                               var id = snapshot.data!.docs[index]['id'];
-                              return  content('Phòng ' + index.toString(), ()
+                              return  content('Phòng ' + id.toString(), ()
                               {
                                 var user_2 = {
                                 'email' : _auth.currentUser!.email,
