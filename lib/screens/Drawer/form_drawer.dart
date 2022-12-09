@@ -171,11 +171,18 @@ class _PageDrawerState extends State<PageDrawer> {
             leading: const Icon(Icons.logout),
             title: Text("Đăng xuất"),
             onTap: () {
-              FirebaseAuth.instance.signOut();
+              try{
+              FirebaseAuth.instance.signOut().then((value){
+                final snackbar = SnackBar(content: Text('Đăng xuất thành công'));
+                                  ScaffoldMessenger.of(context).showSnackBar(snackbar);
+              });
               /* Navigator.of(context).popUntil((route) => route.isFirst);
               Navigator.push(context,
                   MaterialPageRoute(builder: ((context) => HomePage_Login_SignUp()))); */
                   Navigator.pushNamedAndRemoveUntil(context, 'welcome', (route) => false);
+              }catch(e){
+                Center(child: CircularProgressIndicator(),);
+              }
             },
           ),
         ],

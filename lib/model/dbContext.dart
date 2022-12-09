@@ -60,7 +60,7 @@ class fireDb{
          },
         'created' : DateTime.now()
      };
-    await FirebaseFirestore.instance.collection('room').doc(number.toString()).set(newRoom);
+    await FirebaseFirestore.instance.collection('rooms').doc(number.toString()).set(newRoom);
     return number;
   }
   joinRoom(int id,var user)async{
@@ -72,7 +72,7 @@ class fireDb{
            'score' : 0
          },
     };
-    await FirebaseFirestore.instance.collection('room').doc(id.toString()).update(user_2);
+    await FirebaseFirestore.instance.collection('rooms').doc(id.toString()).update(user_2);
   }
   leaveRoom(int? id)async{
     var user={
@@ -83,11 +83,11 @@ class fireDb{
            'score' : 0
          },
     };
-    await FirebaseFirestore.instance.collection('room').doc(id.toString()).update(user);
+    await FirebaseFirestore.instance.collection('rooms').doc(id.toString()).update(user);
   }
   Future<bool> check(int? id)async{
       String user = ''; 
-    await FirebaseFirestore.instance.collection('room').where('id',isEqualTo: id).get().then((value) => {
+    await FirebaseFirestore.instance.collection('rooms').where('id',isEqualTo: id).get().then((value) => {
         user = value.docs[0]['player_2'].toString()
   });
     if(user==null)
