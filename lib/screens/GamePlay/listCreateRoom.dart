@@ -1,14 +1,13 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:home_page/components/Layout.dart';
 import 'package:home_page/model/dbContext.dart';
 import 'package:home_page/screens/GamePlay/questionBattle.dart';
+import 'package:home_page/screens/GamePlay/questionBattle_2.dart';
 class CreateRoom extends StatefulWidget {
-  CreateRoom({Key? key,this.id,this.user_two}):super(key: key);
-  final int? id;
+  CreateRoom({Key? key,required this.id,this.user_two}):super(key: key);
+  final int id;
   var user_one;
   var user_two;
   @override
@@ -160,24 +159,63 @@ class _CreateRoomState extends State<CreateRoom> {
           );          
 }
   Widget roomReady(String email_1,String email_2){
-    String button='';
-    bool flag = false;
-    Function() click=(){};
-    if(email_1==_auth.currentUser!.email){
-        button ='Bắt đầu';
+    String button = '';
+    bool page=false;
+    return StreamBuilder<QuerySnapshot>(
+      stream: _firestore.collection('rooms').where('id',isEqualTo: widget.id).snapshots(),
+      builder: (context, snapshot) {
+        try{
+        bool check =  snapshot.data!.docs[0]['player_2.ready'];
+        bool play = snapshot.data!.docs[0]['player_1.ready'];
+        try{
+        if(play && check && email_2==_auth.currentUser!.email) 
+        Future.delayed(Duration.zero, () {
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>QuestionBattle_2(id: widget.id,)));
+        });
+        }catch(e){
+          print(e);
+        }
+        if(email_1==_auth.currentUser!.email){
+          button ='Bắt đầu';
     }
     else {
-      button = 'Sẵn sàng';
+      if(snapshot.data!.docs[0]['player_2.ready']==false)
+          button = 'Sẵn sàng';
+      else button = 'Đã sẳn sàng';
     }
-    return Container(
-                  width: MediaQuery.of(context).size.width/3,
-                  height: MediaQuery.of(context).size.width/8.5,
-                  child: TextButton(
-                    style: TextButton.styleFrom(foregroundColor: Colors.black),
-                  onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> QuestionBattle()));
-                  }, 
-                child: Text(button,style: TextStyle(color: Colors.black,fontSize: 17,fontWeight: FontWeight.w600),),),
-                decoration: BoxDecoration(color: Colors.white,border: Border.all(width: 2),boxShadow: [BoxShadow(color: Colors.black,offset: Offset(3,3))]),);
+        return Container(
+                      width: MediaQuery.of(context).size.width/3,
+                      height: MediaQuery.of(context).size.width/8.5,
+                      child: TextButton(
+                        style: TextButton.styleFrom(foregroundColor: Colors.black),
+                      onPressed: ()async{
+                       if(email_1==_auth.currentUser!.email && check){
+                           await fireDb().getPlay(widget.id,true);
+                       }
+                       else if(email_2==_auth.currentUser!.email){
+                        await fireDb().getReady(widget.id,check);
+                       }
+                       else{
+                        return showDialog(context: context, builder: (context){
+                          return AlertDialog(
+                                //title: Text("Save and Exit ?"),
+                                content: Text("Đối thủ chưa sẵn sàng"),
+                                actions: [
+                                  FloatingActionButton(
+                                    onPressed: () => Navigator.pop(context, false),
+                                    child: Center(child: Text('OK')),
+                                  ),
+                                ],
+                              );
+                        });
+                       }
+                      }, 
+                    child: Text(button,style: TextStyle(color: Colors.black,fontSize: 17,fontWeight: FontWeight.w600),),),
+                    decoration: BoxDecoration(color: Colors.white,border: Border.all(width: 2),boxShadow: [BoxShadow(color: Colors.black,offset: Offset(3,3))]),);
+      }catch(e){
+        return Center(child: CircularProgressIndicator(),);
+      }
+      }
+    );
   }
 }

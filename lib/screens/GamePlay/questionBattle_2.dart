@@ -6,14 +6,14 @@ import 'package:home_page/model/dbContext.dart';
 import 'package:home_page/screens/TabBar/battleHistory.dart';
 import 'package:home_page/screens/home.dart';
 
-class QuestionBattle extends StatefulWidget {
-  QuestionBattle({super.key,required this.id});
+class QuestionBattle_2 extends StatefulWidget {
+  QuestionBattle_2({super.key,required this.id});
   int id;
   @override
-  State<QuestionBattle> createState() => _QuestionBattleState();
+  State<QuestionBattle_2> createState() => _QuestionBattleState();
 }
 
-class _QuestionBattleState extends State<QuestionBattle> {
+class _QuestionBattleState extends State<QuestionBattle_2> {
   final _firestore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
