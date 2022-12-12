@@ -179,7 +179,7 @@ class _HomePageState extends State<HomePage> {
         }
         else{
           return Center(
-            child: Text('Có lỗi xảy ra'),
+            child:CircularProgressIndicator(),
           );
         }
     } ),
