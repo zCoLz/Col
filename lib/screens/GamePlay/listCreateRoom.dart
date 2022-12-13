@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:home_page/components/Layout.dart';
 import 'package:home_page/model/dbContext.dart';
-import 'package:home_page/screens/GamePlay/questionBattle.dart';
 import 'package:home_page/screens/GamePlay/questionBattle_2.dart';
 class CreateRoom extends StatefulWidget {
   CreateRoom({Key? key,required this.id,this.user_two}):super(key: key);
@@ -30,18 +29,29 @@ class _CreateRoomState extends State<CreateRoom> {
                 name = snapshot.data!.docs[0]['player_1.name'];
                  return Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          const Padding(
-                            padding: EdgeInsets.only(bottom: 10),
-                            child: Text('Chủ phòng',style: TextStyle(fontSize: 15),),
+                           Container(
+                            alignment: Alignment.center,
+                            width: MediaQuery.of(context).size.width/3,
+                             child: Padding(
+                              padding:const EdgeInsets.only(bottom: 10),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  const Text('Chủ phòng',style: TextStyle(fontSize: 18),),
+                                  Icon(Icons.military_tech,color: Colors.yellow[500],)
+                                ],
+                              ),
                           ),
+                           ),
                           if(images=='')
                              CircleAvatar(radius: 28,child: Text(name.substring(0,1).toUpperCase(),
                             style:const TextStyle(fontSize: 30),),)
                           else
                           CircleAvatar(backgroundImage: AssetImage('acssets/avatar/$images'),radius: 30,),
                           Padding(padding: const EdgeInsets.only(top: 15),
-                          child: Text(name,style: const TextStyle(fontSize: 17,fontWeight: FontWeight.w600),))],);
+                          child: Text(name,style: const TextStyle(fontSize: 20,fontWeight: FontWeight.w600),))],);
                 }catch(e){
                   return const Center(child: CircularProgressIndicator(),);
                 }
@@ -54,8 +64,8 @@ class _CreateRoomState extends State<CreateRoom> {
     }
     Widget avatarBattle(){
       return Container(
-              margin: const EdgeInsets.fromLTRB(0, 80, 0, 10),
-              width: MediaQuery.of(context).size.width/1.2, 
+              margin: const EdgeInsets.fromLTRB(0, 40, 0, 10),
+              width: MediaQuery.of(context).size.width/1.05, 
               child: Row(
               crossAxisAlignment:  CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -105,9 +115,12 @@ class _CreateRoomState extends State<CreateRoom> {
             height: MediaQuery.of(context).size.height,decoration: Layout().background_image,
             child: SingleChildScrollView(child: Column(
               children: <Widget>[
+                Container(
+                  margin: const EdgeInsets.only(top: 20),
+                  child: Text('ID phòng : ${widget.id}',style:const TextStyle(fontSize: 20,fontWeight: FontWeight.w600),)),
                 avatarBattle(),
                 //Text('00:00s',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
-                Image(image:const AssetImage('acssets/randomQuestion.jpg'),width:MediaQuery.of(context).size.width/2.5,),
+                Image(image:const AssetImage('acssets/randomQuestion.jpg'),width:MediaQuery.of(context).size.width/3,),
                 const Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 100),child: Text('Ngẫu nhiên',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),),
                 roomReady(snapshot.data!.docs[0]['player_1.email'], snapshot.data!.docs[0]['player_2.email'])
           ],),),),
@@ -145,30 +158,38 @@ class _CreateRoomState extends State<CreateRoom> {
                   }
                    return Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(ready,style: const TextStyle(fontSize: 15),textAlign: TextAlign.center,),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width/3,
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: Text(ready,style: const TextStyle(fontSize: 18),textAlign: TextAlign.center,),
+                            ),
                           ),
                           if(images=='')
-                              CircleAvatar(child: Text(name.substring(0,1).toUpperCase(),
-                            style: const TextStyle(fontSize: 25)),)
+                              CircleAvatar(radius: 28,child: Text(name.substring(0,1).toUpperCase(),
+                            style: const TextStyle(fontSize: 30)),)
                           else
                           CircleAvatar(backgroundImage: AssetImage('acssets/avatar/$images'),radius: 30,),
                           Padding(padding: const EdgeInsets.only(top: 15),
-                          child: Text(name,style: const TextStyle(fontSize: 17,fontWeight: FontWeight.w600),)),
+                          child: Text(name,style: const TextStyle(fontSize: 20,fontWeight: FontWeight.w600),)),
                           ],);
               }
             else{
               return Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          const Padding(
-                            padding: EdgeInsets.only(bottom: 10),
-                            child: Text('Trống',style: TextStyle(fontSize: 15),),
+                           Container(
+                            alignment: Alignment.center,
+                            width: MediaQuery.of(context).size.width/3,
+                             child: const Padding(
+                              padding: EdgeInsets.only(bottom: 10),
+                              child: Text('Đang chờ',style: TextStyle(fontSize: 18),),
                           ),
+                           ),
                           if(images=='')
-                            const CircleAvatar(backgroundImage: AssetImage('acssets/avatar/wait.png'),radius: 30,)
+                            const CircleAvatar(backgroundImage: AssetImage('acssets/avatar/waiting.gif'),radius: 30,)
                           else
                           CircleAvatar(backgroundImage: AssetImage('acssets/avatar/$images'),radius: 30,),
                           if(name=='')
@@ -225,6 +246,7 @@ class _CreateRoomState extends State<CreateRoom> {
                       onPressed: ()async{
                        if(email_1==_auth.currentUser!.email && check){
                            await fireDb().getPlay(widget.id,true);
+                           //Navigator.push(context, MaterialPageRoute(builder: (context)=>QuestionBattle(id: widget.id,)));
                        }
                        else if(email_2==_auth.currentUser!.email){
                         await fireDb().getReady(widget.id,check);
