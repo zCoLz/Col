@@ -64,13 +64,15 @@ class fireDb{
            'score' : 0,
            'ready' : false
          },
-        'created' : DateTime.now()
+        'created' : DateTime.now(),
+        'status' : 1
      };
     await FirebaseFirestore.instance.collection('rooms').doc(number.toString()).set(newRoom);
     return number;
   }
   joinRoom(int id,var user)async{
     var user_2 ={
+    'status': 2,
     'player_2' : {
            'email' : user['email'],
            'name' : user['name'],
@@ -97,6 +99,7 @@ class fireDb{
   }
   leaveRoom(int? id)async{
     var user={
+      'status' : 1,
       'player_2' : {
            'email' : '',
            'name' : '',

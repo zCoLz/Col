@@ -118,8 +118,8 @@ class _LoginPageState extends State<LoginPage> {
                             try {
                              
                               final _user =  _auth.signInWithEmailAndPassword(email: txtEmail.text, password: txtPass.text)
-                                .then((UserCredential) async{
-                                    final user=  _auth.currentUser;
+                                .then((value) async{
+                                  final user=  _auth.currentUser;
                                   await fireDb().createUser(user!.displayName.toString(),user.email.toString(),user.uid.toString(),);
                                   txtEmail.clear();
                                   txtPass.clear();
