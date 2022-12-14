@@ -1,7 +1,10 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:home_page/components/Layout.dart';
+import 'package:home_page/model/dbContext.dart';
 import 'package:home_page/screens/TabBar/history.dart';
 import 'package:home_page/screens/TabBar/pageRank.dart';
 import 'package:home_page/screens/TabBar/presonRank.dart';
@@ -23,7 +26,7 @@ class _PageDrawerState extends State<PageDrawer> {
   Widget build(BuildContext context) {
      final _login =  _auth.currentUser;
     final userDB = FirebaseFirestore.instance.collection('users')
-    .where('email',isEqualTo: _login!.email)
+    .where('email',isEqualTo: _auth.currentUser!.email)
     .snapshots();
     return Drawer(
       child: ListView(
@@ -34,15 +37,17 @@ class _PageDrawerState extends State<PageDrawer> {
             child: StreamBuilder<QuerySnapshot>(
               stream: userDB,
               builder: (context, snapshot) {
+                if(snapshot.hasData){
                 var user = snapshot.data!.docs;
-                Rank().setRank(user[0]['rankScore']);
+                fireDb().setRank(user[0]['rankScore']);
+                fireDb().setLevel(user[0]['exp']);
                 return Column(children: [
                   Row(
                     children: [
-                      if(user[0]['userImages'].toString()=='null')
+                      if(user[0]['userImages'].toString()=='')
                         CircleAvatar(child: Text(user[0]['name'].toString().substring(0,1).toUpperCase(),
                         style: TextStyle(fontSize: 25)),)
-                      else  Icon(Icons.account_circle,size: 60,), 
+                      else  CircleAvatar(backgroundImage: AssetImage('acssets/avatar/${user[0]['userImages']}'),), 
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -58,10 +63,17 @@ class _PageDrawerState extends State<PageDrawer> {
                              padding: const EdgeInsets.only(right: 75,left: 10),
                              child: Row(
                               children: [
-                                Text("Cấp ${Level().setLevel(user[0]['exp'])}",style: TextStyle(fontSize: 15),),
+                                Text("Cấp ${user[0]['level'].toString()}",style: TextStyle(fontSize: 15),),
                               ],
                           ),
                            ),
+                           Container(
+                            margin: EdgeInsets.only(top: 10,left: 10),
+                            width: MediaQuery.of(context).size.width/3,
+                            height: 14,
+                            child: Center(child: Text(user[0]['exp'].toString()/* +'/'+ fireDb().setExp(user[0]['level']).toString() */,style: TextStyle(fontSize: 12),)),
+                            decoration: BoxDecoration(border: Border.all(width: 1),borderRadius: BorderRadius.circular(10)),
+                           )
                         ],
                       ),
                     ],
@@ -86,6 +98,11 @@ class _PageDrawerState extends State<PageDrawer> {
                       Text('Điểm : ' + user[0]['rankScore'].toString(),style: TextStyle(fontSize: 15),)
                       ])
                 ]);
+              }else{
+                return Center(
+                    child: CircularProgressIndicator(),
+                  );
+              }
               }
             ),
           ),
@@ -154,11 +171,18 @@ class _PageDrawerState extends State<PageDrawer> {
             leading: const Icon(Icons.logout),
             title: Text("Đăng xuất"),
             onTap: () {
-              FirebaseAuth.instance.signOut();
+              try{
+              FirebaseAuth.instance.signOut().then((value){
+                final snackbar = SnackBar(content: Text('Đăng xuất thành công'));
+                                  ScaffoldMessenger.of(context).showSnackBar(snackbar);
+              });
               /* Navigator.of(context).popUntil((route) => route.isFirst);
               Navigator.push(context,
                   MaterialPageRoute(builder: ((context) => HomePage_Login_SignUp()))); */
                   Navigator.pushNamedAndRemoveUntil(context, 'welcome', (route) => false);
+              }catch(e){
+                Center(child: CircularProgressIndicator(),);
+              }
             },
           ),
         ],

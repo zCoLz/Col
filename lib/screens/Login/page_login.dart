@@ -117,23 +117,19 @@ class _LoginPageState extends State<LoginPage> {
                               else{
                             try {
                              
-                              final _user =  _auth.signInWithEmailAndPassword(email: txtEmail.text, password: txtPass.text);
-                                 _auth.userChanges().listen((event) async {
-                                if(event != null)
-                                {
+                              final _user =  _auth.signInWithEmailAndPassword(email: txtEmail.text, password: txtPass.text)
+                                .then((value) async{
                                   final user=  _auth.currentUser;
-                                  await fireDb().createUser(user!.displayName.toString(),user.email.toString(),user.photoURL.toString(),user.uid.toString(),);
+                                  await fireDb().createUser(user!.displayName.toString(),user.email.toString(),user.uid.toString(),);
                                   txtEmail.clear();
                                   txtPass.clear();
                                   final snackbar = SnackBar(content: Text('Đăng nhập thành công'));
                                   ScaffoldMessenger.of(context).showSnackBar(snackbar);
                                   Navigator.pushNamedAndRemoveUntil(context,'home', (route) => false);
-                                }
-                                else{
-                                  final snackBar = SnackBar(content: Text('Email hoặc mật khẩu không đúng',));
+                                }).onError((error, stackTrace){
+                                   final snackBar = SnackBar(content: Text('Email hoặc mật khẩu không đúng',));
                                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                }
-                              });
+                                });
                             }
                             catch(e)
                             {

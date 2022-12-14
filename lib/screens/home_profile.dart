@@ -20,15 +20,16 @@ class _PageProfileState extends State<PageProfile> {
   @override
   Widget build(BuildContext context) {
    final user = FirebaseFirestore.instance.collection('users')
-    .where('email',isEqualTo: _auth.currentUser!.email)
-    .snapshots();
+  .where('email',isEqualTo: _auth.currentUser!.email)
+  .snapshots();
     return Container(
       decoration: Layout().background_image,
       child: StreamBuilder<QuerySnapshot>(
-        stream: user,
+        stream: user,//user,
         builder: (context, snapshot) {
-            _name.text = snapshot.data!.docs[0]['name'].toString();
+          if(snapshot.hasData){ _name.text = snapshot.data!.docs[0]['name'].toString();
             _account.text = snapshot.data!.docs[0]['email'].toString();
+            var imgae = snapshot.data!.docs[0]['userImages'].toString();
           return Scaffold(
             backgroundColor: Colors.transparent,
               resizeToAvoidBottomInset: true,
@@ -42,56 +43,60 @@ class _PageProfileState extends State<PageProfile> {
               ),
               drawer: PageDrawer(),
               body: Center(
-                child: Container(
-                  child: Column(children: [
-                    Icon(
-                      Icons.account_circle,
-                      size: 60,
-                    ),
-                    Text(
-                      "Quang Thiếu U",
-                      style: TextStyle(fontSize: 30),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextField(
-                        controller: _name,
-                        keyboardType: TextInputType.text,
-                        style: TextStyle(fontSize: 20, color: Colors.black),
-                        decoration: InputDecoration(
-                            labelText: "Tên hiển thị",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            )),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Container(
+                    child: Column(children: [
+                     if(imgae=='')
+                      CircleAvatar(child: Text(snapshot.data!.docs[0]['name'].toString().substring(0,1).toUpperCase(),
+                        style: TextStyle(fontSize: 25)),)else
+                        CircleAvatar(backgroundImage: AssetImage('acssets/avatar/$imgae'),maxRadius: 30,)
+                      ,
+                      Text(
+                        _name.text,
+                        style: TextStyle(fontSize: 30),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextField(
-                        controller: _account,
-                        keyboardType: TextInputType.text,
-                        style: TextStyle(fontSize: 20, color: Colors.black),
-                        decoration: InputDecoration(
-                            labelText: "Tài khoản",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            )),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          controller: _name,
+                          keyboardType: TextInputType.text,
+                          style: TextStyle(fontSize: 20, color: Colors.black),
+                          decoration: InputDecoration(
+                              labelText: "Tên hiển thị",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              )),
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextField(
-                        controller: _pasword,
-                        keyboardType: TextInputType.text,
-                        style: TextStyle(fontSize: 20, color: Colors.black),
-                        decoration: InputDecoration(
-                            labelText: "Mật khẩu",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            )),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          controller: _account,
+                          keyboardType: TextInputType.text,
+                          style: TextStyle(fontSize: 20, color: Colors.black),
+                          decoration: InputDecoration(
+                              labelText: "Tài khoản",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              )),
+                        ),
                       ),
-                    )
-                  ]),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          controller: _pasword,
+                          keyboardType: TextInputType.text,
+                          style: TextStyle(fontSize: 20, color: Colors.black),
+                          decoration: InputDecoration(
+                              labelText: "Mật khẩu",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              )),
+                        ),
+                      )
+                    ]),
+                  ),
                 ),
               )
               //Column(children: [
@@ -165,6 +170,9 @@ class _PageProfileState extends State<PageProfile> {
               //     )),
               //   ]),
               );
+        }else{
+          return Center(child: CircularProgressIndicator(),);
+        }
         }
       ),
     );

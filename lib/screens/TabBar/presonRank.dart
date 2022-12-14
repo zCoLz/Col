@@ -20,6 +20,7 @@ class _PersonalRankState extends State<PresonalRank> {
     return StreamBuilder<QuerySnapshot>(
       stream: user_current,
       builder: (context, snapshot) {
+        try{
         final user = snapshot.data!.docs;
         return Container(
           decoration: Layout().background_image,
@@ -60,6 +61,9 @@ class _PersonalRankState extends State<PresonalRank> {
              ),
              ),
         );
+      }catch(e){
+        return Center(child: CircularProgressIndicator(),);
+      }
       }
     );
   }

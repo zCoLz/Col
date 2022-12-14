@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:home_page/components/Layout.dart';
+import 'package:home_page/model/dbContext.dart';
 import 'package:home_page/screens/Drawer/form_drawer.dart';
 
 class PageCart extends StatefulWidget {
@@ -192,7 +193,9 @@ class _PageCartState extends State<PageCart> {
                     ),
                     subtitle: const Text("số lượng: 100"),
                     trailing: IconButton(
-                        onPressed: (() {}), icon: Icon(Icons.add_circle,color: Colors.black,))),
+                        onPressed: (() {
+                          fireDb().setUserImage('minhdeptrai.jpg');
+                        }), icon: Icon(Icons.add_circle,color: Colors.black,))),
               ),
             ),
           ),
