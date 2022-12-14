@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:home_page/screens/GamePlay/difficult.dart';
-import 'package:home_page/screens/GamePlay/question.dart';
+import 'package:home_page/screens/GamePlay/quiz_question.dart';
 
 import '../model/dbContext.dart';
 import '../model/level.dart';
@@ -17,10 +17,10 @@ class _LevelStateState extends State<Level> {
   Widget build(BuildContext context) {
     var levelInfo = widget.level;
     return TextButton(
-        onPressed: (() {
+        onPressed: (() {  
           if (levelInfo.unClock == null) {
             Navigator.push(
-                context, MaterialPageRoute(builder: ((context) => Difficult())));
+                context, MaterialPageRoute(builder: ((context) => Difficult(idSubject: levelInfo.id,))));
           }
         }),
         child: Container(

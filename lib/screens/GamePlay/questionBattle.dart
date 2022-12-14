@@ -19,12 +19,11 @@ class _QuestionBattleState extends State<QuestionBattle> {
   Widget build(BuildContext context) {
     Widget buttonAnswer(String title) {
       return Container(
-        height: MediaQuery.of(context).size.height/16,
+        height: MediaQuery.of(context).size.height / 16,
         margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
         child: TextButton(
-          
             style: TextButton.styleFrom(
-                minimumSize: Size(MediaQuery.of(context).size.width/1.2, 35)),
+                minimumSize: Size(MediaQuery.of(context).size.width / 1.2, 35)),
             onPressed: () {
               Navigator.push(context,MaterialPageRoute(builder: (context) => BattleHistory()));
             },
@@ -33,9 +32,9 @@ class _QuestionBattleState extends State<QuestionBattle> {
               style: TextStyle(color: Colors.black, fontSize: 17),
             )),
         decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.8),
-            border: Border.all(width: 1),
-            ),
+          color: Colors.white.withOpacity(0.8),
+          border: Border.all(width: 1),
+        ),
       );
     }
     return StreamBuilder<QuerySnapshot>(

@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:home_page/components/Layout.dart';
-import 'package:home_page/screens/GamePlay/question.dart';
-
+import 'package:home_page/screens/GamePlay/quiz_question.dart';
+import 'package:home_page/model/Question_Model.dart';
 class Difficult extends StatefulWidget {
-  const Difficult({super.key});
-
+  const Difficult({super.key,required this.idSubject});
+  final int idSubject;
   @override
   State<Difficult> createState() => _DifficultState();
 }
 
 class _DifficultState extends State<Difficult> {
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -69,7 +70,7 @@ class _DifficultState extends State<Difficult> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Question()));
+                                      builder: (context) => Questions(idSubject: widget.idSubject,level: 1,)));
                             },
                             child: Text(
                               'Dễ',
@@ -98,7 +99,7 @@ class _DifficultState extends State<Difficult> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Question()));
+                                      builder: (context) => Questions(idSubject: widget.idSubject,level: 2,)));
                             },
                             child: Text(
                               'Trung bình',
@@ -127,7 +128,7 @@ class _DifficultState extends State<Difficult> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Question()));
+                                      builder: (context) => Questions(idSubject: widget.idSubject,level: 3,) ));
                             },
                             child: Text(
                               'Khó',
