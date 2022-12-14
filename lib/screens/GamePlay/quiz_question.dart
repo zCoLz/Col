@@ -26,7 +26,7 @@ class _QuestionsState extends State<Questions>
   double _headerHeight = 55.0;
   double _bodyHeight = 250.0;
 
-  final countTime = 600;
+  int countTime = 30;
   late AnimationController _controller;
   //Khai bao bien _currenIndex
   int _currentIndex =8;
@@ -40,7 +40,9 @@ class _QuestionsState extends State<Questions>
   int diem = 0;
   @override
   void dispose() {
+    // ignore: todo
     // TODO: implement dispose
+    _controller.dispose();
     super.dispose();
     if (_controller.isAnimating || _controller.isCompleted) {
       _controller.dispose();
@@ -123,7 +125,7 @@ class _QuestionsState extends State<Questions>
                   backgroundColor: Colors.transparent,
                   appBar: AppBar(
                     centerTitle: true,
-                    title: Text(
+                    title: const Text(
                       'Javascipt',
                       style: TextStyle(
                           color: Color.fromARGB(255, 55, 55, 55),
@@ -134,7 +136,7 @@ class _QuestionsState extends State<Questions>
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.chevron_left,
                           color: Colors.white,
                           size: 40,
@@ -162,7 +164,7 @@ class _QuestionsState extends State<Questions>
                                   children: [
                                     Expanded(
                                         child: Text(
-                                      'Điểm ${diem}',
+                                      'Điểm $diem',
                                       style: TextStyle(fontSize: 23),
                                     )),
                                     Time(
@@ -195,7 +197,7 @@ class _QuestionsState extends State<Questions>
                                 //     buttonAnswer('Đáp án 4')
                                 //   ],
                                 // ),
-                                Divider(
+                                const Divider(
                                   thickness: 2,
                                   color: Colors.black,
                                 ),
@@ -211,7 +213,7 @@ class _QuestionsState extends State<Questions>
                                         const EdgeInsets.fromLTRB(15, 0, 5, 0),
                                     child: Text(
                                       questions[_currentIndex].title,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           backgroundColor: Colors.white,
                                           fontSize: 20),
                                       softWrap: true,
@@ -233,15 +235,18 @@ class _QuestionsState extends State<Questions>
                                         if (_currentIndex == 9) {
                                           setState(() {
                                             isLock = true;
+
                                             showDialog(context: context, builder: (context)=> _showDiaglog(context));
                                           });
                                           
                                         } else {
                                           setState(() {
                                             isLock = true;
+                                            countTime = 30;
+                                            
                                           });
                                           Future.delayed(
-                                              Duration(
+                                              const Duration(
                                                   seconds: 1,
                                                   milliseconds: 500), () {
                                             setState(() {
@@ -249,6 +254,7 @@ class _QuestionsState extends State<Questions>
                                               isLock = false;
                                             });
                                           });
+                                          print(countTime);
                                         }
                                       },
                                       child: Container(
@@ -263,10 +269,10 @@ class _QuestionsState extends State<Questions>
                                                     ? Colors.green
                                                     : Colors.red
                                                 : Colors.white),
-                                        padding: EdgeInsets.all(15),
+                                        padding: const EdgeInsets.all(15),
                                         child: Text(
                                           questions[_currentIndex].answer[i],
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 15,
                                               fontWeight: FontWeight.bold),
                                         ),
@@ -288,19 +294,19 @@ class _QuestionsState extends State<Questions>
     return AlertDialog(
 
       content: Padding(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text("Điểm",style: TextStyle(fontSize: 30),),
+              const Text("Điểm",style: TextStyle(fontSize: 30),),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text('$diem/10',style: TextStyle(fontSize: 22),),
+                child: Text('$diem/10',style: const TextStyle(fontSize: 22),),
               ),
               ElevatedButton(onPressed: () {
                 Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LevelList()), (route) => false);
-              }, child: Text("Ok",style: TextStyle(fontSize: 15),))
+              }, child: const Text("Ok",style: TextStyle(fontSize: 15),))
             ]),
       ),
     );
@@ -327,12 +333,12 @@ class _QuestionsState extends State<Questions>
 
   Widget _buildBottomDrawerHead(BuildContext context) {
     return Container(
-        margin: EdgeInsets.fromLTRB(10, 0, 10, 5),
+        margin: const EdgeInsets.fromLTRB(10, 0, 10, 5),
         child: Row(
           children: [
             Expanded(
                 child: Row(
-              children: [
+              children: const [
                 Icon(
                   Icons.monetization_on_rounded,
                   color: Colors.yellow,
@@ -366,7 +372,7 @@ class _QuestionsState extends State<Questions>
                     }
                   });
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.info_sharp,
                   size: 40,
                 ))

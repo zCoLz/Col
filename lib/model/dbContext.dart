@@ -6,20 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:home_page/components/levelDesign.dart';
 import 'package:home_page/model/level.dart';
-import 'package:home_page/screens/GamePlay/listCreateRoom.dart';
-import 'package:http/http.dart';
 class DbContext{
-    static List<Level> lstLevel = new List<Level>.filled(1, Level(level: LevelInfo(unClock: null,images: '',title: '',id: 0)),growable: true);
-    void createLevel(){
-     lstLevel =[
-        Level(level: LevelInfo(unClock: null,images: 'level/title1.jpg', title: 'Ải 1',id: 2)),
-        Level(level: LevelInfo(unClock: null,images: 'level/randomQuestion.jpg', title: 'Ải 2',id: 3)),
-        Level(level: LevelInfo(unClock: Icons.lock_rounded,images: 'level/randomQuestion.jpg', title: 'Ải 3',id: 3)),
-        Level(level: LevelInfo(unClock: Icons.lock_rounded,images: 'level/randomQuestion.jpg', title: 'Ải 4',id: 4)),
-        Level(level: LevelInfo(unClock: Icons.lock_rounded,images: 'level/randomQuestion.jpg', title: 'Ải 5',id: 5)),
-        Level(level: LevelInfo(unClock: Icons.lock_rounded,images: 'level/randomQuestion.jpg', title: 'Ải 6',id: 6)),
-       ];
-      }
 }
 class fireDb{
   final _auth = FirebaseAuth.instance;
@@ -65,6 +52,7 @@ class fireDb{
            'ready' : false
          },
         'created' : DateTime.now(),
+        'chapter' : 1,
         'status' : 1
      };
     await FirebaseFirestore.instance.collection('rooms').doc(number.toString()).set(newRoom);
@@ -174,6 +162,7 @@ class fireDb{
         await _firestore.collection('users').doc(_auth.currentUser!.uid)
         .update(setLevel);
     }
+   
    /*  int setExp(int level){
       level= level + 1;
       double exp = (((level ^ 2) + level) / 2 * (100 - (level * 100)).abs()); 
