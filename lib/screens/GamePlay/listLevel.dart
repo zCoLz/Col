@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:home_page/components/Layout.dart';
-import 'package:home_page/components/home_page.dart';
 import 'package:home_page/model/dbContext.dart';
+import 'package:home_page/screens/home.dart';
 
 class LevelList extends StatefulWidget {
   LevelList({super.key});
@@ -19,6 +19,7 @@ class _LevelListStateState extends State<LevelList> {
             leading: IconButton(
                 onPressed: () {
                   Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: ((context) => Home())));
                 },
                 icon: Icon(
                   Icons.chevron_left,
@@ -29,7 +30,7 @@ class _LevelListStateState extends State<LevelList> {
                   padding: EdgeInsets.only(right: 15),
                   child: IconButton(
                       onPressed: () {},
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.power_settings_new,
                         size: 35,
                       )))
