@@ -1,3 +1,4 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -140,11 +141,23 @@ class _listRoomState extends State<listRoom>{
                          actions: [
                                     Column(
                                       children: [
-                                        TextField(
+                                        TextField(keyboardType: TextInputType.number,
                                           controller: txtSearchRoom,
                                           decoration: const InputDecoration(border: OutlineInputBorder(),),
                                         ),
                                         Center(child : ElevatedButton(onPressed: ()async{
+                                          try{
+                                          if(txtSearchRoom.text==''){
+                                            showDialog(context: context, builder: (context)=>
+                                            AlertDialog(
+                                              content: const Text('Vui lòng không bỏ trống'),
+                                              actions: [
+                                                TextButton(onPressed: (){
+                                                  Navigator.pop(context);
+                                                }, child: const Text('Ok'))
+                                              ],
+                                            ));
+                                          }else{
                                           var id =int.parse(txtSearchRoom.text);
                                           if(await fireDb().getRoom(id)){
                                             var user_2 = {
@@ -166,7 +179,18 @@ class _listRoomState extends State<listRoom>{
                                               ],
                                             ));
                                           }
-                                          
+                                          }}catch(e){
+                                            showDialog(context: context, builder: (context){
+                                              return AlertDialog(
+                                                content: Text('Có lỗi xảy ra'),
+                                                actions: [
+                                                  Center(child: ElevatedButton(onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },child: Text('Ok'),))
+                                                ],
+                                              );
+                                            });
+                                          }
                                         }, child: const Text('Tìm'))),
                                       ],
                                     )

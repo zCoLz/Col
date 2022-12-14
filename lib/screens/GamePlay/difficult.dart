@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:home_page/components/Layout.dart';
-import 'package:home_page/screens/GamePlay/question.dart';
-
+import 'package:home_page/screens/GamePlay/quiz_question.dart';
 class Difficult extends StatefulWidget {
-  Difficult({super.key,required this.id});
-  int id;
+  const Difficult({super.key,required this.idSubject});
+  final int idSubject;
   @override
   State<Difficult> createState() => _DifficultState();
 }
@@ -30,7 +29,7 @@ class _DifficultState extends State<Difficult> {
                   )),
             ),
             body: StreamBuilder<QuerySnapshot>(
-              stream: _firestore.collection('subjects').where('id',isEqualTo: widget.id).snapshots(),
+              stream: _firestore.collection('subjects').where('id',isEqualTo: widget.idSubject).snapshots(),
               builder: (context, snapshot) {
                 try{
                 return Column(
@@ -55,72 +54,85 @@ class _DifficultState extends State<Difficult> {
                             width: MediaQuery.of(context).size.width / 2.5,
                             height: MediaQuery.of(context).size.width / 2.5,
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(top: 30),
-                            child: Text(
-                              'Chọn cấp độ khó',
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 20, top: 50),
+                          width: MediaQuery.of(context).size.width / 2.7,
+                          height: MediaQuery.of(context).size.width / 8.5,
+                          decoration: BoxDecoration(
+                              color: Colors.blue,
+                              border: Border.all(width: 2),
+                              boxShadow: const [
+                                BoxShadow(
+                                    color: Colors.black, offset: Offset(3, 3))
+                              ]),
+                          child: TextButton(
+                            style: TextButton.styleFrom(
+                                foregroundColor: Colors.black),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Questions(idSubject: widget.idSubject,level: 1,)));
+                            },
+                            child: const Text(
+                              'Dễ',
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20),
+                                  color: Colors.white,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600)
                             ),
                           ),
-                          Container(
-                            margin: const EdgeInsets.only(bottom: 20, top: 50),
-                            width: MediaQuery.of(context).size.width / 2.7,
-                            height: MediaQuery.of(context).size.width / 8.5,
-                            decoration: BoxDecoration(
-                                color: Colors.blue,
-                                border: Border.all(width: 2),
-                                boxShadow: const [
-                                  BoxShadow(
-                                      color: Colors.black, offset: Offset(3, 3))
-                                ]),
-                            child: TextButton(
-                              style: TextButton.styleFrom(
-                                  foregroundColor: Colors.black),
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Question()));
-                              },
-                              child: const Text(
-                                'Dễ',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w600),
-                              ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 20, top: 20),
+                          width: MediaQuery.of(context).size.width / 2.7,
+                          height: MediaQuery.of(context).size.width / 8.5,
+                          decoration: BoxDecoration(
+                              color: Colors.blue,
+                              border: Border.all(width: 2),
+                              boxShadow: const [
+                                BoxShadow(
+                                    color: Colors.black, offset: Offset(3, 3))
+                              ]),
+                          child: TextButton(
+                            style: TextButton.styleFrom(
+                                foregroundColor: Colors.black),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Questions(idSubject: widget.idSubject,level: 2,)));
+                            },
+                            child: const Text(
+                              'Trung bình',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600),
                             ),
                           ),
-                          Container(
-                            margin: const EdgeInsets.only(bottom: 20, top: 20),
-                            width: MediaQuery.of(context).size.width / 2.7,
-                            height: MediaQuery.of(context).size.width / 8.5,
-                            decoration: BoxDecoration(
-                                color: Colors.blue,
-                                border: Border.all(width: 2),
-                                boxShadow: const [
-                                  BoxShadow(
-                                      color: Colors.black, offset: Offset(3, 3))
-                                ]),
-                            child: TextButton(
-                              style: TextButton.styleFrom(
-                                  foregroundColor: Colors.black),
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Question()));
-                              },
-                              child: const Text(
-                                'Trung bình',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w600),
-                              ),
+                        ),
+                        /* Container(
+                          margin: const EdgeInsets.only(bottom: 20, top: 20),
+                          width: MediaQuery.of(context).size.width / 2.7,
+                          height: MediaQuery.of(context).size.width / 8.5,
+                          child: TextButton(
+                            style: TextButton.styleFrom(
+                                foregroundColor: Colors.black),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Questions(idSubject: widget.idSubject,level: 3,) ));
+                            },
+                            child: const Text(
+                              'Khó',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600),
                             ),
-                          ),
+                          ),), */
                           Container(
                             margin: const EdgeInsets.only(bottom: 20, top: 20),
                             width: MediaQuery.of(context).size.width / 2.7,
@@ -137,9 +149,9 @@ class _DifficultState extends State<Difficult> {
                                   foregroundColor: Colors.black),
                               onPressed: () {
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Question()));
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Questions(idSubject: widget.idSubject,level: 3,) ));
                               },
                               child: const Text(
                                 'Khó',

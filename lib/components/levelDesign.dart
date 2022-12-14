@@ -23,11 +23,12 @@ class _LevelStateState extends State<Level> {
         return StreamBuilder<QuerySnapshot>(
           stream: _firestore.collection('users').where('email',isEqualTo: _auth.currentUser!.email).snapshots(),
           builder: (context, snapshot) {
+            try{
             return TextButton(
                 onPressed: (() {
                   if (snapshot.data!.docs[0]['chapter']>widget.index) {
                     Navigator.push(
-                        context, MaterialPageRoute(builder: ((context) => Difficult(id: subject[widget.index]['id'],))));
+                        context, MaterialPageRoute(builder: ((context) => Difficult(idSubject: subject[widget.index]['id'],))));
                   }
                   else{
                     showDialog(context: context, builder: (context) => AlertDialog(
@@ -72,6 +73,9 @@ class _LevelStateState extends State<Level> {
                     ],
                   ),
                 ));
+          }catch(e){
+            return Center(child: CircularProgressIndicator(),);
+          }
           }
         );
             }catch(e){

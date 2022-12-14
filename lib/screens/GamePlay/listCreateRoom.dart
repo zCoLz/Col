@@ -12,6 +12,7 @@ class CreateRoom extends StatefulWidget {
   @override
   State<CreateRoom> createState() => _CreateRoomState();
 }
+
 class _CreateRoomState extends State<CreateRoom> {
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
