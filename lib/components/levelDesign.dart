@@ -74,7 +74,7 @@ class _LevelStateState extends State<Level> {
                   ),
                 ));
           }catch(e){
-            return Center(child: CircularProgressIndicator(),);
+            return const Center(child: CircularProgressIndicator(),);
           }
           }
         );

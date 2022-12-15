@@ -279,7 +279,8 @@ class _QuestionBattleState_2 extends State<QuestionBattle_2>
                                         onTap: () {
                                           if (isLock) return;
                                           questions[_currentIndex].key == i
-                                              ? seconds>=25 ? diem+=20 
+                                              ? seconds>=27 ? diem+=25
+                                              : seconds>=25 ? diem+=20 
                                               : seconds>=20 ? diem+=15
                                               : diem+=10
                                               : null;

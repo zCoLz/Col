@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:home_page/components/Layout.dart';
 import 'package:bottom_drawer/bottom_drawer.dart';
 import 'package:home_page/model/Question_Model.dart';
+import 'package:home_page/model/dbContext.dart';
 import 'package:home_page/screens/GamePlay/difficult.dart';
 import 'package:home_page/screens/GamePlay/listLevel.dart';
 
@@ -27,7 +28,7 @@ class _QuestionsState extends State<Questions>
   int countTime = 30;
   late AnimationController _controller;
   //Khai bao bien _currenIndex
-  int _currentIndex = 8;
+  int _currentIndex = 0;
   bool flag = false;
   BottomDrawerController bottom = BottomDrawerController();
   final _firestore = FirebaseFirestore.instance;
@@ -67,7 +68,7 @@ class _QuestionsState extends State<Questions>
         });
       }
     });
-    //_startTimer();
+    _startTimer();
     //_controller.forward(); //start time
   }
 
@@ -337,7 +338,7 @@ class _QuestionsState extends State<Questions>
                   )));
         });
   }
-
+ bool unclock = false;
   Widget _showDiaglog(BuildContext context) {
     String score = 'Điểm của bạn ';
     return StreamBuilder(
@@ -347,7 +348,15 @@ class _QuestionsState extends State<Questions>
         if(snapshot.data!.docs[0]['highScore']<diem)
           {
             score = 'Điểm cao nhất ';
+            fireDb().setHighScore(diem);
           }
+        if(snapshot.data!.docs[0]['chapter']== widget.idSubject-1 && diem>0){
+            int chapter = snapshot.data!.docs[0]['chapter'];
+            fireDb().unClockChapter(++chapter);
+            setState(() {
+              unclock=true;
+            });
+        }
         return AlertDialog(
           content: Padding(
             padding: const EdgeInsets.all(20),
@@ -368,11 +377,25 @@ class _QuestionsState extends State<Questions>
                   ),
                   ElevatedButton(
                       onPressed: () {
+                        if(unclock){
+                          showDialog(context: context, builder: (context)=>AlertDialog(
+                            title: const Text('Chúc mừng bạn đã mở khóa màn tiếp theo'),
+                            actions: [
+                            Center(child: TextButton(onPressed: (){
+                                Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (context) => const LevelList()),
+                            (route) => false);
+                              }, child: const Text('OK'))
+                          )],
+                          )
+                        );
+                        }else{
                         Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(builder: (context) => const LevelList()),
                             (route) => false);
-                      },
+                      }},
                       child: const Text(
                         "Ok",
                         style: TextStyle(fontSize: 15),
