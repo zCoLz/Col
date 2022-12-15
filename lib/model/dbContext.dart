@@ -25,15 +25,16 @@ class fireDb{
         'money':0,
         'rankScore' : 0,
         'rank' : '',
-        'level' : fireDb().setLevel(0)
+        'level' : fireDb().setLevel(0),
+        'chapter' : 1,
       };
       await FirebaseFirestore.instance.collection('users').doc(user!.uid).set(newUser);}
   }
   createRoom(var user)async{
      Random objectname = Random();
-     int number = objectname.nextInt(1000);
+     int number = objectname.nextInt(10000);
      while(await getRoom(number)){
-        number = objectname.nextInt(1000);
+        number = objectname.nextInt(10000);
      }
      var newRoom = {
         'id' : number,
@@ -52,7 +53,6 @@ class fireDb{
            'ready' : false
          },
         'created' : DateTime.now(),
-        'chapter' : 1,
         'status' : 1
      };
     await FirebaseFirestore.instance.collection('rooms').doc(number.toString()).set(newRoom);
