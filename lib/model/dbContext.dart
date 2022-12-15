@@ -162,7 +162,18 @@ class fireDb{
         await _firestore.collection('users').doc(_auth.currentUser!.uid)
         .update(setLevel);
     }
-   
+   setHighScore(int score)async{
+      var user ={
+          'highScore' : score
+      };
+      await _firestore.collection('users').doc(_auth.currentUser!.uid).update(user);
+   }
+   unClockChapter(int chapter)async{
+    var user = {
+      'chapter' : chapter
+    };
+    await _firestore.collection('users').doc(_auth.currentUser!.uid).update(user);
+   }
    /*  int setExp(int level){
       level= level + 1;
       double exp = (((level ^ 2) + level) / 2 * (100 - (level * 100)).abs()); 

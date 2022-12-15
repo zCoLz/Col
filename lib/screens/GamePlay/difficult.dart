@@ -40,7 +40,7 @@ class _DifficultState extends State<Difficult> {
                       child: Text(
                         'Chủ đề :  ${snapshot.data!.docs[0]['title']}',
                         style:
-                            TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                            const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                       ),
                     ),
                     Container(
