@@ -369,6 +369,7 @@ class _CreateRoomState extends State<CreateRoom> {
                         for (int i = 0; i < 10; i++) {
                             int random = r.nextInt(list.length);
                             lst.add(list.elementAt(random));
+                            list.removeAt(random);
                         }}
                     try {
                       if (play &&

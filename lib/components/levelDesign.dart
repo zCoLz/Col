@@ -23,7 +23,7 @@ class _LevelStateState extends State<Level> {
         return StreamBuilder<QuerySnapshot>(
           stream: _firestore.collection('users').where('email',isEqualTo: _auth.currentUser!.email).snapshots(),
           builder: (context, snapshot) {
-            try{
+            if(snapshot.hasData){
             return TextButton(
                 onPressed: (() {
                   if (snapshot.data!.docs[0]['chapter']>widget.index) {
@@ -73,13 +73,13 @@ class _LevelStateState extends State<Level> {
                     ],
                   ),
                 ));
-          }catch(e){
-            return const Center(child: CircularProgressIndicator(),);
+          }else{
+              return Container();
           }
           }
         );
             }catch(e){
-              return const Center(child: CircularProgressIndicator(),);
+              return const Center(/* child: CircularProgressIndicator(), */);
             }
       }
     );

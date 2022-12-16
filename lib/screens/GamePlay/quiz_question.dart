@@ -8,6 +8,7 @@ import 'package:home_page/model/Question_Model.dart';
 import 'package:home_page/model/dbContext.dart';
 import 'package:home_page/screens/GamePlay/difficult.dart';
 import 'package:home_page/screens/GamePlay/listLevel.dart';
+import 'package:home_page/screens/home.dart';
 
 class Questions extends StatefulWidget {
   const Questions({Key? key, required this.idSubject, required this.level})
@@ -90,8 +91,8 @@ class _QuestionsState extends State<Questions>
               context: context, builder: (context) => _showDiaglog(context));
         }));
       } else {
+        timer!.cancel();
         setState(() {
-          timer!.cancel();
           isLock = true;
         });
         Future.delayed(const Duration(seconds: 1, milliseconds: 500), () {
@@ -131,7 +132,7 @@ class _QuestionsState extends State<Questions>
     } */
 
     return StreamBuilder(
-        stream: snapshots,
+        stream: snapshots.take(10),
         builder: (context, snapshot) {
           //Neu co du lieu co loi
           if (snapshot.hasError) {
@@ -161,16 +162,33 @@ class _QuestionsState extends State<Questions>
                   backgroundColor: Colors.transparent,
                   appBar: AppBar(
                     centerTitle: true,
-                    title: const Text(
-                      'Javascipt',
-                      style: TextStyle(
+                    title: Text(
+                      snapshot.data!.docs[0]['subject.title'],
+                      style: const TextStyle(
                           color: Color.fromARGB(255, 55, 55, 55),
                           fontSize: 30,
                           fontWeight: FontWeight.bold),
                     ),
                     leading: IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
+                        onPressed: () async{
+                          timer!.cancel();
+                          bool? result = await showDialog(context: context, builder: (context){
+                            return AlertDialog(
+                              title: const Text('Đang tạm dừng'),
+                              content: const Text('Bạn có muốn thoát ra không ?'),
+                              actions: [
+                                TextButton(onPressed: (){
+                                  Navigator.pushAndRemoveUntil(context,
+                                  MaterialPageRoute(builder: (context)=>const LevelList()), (route) => false);
+                                }, child:const Text('Có')),
+                                TextButton(onPressed: (){
+                                  Navigator.pop(context);
+                                }, child: const Text('Không')),
+                              ],
+                            );
+                            }
+                            );
+                            if(result==null) _startTimer();
                         },
                         icon: const Icon(
                           Icons.chevron_left,
@@ -199,16 +217,25 @@ class _QuestionsState extends State<Questions>
                                 children: [
                                   Expanded(
                                       child: Text(
-                                    'Điểm $diem',
+                                    'Điểm : $diem',
                                     style: const TextStyle(fontSize: 23),
                                   )),
                                   /* Time(
                                       animation:
                                           StepTween(begin: countTime, end: 0)
                                               .animate(_controller)) */
-                                  Text(
-                                    'Thời gian : $seconds s',
-                                    style: const TextStyle(fontSize: 25),
+                                  Row(
+                                    children: [
+                                      const Text('Thời gian : ',style: TextStyle(fontSize: 25),),
+                                      SizedBox(
+                                        width: MediaQuery.of(context).size.width/13,
+                                        child: Text(
+                                          '$seconds',
+                                          style: const TextStyle(fontSize: 25),textAlign: TextAlign.right,
+                                        ),
+                                      ),
+                                      const Text(' s',style: TextStyle(fontSize: 25),)
+                                    ],
                                   )
                                 ],
                               ),
@@ -350,7 +377,7 @@ class _QuestionsState extends State<Questions>
             score = 'Điểm cao nhất ';
             fireDb().setHighScore(diem);
           }
-        if(snapshot.data!.docs[0]['chapter']== widget.idSubject-1 && diem>0){
+        if(snapshot.data!.docs[0]['chapter']== widget.idSubject-1 && diem>150){
             int chapter = snapshot.data!.docs[0]['chapter'];
             fireDb().unClockChapter(++chapter);
             setState(() {
@@ -404,7 +431,7 @@ class _QuestionsState extends State<Questions>
           ),
         );
       }catch(e){
-        return Center(child: CircularProgressIndicator(),);
+        return const Center(child: CircularProgressIndicator(),);
       }
       }
     );
@@ -499,7 +526,7 @@ class _QuestionsState extends State<Questions>
   }
 
   Widget _buildBottomDrawerBody(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: _bodyHeight,
       child: SingleChildScrollView(
