@@ -182,11 +182,11 @@ class _listRoomState extends State<listRoom>{
                                           }}catch(e){
                                             showDialog(context: context, builder: (context){
                                               return AlertDialog(
-                                                content: Text('Có lỗi xảy ra'),
+                                                content: const Text('Có lỗi xảy ra'),
                                                 actions: [
                                                   Center(child: ElevatedButton(onPressed: () {
                                                     Navigator.pop(context);
-                                                  },child: Text('Ok'),))
+                                                  },child: const Text('Ok'),))
                                                 ],
                                               );
                                             });

@@ -110,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                             //     MaterialPageRoute(
                             //         builder: (context) => Home()));
                              if(txtEmail.text==''||txtPass.text==''){
-                                 final snackBar = SnackBar(backgroundColor: Colors.white,content: Text('Không được bỏ trống email và password',
+                                 const snackBar = SnackBar(backgroundColor: Colors.white,content: Text('Không được bỏ trống email và password',
                                  style: TextStyle(fontSize: 18,color: Colors.red,fontWeight: FontWeight.w500),));
                                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                               }
@@ -123,11 +123,13 @@ class _LoginPageState extends State<LoginPage> {
                                   await fireDb().createUser(user!.displayName.toString(),user.email.toString(),user.uid.toString(),);
                                   txtEmail.clear();
                                   txtPass.clear();
-                                  final snackbar = SnackBar(content: Text('Đăng nhập thành công'));
+                                  const snackbar = SnackBar(content: Text('Đăng nhập thành công'));
                                   ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                                  Navigator.pushNamedAndRemoveUntil(context,'home', (route) => false);
+                                  setState(() {
+                                    Navigator.pushNamedAndRemoveUntil(context,'home', (route) => false);
+                                  });
                                 }).onError((error, stackTrace){
-                                   final snackBar = SnackBar(content: Text('Email hoặc mật khẩu không đúng',));
+                                   const snackBar = SnackBar(content: Text('Email hoặc mật khẩu không đúng',));
                                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                 });
                             }
