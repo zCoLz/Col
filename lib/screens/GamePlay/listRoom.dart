@@ -6,6 +6,7 @@ import 'package:home_page/components/Layout.dart';
 import 'package:home_page/model/dbContext.dart';
 import 'package:home_page/screens/GamePlay/listCreateRoom.dart';
 import 'package:home_page/screens/GamePlay/searchBattle.dart';
+import 'package:home_page/screens/home.dart';
 
 class listRoom extends StatefulWidget{
     listRoom({super.key});
@@ -46,7 +47,8 @@ class _listRoomState extends State<listRoom>{
               backgroundColor: Colors.transparent,
               appBar: AppBar(title: Text(''),
               leading: IconButton(onPressed: (){
-                Navigator.pop(context);
+                Navigator.pushAndRemoveUntil(context,
+                MaterialPageRoute(builder: (context)=>Home()), (route) => false);
               }, icon: Icon(Icons.chevron_left,size: 40,),),
               actions: [
                  Padding(padding: EdgeInsets.only(right:15), child:

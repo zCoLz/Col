@@ -140,6 +140,7 @@ class _QuestionBattleState_2 extends State<QuestionBattle_2>
                 child: Scaffold(
                     backgroundColor: Colors.transparent,
                     appBar: AppBar(
+                      automaticallyImplyLeading: false,
                       centerTitle: true,
                       title: const Text(
                         'Đối kháng',
@@ -148,7 +149,7 @@ class _QuestionBattleState_2 extends State<QuestionBattle_2>
                             fontSize: 30,
                             fontWeight: FontWeight.bold),
                       ),
-                      leading: IconButton(
+                      /* leading: IconButton(
                           onPressed: () async {
                             try {
                               Future.delayed(Duration.zero, () async {
@@ -168,7 +169,7 @@ class _QuestionBattleState_2 extends State<QuestionBattle_2>
                             Icons.chevron_left,
                             color: Colors.white,
                             size: 40,
-                          )),
+                          )), */
                     ),
                     body: Column(
                       children: <Widget>[
