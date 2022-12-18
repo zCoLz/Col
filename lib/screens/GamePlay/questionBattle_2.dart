@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:home_page/components/Layout.dart';
 import 'package:home_page/model/Question_Model.dart';
 import 'package:home_page/model/dbContext.dart';
-import 'package:home_page/screens/TabBar/battleHistory.dart';
+import 'package:home_page/screens/GamePlay/battleResult_1.dart';
+import 'package:home_page/screens/GamePlay/battleResult_2.dart';
 
 class QuestionBattle_2 extends StatefulWidget {
   QuestionBattle_2({super.key, required this.id, required this.listQuestions});
@@ -25,7 +26,7 @@ class _QuestionBattleState_2 extends State<QuestionBattle_2>
   List<Question> questions = [];
   List<Question> randomQuestion = [];
   //Khai bao bien _currenIndex
-  int _currentIndex = 0;
+  int _currentIndex = 9;
   bool isLock = false;
   int diem = 0;
   @override
@@ -72,10 +73,10 @@ class _QuestionBattleState_2 extends State<QuestionBattle_2>
         setState(() {
           isLock = true;
         });
-        /* Future.delayed(const Duration(seconds: 1),(() {
-          showDialog(
-              context: context, builder: (context) => _showDiaglog(context));
-        })); */
+        fireDb().getReady(widget.id, true);
+        Future.delayed(const Duration(seconds: 1),() => 
+        Navigator.push(context, 
+        MaterialPageRoute(builder: (context)=>BattleResult_2(id: widget.id,))));
       } else {
         timer!.cancel();
         setState(() {
@@ -177,7 +178,7 @@ class _QuestionBattleState_2 extends State<QuestionBattle_2>
                           width: MediaQuery.of(context).size.width,
                           margin: const EdgeInsets.fromLTRB(20, 10, 20, 5),
                           child: Column(children: [
-                            Container(
+                            SizedBox(
                               width: MediaQuery.of(context).size.width,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -291,11 +292,14 @@ class _QuestionBattleState_2 extends State<QuestionBattle_2>
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.only(bottom: 10),
-                                      child: Text('${_currentIndex+1}/10',style: TextStyle(fontSize: 20),),
+                                      child: Text('${_currentIndex+1}/10',style: const TextStyle(fontSize: 20),),
                                     ),
                                     Container(
-                                      //height: MediaQuery.of(context).size.height/5.2,
-                                      width: 350,
+                                      constraints: BoxConstraints(
+                                        maxHeight: MediaQuery.of(context).size.height/4.3
+                                      ),
+                                      //height: MediaQuery.of(context).size.height/4.3,
+                                      width: 400,
                                       padding: const EdgeInsets.only(
                                           top: 20, bottom: 20),
                                       decoration: BoxDecoration(
@@ -319,7 +323,7 @@ class _QuestionBattleState_2 extends State<QuestionBattle_2>
                                     SizedBox(
                                       height:
                                           MediaQuery.of(context).size.height /
-                                              2.5,
+                                              2.6,
                                       child: SingleChildScrollView(
                                         child: Column(
                                           children: [
@@ -346,16 +350,16 @@ class _QuestionBattleState_2 extends State<QuestionBattle_2>
                                                                     ? diem += 15
                                                                     : diem += 10
                                                         : null;
+                                                      fireDb().updateScore(widget.id, 2, diem);
                                                     _controller.repeat();
                                                     if (_currentIndex == 9) {
                                                       timer!.cancel();
-                                                      setState(() {
-                                                        isLock = true;
-                                                        /* showDialog(
-                                                  context: context,
-                                                  builder: (context) =>
-                                                      _showDiaglog(context)); */
+                                                      setState((){
+                                                        isLock = true;        
                                                       });
+                                                      fireDb().getReady(widget.id, true);
+                                                      Future.delayed(const Duration(seconds: 1),() => 
+                                                        Navigator.push(context, MaterialPageRoute(builder: (context)=>BattleResult_2(id: widget.id,))));
                                                     } else {
                                                       timer!.cancel();
                                                       setState(() {

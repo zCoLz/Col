@@ -24,7 +24,7 @@ class _BattleHistoryState extends State<BattleHistory> {
       });
     }
     return Container(
-      margin: EdgeInsets.only(top: 30),
+      margin: const EdgeInsets.only(top: 30),
       width: MediaQuery.of(context).size.width / 3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -33,7 +33,7 @@ class _BattleHistoryState extends State<BattleHistory> {
             padding: const EdgeInsets.only(bottom: 15),
             child: Text(
               'Điểm : $score',
-              style: TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 18),
             ),
           ),
           Icon(
@@ -48,7 +48,7 @@ class _BattleHistoryState extends State<BattleHistory> {
             ),
           ),
           Text(
-            question,
+            'Rank',
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
           ),
           Padding(
@@ -89,7 +89,7 @@ class _BattleHistoryState extends State<BattleHistory> {
                 children: [
                   user(100, 'Nhựt Minh', '10/10', 1),
                   Image(
-                    image: AssetImage('acssets/vs.png'),
+                    image: const AssetImage('acssets/vs.png'),
                     width: MediaQuery.of(context).size.width / 6,
                   ),
                   user(60, 'Quang thieu Em', '6/10', 0)

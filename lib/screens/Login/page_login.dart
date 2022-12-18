@@ -116,7 +116,6 @@ class _LoginPageState extends State<LoginPage> {
                               }
                               else{
                             try {
-                             
                               final _user =  _auth.signInWithEmailAndPassword(email: txtEmail.text, password: txtPass.text)
                                 .then((value) async{
                                   final user=  _auth.currentUser;

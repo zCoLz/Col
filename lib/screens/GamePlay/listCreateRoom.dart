@@ -1,5 +1,5 @@
-import 'dart:math';
 
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +7,7 @@ import 'package:home_page/components/Layout.dart';
 import 'package:home_page/model/Question_Model.dart';
 import 'package:home_page/model/dbContext.dart';
 import 'package:home_page/screens/GamePlay/listRoom.dart';
+import 'package:home_page/screens/GamePlay/questionBattle.dart';
 import 'package:home_page/screens/GamePlay/questionBattle_2.dart';
 
 class CreateRoom extends StatefulWidget {
@@ -21,6 +22,7 @@ class CreateRoom extends StatefulWidget {
 class _CreateRoomState extends State<CreateRoom> {
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
+  List<Question> lst = [];
   @override
   Widget build(BuildContext context) {
     Widget player_one() {
@@ -129,10 +131,7 @@ class _CreateRoomState extends State<CreateRoom> {
                           if (snapshot.data!.docs[0]['player_1.email'] ==
                               _auth.currentUser!.email) {
                             Navigator.pop(context);
-                            _firestore
-                                .collection('rooms')
-                                .doc(widget.id.toString())
-                                .delete();
+                            fireDb().deleteRoom(widget.id,true);
                           }
                           if (snapshot.data!.docs[0]['player_2.email'] ==
                               _auth.currentUser!.email) {
@@ -214,7 +213,8 @@ class _CreateRoomState extends State<CreateRoom> {
                 decoration: Layout().background_image,
                 child: Center(
                   child: ElevatedButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () => Navigator.pushAndRemoveUntil(context, 
+                    MaterialPageRoute(builder: (context)=>listRoom()), (route) => false),
                     child: const Text('Chủ phòng đã thoát, Nhấn để thoát'),
                   ),
                 ),
@@ -336,17 +336,15 @@ class _CreateRoomState extends State<CreateRoom> {
           }
         });
   }
-
-  List<Question> lst = [];
+  List<Question> lstRandom=[];
   Widget roomReady(String email_1, String email_2) {
     String button = '';
-    bool page = false;
-    List<int> random = [];
     var ListQuestions = _firestore
         .collection('questions')
         //.where('level', isEqualTo: 1)
         //.where('subject.id', isEqualTo: widget.subject)
         .snapshots();
+        int count =0;
     return StreamBuilder(
         stream: ListQuestions,
         builder: (context, snapshot) {
@@ -363,31 +361,39 @@ class _CreateRoomState extends State<CreateRoom> {
                   try {
                     bool check = snapshot.data!.docs[0]['player_2.ready'];
                     bool play = snapshot.data!.docs[0]['player_1.ready'];
-                     if(lst.isEmpty && play){
-                        lst.clear();
+                     if(play && lst.isEmpty){
                         Random r = Random();
-                        for (int i = 0; i < 10; i++) {
+                        //lay cau hoi
+                        while(lst.length<10) {
                             int random = r.nextInt(list.length);
-                            lst.add(list.elementAt(random));
-                            list.removeAt(random);
-                        }}
-                    try {
-                      if (play &&
-                          check &&
-                          email_2 == _auth.currentUser!.email) {
-                        Future.delayed(Duration.zero, () {
-                          Navigator.push(
-                              context,
+                            if(list[random].level==1 && lst.length<4){
+                              lst.add(list.elementAt(random));
+                              list.removeAt(random);
+                          }else if(lst.length>=4 && lst.length<7 && list[random].level==2){
+                              lst.add(list.elementAt(random));
+                              list.removeAt(random);
+                          }else if(lst.length>=7 && list[random].level==3){
+                              lst.add(list.elementAt(random));
+                              list.removeAt(random);
+                          }
+                        }
+                        //dao thu tu cau hoi
+                        for(int i=0;i<10;i++){
+                          int random = r.nextInt(lst.length);
+                          lstRandom.add(lst.elementAt(random));
+                          lst.removeAt(random);
+                        }
+                        }
+                      if (play && check && email_2 == _auth.currentUser!.email){
+                        Future.delayed(const Duration(milliseconds: 500), () {
+                          Navigator.pushAndRemoveUntil(context,
                               MaterialPageRoute(
                                   builder: (context) => QuestionBattle_2(
                                         id: widget.id,
-                                        listQuestions: lst,
-                                      )));
+                                        listQuestions: lstRandom,
+                                      )), (route) => false);
                         });
                       }
-                    } catch (e) {
-                      print(e);
-                    }
                     if (email_1 == _auth.currentUser!.email) {
                       button = 'Bắt đầu';
                     } else {
@@ -403,7 +409,7 @@ class _CreateRoomState extends State<CreateRoom> {
                       decoration: BoxDecoration(
                           color: Colors.white,
                           border: Border.all(width: 2),
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(color: Colors.black, offset: Offset(3, 3))
                           ]),
                       child: TextButton(
@@ -412,6 +418,11 @@ class _CreateRoomState extends State<CreateRoom> {
                         onPressed: () async {
                           if (email_1 == _auth.currentUser!.email && check) {
                             await fireDb().getPlay(widget.id, true);
+                            await fireDb().createResult(widget.id);
+                            Future.delayed(const Duration(milliseconds: 500),(){
+                              Navigator.pushAndRemoveUntil(context,
+                              MaterialPageRoute(builder: (context)=>QuestionBattle_1(id: widget.id,listQuestions: lstRandom,)), (route) => false);
+                            });
                             //Navigator.push(context, MaterialPageRoute(builder: (context)=>QuestionBattle(id: widget.id,)));
                           } else if (email_2 == _auth.currentUser!.email) {
                             await fireDb().getReady(widget.id, check);
@@ -427,7 +438,7 @@ class _CreateRoomState extends State<CreateRoom> {
                                       Center(
                                           child: ElevatedButton(
                                         onPressed: () => Navigator.pop(context),
-                                        child: Text('OK'),
+                                        child: const Text('OK'),
                                       ))
                                     ],
                                   );

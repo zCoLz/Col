@@ -34,15 +34,15 @@ class _HistoryState extends State<History> {
                 color: Colors.white.withOpacity(0.8),
                 child: ListTile(
                     title: const Text('Thua',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.red)),
-                    leading: Padding(
-                      padding: const EdgeInsets.only(right: 0),
+                    leading: const Padding(
+                      padding: EdgeInsets.only(right: 0),
                       child: Icon(Icons.account_circle_rounded,size: 50,color: Colors.black, ),
                     ),
-                    subtitle: Text("14/11/2022"),
+                    subtitle: const Text("14/11/2022"),
                     trailing: IconButton(
                         onPressed: () {
                           Navigator.push(context, MaterialPageRoute(builder: ((context) => BattleHistory())));
-                        }, icon: Icon(Icons.arrow_forward,color: Colors.black))),
+                        }, icon: const Icon(Icons.arrow_forward,color: Colors.black))),
               ),
             ),
           ),
