@@ -77,7 +77,8 @@ int count=0;
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: const Text('Lịch sử đấu đối kháng'),
+          centerTitle: true,
+          title: const Text('Kết quả đối kháng'),
         ),
         backgroundColor: Colors.transparent,
         body: Container(
@@ -99,6 +100,7 @@ int count=0;
               }
               if(rooms['player_1.result']!=null && rooms['player_2.result']!=null && rooms['battling']){
                 var battle = {
+                  'id' : 0,
                   'created' : rooms['created'],
                   'player_1' :{
                     'email' : rooms['player_1.email'],
@@ -115,27 +117,28 @@ int count=0;
                 };
                 fireDb().createBattleHistories(battle);
                 String title='Chúc mừng bạn! Bạn đã thắng';
-                int money = 200;
-                int coin =400;
+                int money = 150;
+                int coin =300;
                 int rankScore =20;
                 int exp =200;
                 String rank= '+20';
-                Future.delayed(Duration.zero,(){
+                Future.delayed(Duration.zero,()async{
                   if(rooms['player_1.result']==0){
                     title = 'Bạn đã thua. Hãy cố gắng lần sau';
-                    money=100;
-                    coin=200;
+                    money=50;
+                    coin=100;
                     rankScore=-10;
                     exp = 100;
                     rank = '-10';
                 }else if(rooms['player_1.result']==2){
                   title = 'Hòa. Hãy cố nhé';
-                    money=150;
-                    coin=250;
+                    money=100;
+                    coin=200;
                     rankScore=10;
                     exp = 150;
                     rank = '+10';
                 }
+                  await fireDb().updateRankBattle(rankScore,money,coin,exp);
                   showDialog(context: context, builder: (context){
                     return AlertDialog(
                       title: Text(title),

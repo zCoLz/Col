@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:home_page/components/levelDesign.dart';
 import 'package:home_page/model/level.dart';
@@ -52,7 +53,7 @@ class fireDb{
            'score' : 0,
            'ready' : false
          },
-        'created' : DateTime.now(),
+        'created' : DateTime.now().toString().trim(),
         'status' : 1,
         'battling' : true
      };
@@ -216,6 +217,13 @@ class fireDb{
      await FirebaseFirestore.instance.collection('rooms').doc(id.toString()).update(player);
    }
    createBattleHistories(var battle)async{
+      int id=0;
+      await _firestore.collection('battleHistoreis').get().then((value){
+        if(value!=null){
+          id = value.docs.length;
+        }
+      });
+      battle['id']=id+1;
       await FirebaseFirestore.instance.collection('battleHistoreis').add(battle);
    }
    deleteRoom(int id, bool check)async{
@@ -228,6 +236,33 @@ class fireDb{
       await _firestore.collection('rooms').doc(id.toString()).update(status);
       }
    }
+   updateRankBattle( int rankScore, int money, int coin, int exp)async{
+    int expUser=0;
+    int rankScoreUser=0;
+    int coinUser=0;
+    int moneyUser=0;
+      await _firestore.collection('users').where('email',isEqualTo: _auth.currentUser!.email).get().then((value){
+      if(value!=null){
+        expUser= value.docs[0]['exp'];
+        coinUser = value.docs[0]['coins'];
+        moneyUser = value.docs[0]['money'];
+        rankScoreUser = value.docs[0]['rankScore'];
+      }});
+      if(rankScoreUser + rankScore <0){
+        rankScoreUser=0;
+      }else{
+        rankScoreUser+=rankScore;
+      }
+    var updateUser = {
+      'exp' : (expUser+ exp),
+      'coins' : (coinUser+coin),
+      'money' : (moneyUser + money),
+      'rankScore' : rankScoreUser
+    };
+    await _firestore.collection('users').doc(_auth.currentUser!.uid).update(updateUser);
+    setRank(updateUser['rankScore']!);
+    setLevel(updateUser['exp']!);
+    }
    /*  int setExp(int level){
       level= level + 1;
       double exp = (((level ^ 2) + level) / 2 * (100 - (level * 100)).abs()); 
