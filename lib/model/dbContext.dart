@@ -53,7 +53,8 @@ class fireDb{
            'ready' : false
          },
         'created' : DateTime.now(),
-        'status' : 1
+        'status' : 1,
+        'battling' : true
      };
     await FirebaseFirestore.instance.collection('rooms').doc(number.toString()).set(newRoom);
     return number;
@@ -84,6 +85,32 @@ class fireDb{
         'player_1.ready' : check
      };
      await FirebaseFirestore.instance.collection('rooms').doc(id.toString()).update(ready);
+  }
+  createResult(int id)async{
+    var result = {
+      'player_1.result' : null,
+      'player_2.result' : null
+    };
+    await FirebaseFirestore.instance.collection('rooms').doc(id.toString()).update(result);
+  }
+  updateResult(int id,int score_1, int score_2)async{
+    var user;
+    int result_1=0;
+    int result_2=0;
+    if(score_1>score_2){
+      result_1=1;
+    }
+    else if(score_1<score_2)
+      result_2=1;
+    else{
+      result_1=2;
+      result_2=2;
+    }
+     user ={
+        'player_1.result' : result_1,
+        'player_2.result' : result_2
+      };
+      await FirebaseFirestore.instance.collection('rooms').doc(id.toString()).update(user);
   }
   leaveRoom(int? id)async{
     var user={
@@ -173,6 +200,33 @@ class fireDb{
       'chapter' : chapter
     };
     await _firestore.collection('users').doc(_auth.currentUser!.uid).update(user);
+   }
+   updateScore(int id,int p,int score)async{
+    var player;
+    if(p==1){
+      player = {
+        'player_1.score' : score
+      };
+      }
+    else{
+      player = {
+        'player_2.score' : score
+      };  
+    }
+     await FirebaseFirestore.instance.collection('rooms').doc(id.toString()).update(player);
+   }
+   createBattleHistories(var battle)async{
+      await FirebaseFirestore.instance.collection('battleHistoreis').add(battle);
+   }
+   deleteRoom(int id, bool check)async{
+    if(check){
+      await _firestore .collection('rooms').doc(id.toString()).delete();
+      }else{
+        var status ={
+          'battling' : false
+        };
+      await _firestore.collection('rooms').doc(id.toString()).update(status);
+      }
    }
    /*  int setExp(int level){
       level= level + 1;

@@ -11,24 +11,28 @@ class Question {
   final String title;
   final List<dynamic> answer;
   final int key;
+  final int level;
 
   Question({
     required this.id,
     required this.title,
     required this.answer,
     required this.key,
+    required this.level
   });
   Question copyWith({
     int? id,
     String? title,
     List<dynamic>? answer,
     int? key,
+    int? level
   }) {
     return Question(
       id: id ?? this.id,
       title: title ?? this.title,
       answer: answer ?? this.answer,
       key: key ?? this.key,
+      level: level ?? this.level,
     );
   }
 
@@ -38,6 +42,7 @@ class Question {
       'title': title,
       'answer': answer,
       'key': key,
+      'level' : level
     };
   }
 
@@ -49,6 +54,7 @@ class Question {
         (map['answer'] as List<dynamic>),
       ),
       key: map['key'] as int,
+      level: map['level'] as int
     );
   }
   factory Question.fromQueryDoucumentSnapshot(QueryDocumentSnapshot snapshot){
@@ -64,7 +70,7 @@ class Question {
 
   @override
   String toString() {
-    return 'Question(id: $id, title: $title, answer: $answer, key: $key)';
+    return 'Question(id: $id, title: $title, answer: $answer, key: $key, level : $level)';
   }
 
   @override

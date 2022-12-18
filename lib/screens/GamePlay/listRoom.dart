@@ -33,8 +33,8 @@ class _listRoomState extends State<listRoom>{
         ),),),
         decoration: BoxDecoration(border: Border.all(width: 3)),
       );
-    }           
-      return StreamBuilder<QuerySnapshot>(
+    }  
+      return StreamBuilder(
         stream: _firestore.collection('users').where('email',isEqualTo: _auth.currentUser!.email).snapshots(),
         builder: (context, snapshot) {
           if(snapshot.hasData){
@@ -65,8 +65,11 @@ class _listRoomState extends State<listRoom>{
                         child: Text('Danh sách phòng',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700),),
                         decoration: BoxDecoration(border: Border.all(width: 3)),
                       ),
-                      StreamBuilder<QuerySnapshot>(
-                        stream: FirebaseFirestore.instance.collection('rooms').where('player_1.email',isNotEqualTo: _auth.currentUser!.email).snapshots(),
+                      StreamBuilder(
+                        stream: _firestore.collection('rooms')
+                              //.where('battling', isEqualTo: false)
+                              .where('player_1.email',isNotEqualTo: _auth.currentUser!.email)
+                              .snapshots(),
                         builder: (context, snapshot) {
                           if(snapshot.hasData){
                           return Container(
