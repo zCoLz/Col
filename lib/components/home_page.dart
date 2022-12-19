@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePage> {
                     padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
                     child: Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.energy_savings_leaf,
                           size: 35,
                           color: Colors.green,
@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                                 padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
                                 child: Row(
                                   children: [
-                                    Icon(
+                                    const Icon(
                                       Icons.diamond,
                                       size: 30,
                                       color: Colors.red,
@@ -88,7 +88,7 @@ class _HomePageState extends State<HomePage> {
                                     Text(
                                      // _login.email.toString(),
                                       snapshot.data!.docs[0]['coins'].toString(),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold),
                                     ),

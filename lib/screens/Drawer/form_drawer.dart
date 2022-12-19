@@ -40,8 +40,8 @@ class _PageDrawerState extends State<PageDrawer> {
               builder: (context, snapshot) {
                 if(snapshot.hasData){
                 var user = snapshot.data!.docs;
-                fireDb().setRank(user[0]['rankScore']);
-                fireDb().setLevel(user[0]['exp']);
+                /* fireDb().setRank(user[0]['rankScore']);
+                fireDb().setLevel(user[0]['exp']); */
                 return Column(children: [
                   Row(
                     children: [
@@ -79,25 +79,28 @@ class _PageDrawerState extends State<PageDrawer> {
                       ),
                     ],
                   ),
-                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Row( 
-                          children:[
-                       Padding(padding: EdgeInsets.only(left: 10),
-                       child: Text('Rank : ',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500),)),
-                      if(user[0]['rankScore']==0)
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 20, 20, 20),
-                          child: Text('Chưa có Rank',style: TextStyle(fontSize: 16),),
-                        )
-                      else
-                        Image(image:  AssetImage('acssets/Rank/${user[0]['rank'].toString()}'),
-                      width: MediaQuery.of(context).size.width/5.5,),
-                      ])),
-                      Text('Điểm : ' + user[0]['rankScore'].toString(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.w400),)
-                      ])
+                   Padding(
+                     padding: const EdgeInsets.only(top: 15),
+                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Row( 
+                            children:[
+                         Padding(padding: EdgeInsets.only(left: 10),
+                         child: Text('Rank : ',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500),)),
+                        if(user[0]['rankScore']==0)
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 20, 20, 20),
+                            child: Text('Chưa có Rank',style: TextStyle(fontSize: 16),),
+                          )
+                        else
+                          Image(image:  AssetImage('acssets/Rank/${user[0]['rank'].toString()}'),
+                        width: MediaQuery.of(context).size.width/5.5,),
+                        ])),
+                        Text('Điểm : ' + user[0]['rankScore'].toString(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.w400),)
+                        ]),
+                   )
                 ]);
               }else{
                 return Center(
