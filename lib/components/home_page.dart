@@ -72,48 +72,53 @@ class _HomePageState extends State<HomePage> {
                           size: 35,
                           color: Colors.green,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 200),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                                child: Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.diamond,
-                                      size: 30,
-                                      color: Colors.red,
-                                    ),
-                                    Text(
-                                     // _login.email.toString(),
-                                      snapshot.data!.docs[0]['coins'].toString(),
-                                      style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                  child: Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.diamond,
+                                        size: 30,
+                                        color: Colors.red,
+                                      ),
+                                      Text(
+                                       // _login.email.toString(),
+                                        snapshot.data!.docs[0]['coins'].toString(),
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.monetization_on_rounded,
-                                      size: 30,
-                                      color: Colors.yellow,
-                                    ),
-                                    Text(
-                                      snapshot.data!.docs[0]['money'].toString(),
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.monetization_on_rounded,
+                                        size: 30,
+                                        color: Colors.yellow,
+                                      ),
+                                      Text(
+                                        snapshot.data!.docs[0]['money'].toString(),
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         )
                       ],

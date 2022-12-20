@@ -153,6 +153,12 @@ class _SignUpPageState extends State<SignUpPage> {
                                           try {
                                             final newUser =_auth
                                             .createUserWithEmailAndPassword(email:txtEmail.text , password: txtPass.text)
+                                            .then((value)async {
+                                              if(value!=null){
+                                                 final user=  _auth.currentUser;
+                                                await fireDb().createUser(user!.email.toString());
+                                              }
+                                            })
                                             ;
                                             if (newUser != null) {
                                               //final user=  _auth.currentUser;
