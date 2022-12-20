@@ -29,7 +29,7 @@ class _QuestionsState extends State<Questions>
   final countTime = 600;
   late AnimationController _controller;
   //Khai bao bien _currenIndex
-  int _currentIndex =8;
+  int _currentIndex =0;
   bool flag = false;
   BottomDrawerController bottom = BottomDrawerController();
   final _firestore = FirebaseFirestore.instance;

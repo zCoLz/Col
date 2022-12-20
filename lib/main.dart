@@ -48,12 +48,12 @@ class MyApp extends StatelessWidget {
 //     return Scaffold(
 //       body: Center(child: ElevatedButton(onPressed: (() {
 //        _fireStore.collection('questions').add({
-//           'id': 71,
-//           'title': 'Chèn một dòng mới sau “Xin chao cac ban!”, bằng cách sử dụng lệnh nào sau đây để điền vào phần thiếu:\nint main() {\ncout << “Xin chao cac ban!\ncout << “I am learning C++”;\nreturn 0;\n }',
-//           'answer':['<<endl;','<<end;','<<and;','<<enld;'],
-//           'key':0,
-//           'subject':{'id':3,'title' :'C++'},
-//           'level':3
+//           'id': 132,
+//           'title': '',
+//           'answer':['orange','indigo','blue','yellow'],
+//           'key': 3,
+//           'subject':{'id':5,'title' :'Python'},
+//           'level': 3
 //        });
 //       }), child: Text("add"))),
 //     );
