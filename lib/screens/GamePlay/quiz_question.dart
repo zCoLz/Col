@@ -8,7 +8,6 @@ import 'package:home_page/model/Question_Model.dart';
 import 'package:home_page/model/dbContext.dart';
 import 'package:home_page/screens/GamePlay/difficult.dart';
 import 'package:home_page/screens/GamePlay/listLevel.dart';
-import 'package:home_page/screens/home.dart';
 
 class Questions extends StatefulWidget {
   const Questions({Key? key, required this.idSubject, required this.level})
@@ -366,22 +365,30 @@ class _QuestionsState extends State<Questions>
         });
   }
  bool unclock = false;
+ String title = '';
   Widget _showDiaglog(BuildContext context) {
     String score = 'Điểm của bạn ';
     return StreamBuilder(
       stream: _firestore.collection('users').where('email',isEqualTo: _auth.currentUser!.email).snapshots(),
       builder: (context, snapshot) {
         try{
+           int chapter;
         if(snapshot.data!.docs[0]['highScore']<diem)
           {
             score = 'Điểm cao nhất ';
             fireDb().setHighScore(diem);
           }
         if(snapshot.data!.docs[0]['chapter']== widget.idSubject-1 && diem>150){
-            int chapter = snapshot.data!.docs[0]['chapter'];
+            chapter = snapshot.data!.docs[0]['chapter'];
             fireDb().unClockChapter(++chapter);
-            setState(() {
+            setState(() async{
               unclock=true;
+              int count = await fireDb().countChapter();
+              if(chapter-1 == count){
+              title = 'Chúc mừng bạn đã qua màn. Màn tiếp theo sẽ được cập nhật trong tương lai';
+              }else{
+              title = 'Chúc mừng bạn đã mở khóa màn tiếp theo';
+              }
             });
         }
         return AlertDialog(
@@ -406,7 +413,7 @@ class _QuestionsState extends State<Questions>
                       onPressed: () {
                         if(unclock){
                           showDialog(context: context, builder: (context)=>AlertDialog(
-                            title: const Text('Chúc mừng bạn đã mở khóa màn tiếp theo'),
+                            title: Text(title),
                             actions: [
                             Center(child: TextButton(onPressed: (){
                                 Navigator.pushAndRemoveUntil(

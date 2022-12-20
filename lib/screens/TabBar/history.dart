@@ -94,7 +94,7 @@ class _HistoryState extends State<History> {
     )//
     ));
     }catch(e){
-      return Center(child: Text('Có lỗi xảy ra'),);
+      return Center(child: CircularProgressIndicator(),);
     }
     }
     );

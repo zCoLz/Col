@@ -12,7 +12,7 @@ class DbContext{
 class fireDb{
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
-  createUser(String name,String email,String uid)async{
+  createUser(String email)async{
       final User? user = _auth.currentUser;
       if(!await getuser()){
          final endIndex = email.indexOf("@", 0);
@@ -26,10 +26,11 @@ class fireDb{
         'money':0,
         'rankScore' : 0,
         'rank' : '',
-        'level' : fireDb().setLevel(0),
+        'level' :  1,
         'chapter' : 1,
       };
-      await FirebaseFirestore.instance.collection('users').doc(user!.uid).set(newUser);}
+      await FirebaseFirestore.instance.collection('users').doc(user!.uid).set(newUser);
+      }
   }
   createRoom(var user)async{
      Random objectname = Random();
@@ -201,6 +202,13 @@ class fireDb{
       'chapter' : chapter
     };
     await _firestore.collection('users').doc(_auth.currentUser!.uid).update(user);
+   }
+   Future<int> countChapter()async{
+    int chapter=0;
+    await _firestore.collection('subjects').get().then((value){
+      chapter = value.docs.length;
+    });
+    return chapter;
    }
    updateScore(int id,int p,int score)async{
     var player;
