@@ -13,7 +13,7 @@ class BattleResult_1 extends StatefulWidget {
 String battle = 'Thua';
 class _BattleResultState extends State<BattleResult_1> {
   final _fireStore = FirebaseFirestore.instance;
-  Widget user(int score, String name, int? result) {
+  Widget user(int score, String name,String image,int? result) {
     Color colors = Colors.red;
     if (result == 1) {
         colors = Colors.blue;
@@ -42,10 +42,29 @@ class _BattleResultState extends State<BattleResult_1> {
               style: const TextStyle(fontSize: 18),
             ),
           ),
-          Icon(
-            Icons.account_circle,
-            size: 80,
-          ),
+          if (image == '')
+                                        Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0, 5, 0, 10),
+                                            child: CircleAvatar(
+                                              radius: 25,
+                                              child: Text(
+                                                  name
+                                                      .substring(0, 1)
+                                                      .toUpperCase(),
+                                                  style: const TextStyle(
+                                                      fontSize: 30)),
+                                            ))
+                                      else
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              0, 5, 0, 10),
+                                          child: CircleAvatar(
+                                            backgroundImage: AssetImage(
+                                                'acssets/avatar/$image'),
+                                            radius: 30,
+                                          ),
+                                        ),
           Padding(
             padding: const EdgeInsets.only(top: 20, bottom: 20),
             child: Text(
@@ -184,12 +203,12 @@ int count=0;
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                        user(rooms['player_1.score'], rooms['player_1.name'],rooms['player_1.result']),
+                        user(rooms['player_1.score'], rooms['player_1.name'],rooms['player_1.userImages'],rooms['player_1.result']),
                       Image(
                         image: const AssetImage('acssets/vs.png'),
                         width: MediaQuery.of(context).size.width / 6,
                       ),
-                        user(rooms['player_2.score'], rooms['player_2.name'], rooms['player_2.result']),
+                        user(rooms['player_2.score'], rooms['player_2.name'],rooms['plaeyr_2.userImages'] ,rooms['player_2.result']),
                     ],
                   ),
                   if(rooms['player_2.ready'] || rooms['player_1.ready'])

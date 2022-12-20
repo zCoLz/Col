@@ -368,19 +368,26 @@ class _QuestionsState extends State<Questions>
  String title = '';
   Widget _showDiaglog(BuildContext context) {
     String score = 'Điểm của bạn ';
+     int money=20;
+      int coin=50;
+      int count=0;
     return StreamBuilder(
       stream: _firestore.collection('users').where('email',isEqualTo: _auth.currentUser!.email).snapshots(),
       builder: (context, snapshot) {
         try{
-           int chapter;
-        if(snapshot.data!.docs[0]['highScore']<diem)
+        int chapter;
+          if(snapshot.data!.docs[0]['highScore']<diem)
           {
             score = 'Điểm cao nhất ';
-            fireDb().setHighScore(diem);
+            money = 50;
+            coin = 100;
+           fireDb().setHighScore(diem);
           }
         if(snapshot.data!.docs[0]['chapter']== widget.idSubject-1 && diem>150){
             chapter = snapshot.data!.docs[0]['chapter'];
             fireDb().unClockChapter(++chapter);
+             money = 50;
+              coin = 100;
             setState(() async{
               unclock=true;
               int count = await fireDb().countChapter();
@@ -390,6 +397,10 @@ class _QuestionsState extends State<Questions>
               title = 'Chúc mừng bạn đã mở khóa màn tiếp theo';
               }
             });
+        }
+        if(count==0){
+          count++;
+          fireDb().storymode(money,coin);
         }
         return AlertDialog(
           content: Padding(
@@ -408,6 +419,18 @@ class _QuestionsState extends State<Questions>
                       '$diem',
                       style: const TextStyle(fontSize: 22),
                     ),
+                  ),
+                   Row(
+                    children: [
+                      Text(money.toString()),
+                      Icon(Icons.diamond,size: 30,color: Colors.red,)
+                    ],
+                  ),
+                   Row(
+                    children: [
+                      Text(coin.toString()),
+                     Icon(Icons.monetization_on_rounded,color: Colors.yellow,size: 30,),
+                    ],
                   ),
                   ElevatedButton(
                       onPressed: () {
@@ -514,7 +537,7 @@ class _QuestionsState extends State<Questions>
 
   Widget ideal(IconData icon, String label) {
     return Container(
-        width: MediaQuery.of(context).size.width / 2.2,
+        width: MediaQuery.of(context).size.width / 2.1,
         height: MediaQuery.of(context).size.width / 7,
         margin: const EdgeInsets.fromLTRB(0, 10, 0, 20),
         child: TextButton(

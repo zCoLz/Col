@@ -16,6 +16,8 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController txtEmail = new TextEditingController();
   TextEditingController txtPass = new TextEditingController();
   final _auth = FirebaseAuth.instance;
+  IconData icon = Icons.password;
+  bool pass =true;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -81,9 +83,21 @@ class _LoginPageState extends State<LoginPage> {
                       padding: const EdgeInsets.only(top: 10),
                       child: TextFormField(
                         controller: txtPass,
-                        obscureText: true,
+                        obscureText: pass,
                         decoration: InputDecoration(
-                            suffixIcon: Icon(Icons.remove_red_eye_sharp),
+                            suffixIcon: IconButton(onPressed: (){
+                              if(pass){
+                                setState(() {
+                                  pass=false;
+                                  icon = Icons.remove_red_eye_sharp;
+                                });
+                              }else{
+                                setState(() {
+                                  pass=true;
+                                icon = Icons.password;
+                                });
+                              }
+                            }, icon: Icon(icon,color: Colors.black,)),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15)),
                             labelText: "Mật khẩu"),
@@ -118,13 +132,19 @@ class _LoginPageState extends State<LoginPage> {
                             try {
                               final _user =  _auth.signInWithEmailAndPassword(email: txtEmail.text, password: txtPass.text)
                                 .then((value) async{
+                                  if(value!=null){
                                   txtEmail.clear();
                                   txtPass.clear();
                                   const snackbar = SnackBar(content: Text('Đăng nhập thành công'));
                                   ScaffoldMessenger.of(context).showSnackBar(snackbar);
                                   setState(() {
                                     Navigator.pushNamedAndRemoveUntil(context,'home', (route) => false);
-                                  });
+                                  });}else{
+                                    showDialog(context: context, builder: (context)
+                                    =>AlertDialog(
+                                      title: Center(child: CircularProgressIndicator(),),
+                                    ));
+                                  }
                                 }).onError((error, stackTrace){
                                    const snackBar = SnackBar(content: Text('Email hoặc mật khẩu không đúng',));
                                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
