@@ -3,23 +3,11 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:home_page/components/levelDesign.dart';
 import 'package:home_page/model/level.dart';
-import 'package:home_page/screens/GamePlay/listCreateRoom.dart';
-import 'package:http/http.dart';
 class DbContext{
-    static List<Level> lstLevel = new List<Level>.filled(1, Level(level: LevelInfo(unClock: null,images: '',title: '',id: 0)),growable: true);
-    void createLevel(){
-     lstLevel =[
-        Level(level: LevelInfo(unClock: null,images: 'level/title1.jpg', title: 'Ải 1',id: 2)),
-        Level(level: LevelInfo(unClock: null,images: 'level/randomQuestion.jpg', title: 'Ải 2',id: 3)),
-        Level(level: LevelInfo(unClock: null,images: 'level/randomQuestion.jpg', title: 'Ải 3',id: 4)),
-        Level(level: LevelInfo(unClock: null,images: 'level/randomQuestion.jpg', title: 'Ải 4',id: 5)),
-        Level(level: LevelInfo(unClock: Icons.lock_rounded,images: 'level/randomQuestion.jpg', title: 'Ải 5',id: 6)),
-        Level(level: LevelInfo(unClock: Icons.lock_rounded,images: 'level/randomQuestion.jpg', title: 'Ải 6',id: 7)),
-       ];
-      }
 }
 class fireDb{
   final _auth = FirebaseAuth.instance;
@@ -38,15 +26,16 @@ class fireDb{
         'money':0,
         'rankScore' : 0,
         'rank' : '',
-        'level' : fireDb().setLevel(0)
+        'level' : fireDb().setLevel(0),
+        'chapter' : 1,
       };
       await FirebaseFirestore.instance.collection('users').doc(user!.uid).set(newUser);}
   }
   createRoom(var user)async{
      Random objectname = Random();
-     int number = objectname.nextInt(1000);
+     int number = objectname.nextInt(10000);
      while(await getRoom(number)){
-        number = objectname.nextInt(1000);
+        number = objectname.nextInt(10000);
      }
      var newRoom = {
         'id' : number,
@@ -64,8 +53,9 @@ class fireDb{
            'score' : 0,
            'ready' : false
          },
-        'created' : DateTime.now(),
-        'status' : 1
+        'created' : DateTime.now().toString().trim(),
+        'status' : 1,
+        'battling' : true
      };
     await FirebaseFirestore.instance.collection('rooms').doc(number.toString()).set(newRoom);
     return number;
@@ -96,6 +86,32 @@ class fireDb{
         'player_1.ready' : check
      };
      await FirebaseFirestore.instance.collection('rooms').doc(id.toString()).update(ready);
+  }
+  createResult(int id)async{
+    var result = {
+      'player_1.result' : null,
+      'player_2.result' : null
+    };
+    await FirebaseFirestore.instance.collection('rooms').doc(id.toString()).update(result);
+  }
+  updateResult(int id,int score_1, int score_2)async{
+    var user;
+    int result_1=0;
+    int result_2=0;
+    if(score_1>score_2){
+      result_1=1;
+    }
+    else if(score_1<score_2)
+      result_2=1;
+    else{
+      result_1=2;
+      result_2=2;
+    }
+     user ={
+        'player_1.result' : result_1,
+        'player_2.result' : result_2
+      };
+      await FirebaseFirestore.instance.collection('rooms').doc(id.toString()).update(user);
   }
   leaveRoom(int? id)async{
     var user={
@@ -173,6 +189,79 @@ class fireDb{
         };
         await _firestore.collection('users').doc(_auth.currentUser!.uid)
         .update(setLevel);
+    }
+   setHighScore(int score)async{
+      var user ={
+          'highScore' : score
+      };
+      await _firestore.collection('users').doc(_auth.currentUser!.uid).update(user);
+   }
+   unClockChapter(int chapter)async{
+    var user = {
+      'chapter' : chapter
+    };
+    await _firestore.collection('users').doc(_auth.currentUser!.uid).update(user);
+   }
+   updateScore(int id,int p,int score)async{
+    var player;
+    if(p==1){
+      player = {
+        'player_1.score' : score
+      };
+      }
+    else{
+      player = {
+        'player_2.score' : score
+      };  
+    }
+     await FirebaseFirestore.instance.collection('rooms').doc(id.toString()).update(player);
+   }
+   createBattleHistories(var battle)async{
+      int id=0;
+      await _firestore.collection('battleHistoreis').get().then((value){
+        if(value!=null){
+          id = value.docs.length;
+        }
+      });
+      battle['id']=id+1;
+      await FirebaseFirestore.instance.collection('battleHistoreis').add(battle);
+   }
+   deleteRoom(int id, bool check)async{
+    if(check){
+      await _firestore .collection('rooms').doc(id.toString()).delete();
+      }else{
+        var status ={
+          'battling' : false
+        };
+      await _firestore.collection('rooms').doc(id.toString()).update(status);
+      }
+   }
+   updateRankBattle( int rankScore, int money, int coin, int exp)async{
+    int expUser=0;
+    int rankScoreUser=0;
+    int coinUser=0;
+    int moneyUser=0;
+      await _firestore.collection('users').where('email',isEqualTo: _auth.currentUser!.email).get().then((value){
+      if(value!=null){
+        expUser= value.docs[0]['exp'];
+        coinUser = value.docs[0]['coins'];
+        moneyUser = value.docs[0]['money'];
+        rankScoreUser = value.docs[0]['rankScore'];
+      }});
+      if(rankScoreUser + rankScore <0){
+        rankScoreUser=0;
+      }else{
+        rankScoreUser+=rankScore;
+      }
+    var updateUser = {
+      'exp' : (expUser+ exp),
+      'coins' : (coinUser+coin),
+      'money' : (moneyUser + money),
+      'rankScore' : rankScoreUser
+    };
+    await _firestore.collection('users').doc(_auth.currentUser!.uid).update(updateUser);
+    setRank(updateUser['rankScore']!);
+    setLevel(updateUser['exp']!);
     }
    /*  int setExp(int level){
       level= level + 1;

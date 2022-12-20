@@ -1,3 +1,4 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +6,7 @@ import 'package:home_page/components/Layout.dart';
 import 'package:home_page/model/dbContext.dart';
 import 'package:home_page/screens/GamePlay/listCreateRoom.dart';
 import 'package:home_page/screens/GamePlay/searchBattle.dart';
+import 'package:home_page/screens/home.dart';
 
 class listRoom extends StatefulWidget{
     listRoom({super.key});
@@ -32,8 +34,8 @@ class _listRoomState extends State<listRoom>{
         ),),),
         decoration: BoxDecoration(border: Border.all(width: 3)),
       );
-    }           
-      return StreamBuilder<QuerySnapshot>(
+    }  
+      return StreamBuilder(
         stream: _firestore.collection('users').where('email',isEqualTo: _auth.currentUser!.email).snapshots(),
         builder: (context, snapshot) {
           if(snapshot.hasData){
@@ -45,7 +47,8 @@ class _listRoomState extends State<listRoom>{
               backgroundColor: Colors.transparent,
               appBar: AppBar(title: Text(''),
               leading: IconButton(onPressed: (){
-                Navigator.pop(context);
+                Navigator.pushAndRemoveUntil(context,
+                MaterialPageRoute(builder: (context)=>Home()), (route) => false);
               }, icon: Icon(Icons.chevron_left,size: 40,),),
               actions: [
                  Padding(padding: EdgeInsets.only(right:15), child:
@@ -64,8 +67,11 @@ class _listRoomState extends State<listRoom>{
                         child: Text('Danh sách phòng',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700),),
                         decoration: BoxDecoration(border: Border.all(width: 3)),
                       ),
-                      StreamBuilder<QuerySnapshot>(
-                        stream: FirebaseFirestore.instance.collection('rooms').where('player_1.email',isNotEqualTo: _auth.currentUser!.email).snapshots(),
+                      StreamBuilder(
+                        stream: _firestore.collection('rooms')
+                              //.where('battling', isEqualTo: false)
+                              .where('player_1.email',isNotEqualTo: _auth.currentUser!.email)
+                              .snapshots(),
                         builder: (context, snapshot) {
                           if(snapshot.hasData){
                           return Container(
@@ -140,11 +146,23 @@ class _listRoomState extends State<listRoom>{
                          actions: [
                                     Column(
                                       children: [
-                                        TextField(
+                                        TextField(keyboardType: TextInputType.number,
                                           controller: txtSearchRoom,
                                           decoration: const InputDecoration(border: OutlineInputBorder(),),
                                         ),
                                         Center(child : ElevatedButton(onPressed: ()async{
+                                          try{
+                                          if(txtSearchRoom.text==''){
+                                            showDialog(context: context, builder: (context)=>
+                                            AlertDialog(
+                                              content: const Text('Vui lòng không bỏ trống'),
+                                              actions: [
+                                                TextButton(onPressed: (){
+                                                  Navigator.pop(context);
+                                                }, child: const Text('Ok'))
+                                              ],
+                                            ));
+                                          }else{
                                           var id =int.parse(txtSearchRoom.text);
                                           if(await fireDb().getRoom(id)){
                                             var user_2 = {
@@ -166,7 +184,18 @@ class _listRoomState extends State<listRoom>{
                                               ],
                                             ));
                                           }
-                                          
+                                          }}catch(e){
+                                            showDialog(context: context, builder: (context){
+                                              return AlertDialog(
+                                                content: const Text('Có lỗi xảy ra'),
+                                                actions: [
+                                                  Center(child: ElevatedButton(onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },child: const Text('Ok'),))
+                                                ],
+                                              );
+                                            });
+                                          }
                                         }, child: const Text('Tìm'))),
                                       ],
                                     )

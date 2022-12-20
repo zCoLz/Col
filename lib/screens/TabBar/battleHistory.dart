@@ -1,30 +1,31 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:home_page/components/Layout.dart';
 
 class BattleHistory extends StatefulWidget {
-  const BattleHistory({super.key});
-
+  BattleHistory({super.key,required this.id});
+  final int id;
   @override
   State<BattleHistory> createState() => _BattleHistoryState();
 }
 
 class _BattleHistoryState extends State<BattleHistory> {
-  Widget user(int score, String name, String question, int result) {
+  final _fireStore = FirebaseFirestore.instance;
+  Widget HistoryView(int score, String name, int result) {
     Color colors = Colors.red;
     String battle = 'Thua';
     if (result == 1) {
-      setState(() {
         colors = Colors.blue;
         battle = 'Thắng';
-      });
-    } else {
-      setState(() {
+    } else if(result==0) {
         colors = Colors.red;
         battle = 'Thua';
-      });
+    }else{
+       colors = Colors.amber;
+        battle = 'Hòa';
     }
     return Container(
-      margin: EdgeInsets.only(top: 30),
+      margin: const EdgeInsets.only(top: 30),
       width: MediaQuery.of(context).size.width / 3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -33,7 +34,7 @@ class _BattleHistoryState extends State<BattleHistory> {
             padding: const EdgeInsets.only(bottom: 15),
             child: Text(
               'Điểm : $score',
-              style: TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 18),
             ),
           ),
           Icon(
@@ -47,10 +48,10 @@ class _BattleHistoryState extends State<BattleHistory> {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
             ),
           ),
-          Text(
-            question,
+          /* Text(
+            'Rank',
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-          ),
+          ), */
           Padding(
             padding: const EdgeInsets.only(top: 20),
             child: Text(
@@ -73,30 +74,45 @@ class _BattleHistoryState extends State<BattleHistory> {
           title: Text('Lịch sử đấu đối kháng'),
         ),
         backgroundColor: Colors.transparent,
-        body: Container(
-          margin: EdgeInsets.symmetric(
-              vertical: MediaQuery.of(context).size.height / 6, horizontal: 13),
-          width: MediaQuery.of(context).size.width / 1.1,
-          height: MediaQuery.of(context).size.height / 2.2,
-          decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.5),
-              border: Border.all(width: 3)),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+        body: StreamBuilder<QuerySnapshot>(
+          stream: _fireStore.collection('battleHistoreis').where('id',isEqualTo: widget.id).snapshots(),
+          builder: (context, snapshot) {
+            try{
+              if(!snapshot.hasData)
+                 return Center(child: CircularProgressIndicator(),); 
+            final user = snapshot.data!.docs[0];
+            return Container(
+              margin: EdgeInsets.symmetric(
+                  vertical: MediaQuery.of(context).size.height / 6, horizontal: 13),
+              width: MediaQuery.of(context).size.width / 1.1,
+              height: MediaQuery.of(context).size.height / 2.2,
+              decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.5),
+                  border: Border.all(width: 3)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  user(100, 'Nhựt Minh', '10/10', 1),
-                  Image(
-                    image: AssetImage('acssets/vs.png'),
-                    width: MediaQuery.of(context).size.width / 6,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      HistoryView(user['player_1.score'], user['player_1.name'],user['player_1.result']),
+                      Image(
+                        image: const AssetImage('acssets/vs.png'),
+                        width: MediaQuery.of(context).size.width / 6,
+                      ),
+                      HistoryView(user['player_2.score'], user['player_2.name'],user['player_2.result']),
+                    ],
                   ),
-                  user(60, 'Quang thieu Em', '6/10', 0)
+                  Padding(padding: const EdgeInsets.all(30),
+                      child: Text('Thời gian : ${user['created'].toString().substring(0,19)}',
+                      style: TextStyle(fontSize: 20),),)
                 ],
-              )
-            ],
-          ),
+              ),
+            );
+          }catch(e){
+            return Center(child: Text('Có lỗi xảy ra'),);
+          }
+          }
         ),
       ),
     );
