@@ -7,7 +7,7 @@ import 'package:home_page/screens/home.dart';
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
+  
   runApp(MyApp());
 }
 

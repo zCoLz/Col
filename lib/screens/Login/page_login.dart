@@ -118,8 +118,6 @@ class _LoginPageState extends State<LoginPage> {
                             try {
                               final _user =  _auth.signInWithEmailAndPassword(email: txtEmail.text, password: txtPass.text)
                                 .then((value) async{
-                                  final user=  _auth.currentUser;
-                                  await fireDb().createUser(user!.displayName.toString(),user.email.toString(),user.uid.toString(),);
                                   txtEmail.clear();
                                   txtPass.clear();
                                   const snackbar = SnackBar(content: Text('Đăng nhập thành công'));
