@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:home_page/components/Layout.dart';
 import 'package:home_page/screens/Drawer/form_drawer.dart';
@@ -14,7 +15,7 @@ class _RankingState extends State<Ranking> {
     return Column(
               children: [
                 Text('Top $top',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,),),
-                Image(image: AssetImage('acssets/Rank/$rankImage'),width: MediaQuery.of(context).size.width/2.2,),
+                Image(image: AssetImage('acssets/Rank/$rankImage'),width: MediaQuery.of(context).size.width/2.4,),
                 Text(name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 24),),
                 Text('Điểm : $score',style: TextStyle(fontWeight: FontWeight.w600,fontSize: 15),)
               ],
@@ -22,27 +23,38 @@ class _RankingState extends State<Ranking> {
   }
   @override
   Widget build(BuildContext context) {
+    final _fireStore = FirebaseFirestore.instance;
     return Container(
       decoration: Layout().background_image,
-      child: Scaffold(appBar: AppBar(title: Text('Bảng xếp hạng'),)
+      child: Scaffold(appBar: AppBar(title: Text('Top xếp hạng'),)
       ,backgroundColor: Colors.transparent,
       drawer: PageDrawer(),
       body: Container(
         margin: EdgeInsets.only(top: 40),
-        child: Column(
-          children: [
-            rankUser('Nhựt Minh', 15000, 'RankMaster.png',1),
+        child: StreamBuilder<QuerySnapshot>(
+              stream: _fireStore.collection('users').orderBy('rankScore',descending: true).snapshots(),
+              builder: (context, snapshot) {
+                try{
+                var user = snapshot.data!.docs;
+               return Column(
+                children: [
+                rankUser(user[0]['name'],user[0]['rankScore'], user[0]['rank'],1),
+
             Padding(
               padding: const EdgeInsets.only(top: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  rankUser('Lộc', 12000, 'RankMaster.png',2),
-                  rankUser('ABC', 10000, 'RankMaster.png',3),
+                  rankUser(user[1]['name'],user[1]['rankScore'], user[1]['rank'],2),
+                  rankUser(user[2]['name'],user[2]['rankScore'], user[2]['rank'],3),
                 ],
               ),
             )
-          ],
+          ]);
+          }catch(e){
+            return Center(child: Text('Có lỗi xảy ra'),);
+          }
+          }
         ),
       ),
       ),
