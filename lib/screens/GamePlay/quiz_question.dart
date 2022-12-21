@@ -390,8 +390,8 @@ class _QuestionsState extends State<Questions>
               coin = 100;
             setState(() async{
               unclock=true;
-              int count = await fireDb().countChapter();
-              if(chapter-1 == count){
+              int countChapter= await fireDb().countChapter();
+              if(chapter-1 == countChapter){
               title = 'Chúc mừng bạn đã qua màn. Màn tiếp theo sẽ được cập nhật trong tương lai';
               }else{
               title = 'Chúc mừng bạn đã mở khóa màn tiếp theo';

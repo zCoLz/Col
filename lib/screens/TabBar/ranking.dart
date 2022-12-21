@@ -9,7 +9,6 @@ class Ranking extends StatefulWidget {
   @override
   State<Ranking> createState() => _RankingState();
 }
-
 class _RankingState extends State<Ranking> {
   Widget rankUser(String name, int score,String rankImage, int top){
     return Column(
@@ -35,6 +34,9 @@ class _RankingState extends State<Ranking> {
               stream: _fireStore.collection('users').orderBy('rankScore',descending: true).snapshots(),
               builder: (context, snapshot) {
                 try{
+                  if(!snapshot.hasData){
+                    return Center(child: CircularProgressIndicator(),);
+                  }
                 var user = snapshot.data!.docs;
                return Column(
                 children: [
@@ -52,7 +54,7 @@ class _RankingState extends State<Ranking> {
             )
           ]);
           }catch(e){
-            return Center(child: Text('Có lỗi xảy ra'),);
+            return Center(child: Text('Chưa có xếp hạng'),);
           }
           }
         ),
