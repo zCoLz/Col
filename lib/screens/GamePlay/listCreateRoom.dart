@@ -114,7 +114,7 @@ class _CreateRoomState extends State<CreateRoom> {
             ],
           ));
     }
-
+   
     return StreamBuilder<QuerySnapshot>(
         stream: _firestore
             .collection('rooms')
@@ -122,21 +122,16 @@ class _CreateRoomState extends State<CreateRoom> {
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            try {
-              return Scaffold(
-                appBar: AppBar(
-                    title: const Text(''),
-                    leading: IconButton(
-                        onPressed: () async {
-                          if (snapshot.data!.docs[0]['player_1.email'] ==
+            Future<bool> _willPopScopeCall()async{
+      if (snapshot.data!.docs[0]['player_1.email'] ==
                               _auth.currentUser!.email) {
-                            Navigator.pop(context);
+                            Navigator.pop(context,true);
                             fireDb().deleteRoom(widget.id,true);
                           }
                           if (snapshot.data!.docs[0]['player_2.email'] ==
                               _auth.currentUser!.email) {
                             if (snapshot.data!.docs[0]['player_2.ready']) {
-                              return showDialog(
+                             return await showDialog(
                                   context: context,
                                   builder: (context) {
                                     return AlertDialog(
@@ -147,62 +142,102 @@ class _CreateRoomState extends State<CreateRoom> {
                                         Center(
                                             child: ElevatedButton(
                                                 onPressed: () {
-                                                  Navigator.pop(context);
+                                                  Navigator.pop(context,false);
                                                 },
                                                 child: const Text('OK')))
                                       ],
                                     );
-                                  });
+                                  })?? false;
                             }
-                            Navigator.pop(context);
+                            Navigator.pop(context,true);
                             await fireDb().leaveRoom(widget.id);
                           }
-                        },
-                        icon: const Icon(
-                          Icons.chevron_left,
-                          size: 40,
-                        )),
-                    actions: [
-                      Padding(
-                          padding: const EdgeInsets.only(right: 15),
-                          child: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.power_settings_new,
-                                size: 35,
-                              )))
-                    ]),
-                body: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  decoration: Layout().background_image,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                            margin: const EdgeInsets.only(top: 20),
-                            child: Text(
-                              'ID phòng : ${widget.id}',
-                              style: const TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w600),
-                            )),
-                        avatarBattle(),
-                        //Text('00:00s',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
-                        Image(
-                          image: const AssetImage('acssets/randomQuestion.jpg'),
-                          width: MediaQuery.of(context).size.width / 3,
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.fromLTRB(0, 20, 0, 100),
-                          child: Text(
-                            'Ngẫu nhiên',
-                            style: TextStyle(
-                                fontSize: 25, fontWeight: FontWeight.bold),
+                   return false;       
+  }
+            try {
+              return WillPopScope(
+                onWillPop: _willPopScopeCall,
+                child: Scaffold(
+                  appBar: AppBar(
+                      title: const Text(''),
+                      leading: IconButton(
+                          onPressed: () async {
+                            if (snapshot.data!.docs[0]['player_1.email'] ==
+                                _auth.currentUser!.email) {
+                              Navigator.pop(context);
+                              fireDb().deleteRoom(widget.id,true);
+                            }
+                            if (snapshot.data!.docs[0]['player_2.email'] ==
+                                _auth.currentUser!.email) {
+                              if (snapshot.data!.docs[0]['player_2.ready']) {
+                                return showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        //title: Text("Save and Exit ?"),
+                                        content: const Text(
+                                            "Bạn đang sẵn sàng không thể thoát"),
+                                        actions: [
+                                          Center(
+                                              child: ElevatedButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: const Text('OK')))
+                                        ],
+                                      );
+                                    });
+                              }
+                              Navigator.pop(context);
+                              await fireDb().leaveRoom(widget.id);
+                            }
+                          },
+                          icon: const Icon(
+                            Icons.chevron_left,
+                            size: 40,
+                          )),
+                      actions: [
+                        Padding(
+                            padding: const EdgeInsets.only(right: 15),
+                            child: IconButton(
+                                onPressed: () {},
+                                icon: const Icon(
+                                  Icons.power_settings_new,
+                                  size: 35,
+                                )))
+                      ]),
+                  body: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    decoration: Layout().background_image,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                              margin: const EdgeInsets.only(top: 20),
+                              child: Text(
+                                'ID phòng : ${widget.id}',
+                                style: const TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w600),
+                              )),
+                          avatarBattle(),
+                          //Text('00:00s',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
+                          Image(
+                            image: const AssetImage('acssets/randomQuestion.jpg'),
+                            width: MediaQuery.of(context).size.width / 3,
                           ),
-                        ),
-                        roomReady(snapshot.data!.docs[0]['player_1.email'],
-                            snapshot.data!.docs[0]['player_2.email'])
-                      ],
+                          const Padding(
+                            padding: EdgeInsets.fromLTRB(0, 20, 0, 100),
+                            child: Text(
+                              'Ngẫu nhiên',
+                              style: TextStyle(
+                                  fontSize: 25, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          roomReady(snapshot.data!.docs[0]['player_1.email'],
+                              snapshot.data!.docs[0]['player_2.email'])
+                        ],
+                      ),
                     ),
                   ),
                 ),

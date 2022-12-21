@@ -157,20 +157,21 @@ class fireDb{
   }
      setRank(int x)async{ 
       String rank ='';
-      if(x<=0)
+      if(x<=0) {
         rank='';
-      else if(x<=200)
+      } else if(x<=200) {
         rank = 'RankDong.png';
-      else if(x<=500)
+      } else if(x<=500) {
         rank = 'RankBac.png';
-      else if(x<=900)
+      } else if(x<=900) {
         rank = 'RankVang.png';
-      else if(x<=1400)
+      } else if(x<=1400) {
         rank = 'RankBK.png';
-      else if(x<=2000)
+      } else if(x<=2000) {
         rank = 'RankKC.png';
-      else
+      } else {
         rank = 'RankMaster.png';
+      }
       var newUser = {
         'rank' : rank
       };

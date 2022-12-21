@@ -172,8 +172,8 @@ class _listRoomState extends State<listRoom>{
                                               'userImages' : user[0]['userImages']
                                               };
                                               fireDb().joinRoom(id,user_2);
-                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>CreateRoom(id: id,user_two: user_2,)));
                                               txtSearchRoom.clear();
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>CreateRoom(id: id,user_two: user_2,)));
                                           }else{
                                             showDialog(context: context, builder: (context)=>
                                             AlertDialog(
