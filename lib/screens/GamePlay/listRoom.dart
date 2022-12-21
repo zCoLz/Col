@@ -18,6 +18,7 @@ class listRoom extends StatefulWidget{
 class _listRoomState extends State<listRoom>{
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
+   String rank='';
   @override
   Widget build(BuildContext context) {
     TextEditingController txtSearchRoom = TextEditingController();
@@ -40,7 +41,25 @@ class _listRoomState extends State<listRoom>{
         builder: (context, snapshot) {
           if(snapshot.hasData){
           var user = snapshot.data!.docs;
-          
+          if(rank==''){
+            var rankOld = user[0];
+                Future.delayed(Duration.zero,()async{
+                rank = await fireDb().setRank(user[0]['rankScore']);
+                await fireDb().setLevel(user[0]['exp']);
+                  if(rank!=rankOld['rank']){
+                   return showDialog(context: context, builder: (context)=>
+                    AlertDialog(
+                      title: Text('Rank hiện tại của bạn là : '),
+                      content: Image(image: AssetImage('acssets/Rank/$rank'),width: MediaQuery.of(context).size.width/3,),
+                      actions: [
+                        ElevatedButton(onPressed: (){
+                          Navigator.pop(context); 
+                        }, child: Text('Ok'))
+                      ],
+                    ));
+                  }
+                });
+              }
           return Container(
             decoration: Layout().background_image,
             child: Scaffold(

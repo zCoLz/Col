@@ -40,8 +40,6 @@ class _PageDrawerState extends State<PageDrawer> {
               builder: (context, snapshot) {
                 if(snapshot.hasData){
                 var user = snapshot.data!.docs;
-                fireDb().setRank(user[0]['rankScore']);
-                fireDb().setLevel(user[0]['exp']);
                 return Column(children: [
                   Row(
                     children: [

@@ -155,7 +155,16 @@ class fireDb{
         return false;
     return true;
   }
-     setRank(int x)async{ 
+    Future<String> setRank(int x)async{ 
+     /*  String rankOld='';
+      await _firestore
+      .collection('users')
+      .where('email',isEqualTo: _auth.currentUser!.email)
+      .get().then((value){
+        if(value!=null){
+          rankOld = value.docs[0]['rank'];
+        }
+      }); */
       String rank ='';
       if(x<=0) {
         rank='';
@@ -177,6 +186,7 @@ class fireDb{
       };
       await FirebaseFirestore.instance.collection('users')
       .doc(_auth.currentUser!.uid).update(newUser);
+      return rank;
      }
      setUserImage(String image)async{
         var newUser = {
@@ -270,7 +280,7 @@ class fireDb{
       'rankScore' : rankScoreUser
     };
     await _firestore.collection('users').doc(_auth.currentUser!.uid).update(updateUser);
-    setRank(updateUser['rankScore']!);
+    //setRank(updateUser['rankScore']!);
     setLevel(updateUser['exp']!);
     }
     getImage(String email)async{
