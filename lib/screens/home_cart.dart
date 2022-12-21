@@ -32,6 +32,7 @@ class _PageCartState extends State<PageCart> {
         child: StreamBuilder<QuerySnapshot>(
           stream: _fireStore.collection('users').where('email',isEqualTo: _auth.currentUser!.email).snapshots(),
           builder: (context, snapshot) {
+            try{
             return Column(children: [
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
@@ -215,6 +216,10 @@ class _PageCartState extends State<PageCart> {
                 ),
               ),
             ]);
+          }
+          catch(e){
+            return Center(child: CircularProgressIndicator(),);
+          }
           }
         ),
       ),

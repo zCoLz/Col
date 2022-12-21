@@ -28,7 +28,7 @@ class _QuestionsState extends State<Questions>
   int countTime = 30;
   late AnimationController _controller;
   //Khai bao bien _currenIndex
-  int _currentIndex = 0;
+  int _currentIndex =0;
   bool flag = false;
   BottomDrawerController bottom = BottomDrawerController();
   final _firestore = FirebaseFirestore.instance;

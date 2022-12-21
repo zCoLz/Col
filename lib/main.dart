@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:home_page/screens/Login/form_login_signup.dart';
 import 'package:home_page/screens/home.dart';
+import 'package:home_page/screens/home_profile.dart';
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         'welcome': (context) => HomePage_Login_SignUp(),
         'home': (context) => Home(),
       },
-      // home: AddQuestion(),
+      // home: PageProfile(),
     );
   }
 } 
@@ -46,12 +47,12 @@ class MyApp extends StatelessWidget {
 //     return Scaffold(
 //       body: Center(child: ElevatedButton(onPressed: (() {
 //        _fireStore.collection('questions').add({
-//           'id': 71,
-//           'title': 'Chèn một dòng mới sau “Xin chao cac ban!”, bằng cách sử dụng lệnh nào sau đây để điền vào phần thiếu:\nint main() {\ncout << “Xin chao cac ban!\ncout << “I am learning C++”;\nreturn 0;\n }',
-//           'answer':['<<endl;','<<end;','<<and;','<<enld;'],
-//           'key':0,
-//           'subject':{'id':3,'title' :'C++'},
-//           'level':3
+//           'id': 132,
+//           'title': '',
+//           'answer':['orange','indigo','blue','yellow'],
+//           'key': 3,
+//           'subject':{'id':5,'title' :'Python'},
+//           'level': 3
 //        });
 //       }), child: Text("add"))),
 //     );
