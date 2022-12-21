@@ -28,6 +28,7 @@ class fireDb{
         'rank' : '',
         'level' :  1,
         'chapter' : 1,
+        'rename' : 2
       };
       await FirebaseFirestore.instance.collection('users').doc(user!.uid).set(newUser);
       }
@@ -156,20 +157,21 @@ class fireDb{
   }
      setRank(int x)async{ 
       String rank ='';
-      if(x<=0)
+      if(x<=0) {
         rank='';
-      else if(x<=200)
+      } else if(x<=200) {
         rank = 'RankDong.png';
-      else if(x<=500)
+      } else if(x<=500) {
         rank = 'RankBac.png';
-      else if(x<=900)
+      } else if(x<=900) {
         rank = 'RankVang.png';
-      else if(x<=1400)
+      } else if(x<=1400) {
         rank = 'RankBK.png';
-      else if(x<=2000)
+      } else if(x<=2000) {
         rank = 'RankKC.png';
-      else
+      } else {
         rank = 'RankMaster.png';
+      }
       var newUser = {
         'rank' : rank
       };
@@ -270,6 +272,44 @@ class fireDb{
     await _firestore.collection('users').doc(_auth.currentUser!.uid).update(updateUser);
     setRank(updateUser['rankScore']!);
     setLevel(updateUser['exp']!);
+    }
+    getImage(String email)async{
+      String image ='';
+    await _firestore.collection('users').where('email',isEqualTo: email)
+      .get().then((value){
+        if(value!=null){
+          image = value.docs[0]['userImages'];
+        }
+      });
+      return image;
+    }
+   Future<bool> updateName(String name)async{
+    bool check = false;
+    await _firestore.collection('users').where('email',isEqualTo: _auth.currentUser!.email).get().then((value)async{
+        if(value!=null){
+          await _firestore.collection('users').doc(_auth.currentUser!.uid).update({
+            'name' : name,
+            'rename' : (value.docs[0]['rename']-1)
+      }).then((value) => check=true);
+        }
+    });
+      return check;
+    }
+    storymode(int money, int coin)async{
+      int moneyUser=0;
+      int coinUser=0;
+      await _firestore.collection('users').where('email',isEqualTo: _auth.currentUser!.email).get()
+      .then((value)async{
+         if(value!=null){
+          moneyUser = value.docs[0]['money'];
+          coinUser = value.docs[0]['coins'];
+         }
+      });
+      var update ={
+         'money' : (money+moneyUser),
+        'coins' : (coin+coinUser)
+      };
+      await _firestore.collection('users').doc(_auth.currentUser!.uid).update(update);
     }
    /*  int setExp(int level){
       level= level + 1;

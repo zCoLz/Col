@@ -5,29 +5,30 @@ import 'package:home_page/model/dbContext.dart';
 import 'package:home_page/screens/GamePlay/listRoom.dart';
 
 class BattleResult_2 extends StatefulWidget {
-  BattleResult_2({super.key,required this.id});
+  BattleResult_2({super.key, required this.id});
   int id;
   @override
   State<BattleResult_2> createState() => _BattleResult_2State();
 }
+
 String battle = 'Thua';
+
 class _BattleResult_2State extends State<BattleResult_2> {
   final _fireStore = FirebaseFirestore.instance;
-  Widget user(int score, String name, int? result) {
+  Widget user(int score, String name, String image, int? result) {
     Color colors = Colors.red;
     if (result == 1) {
-        colors = Colors.blue;
-        battle = 'Thắng';
-    } else if(result==0) {
-        colors = Colors.red;
-        battle = 'Thua';
-    }else if(result==2){
+      colors = Colors.blue;
+      battle = 'Thắng';
+    } else if (result == 0) {
+      colors = Colors.red;
+      battle = 'Thua';
+    } else if (result == 2) {
       colors = Colors.amber;
-      battle='Hòa';
-    }
-    else{
+      battle = 'Hòa';
+    } else {
       colors = Colors.green;
-      battle='';
+      battle = '';
     }
     return Container(
       margin: const EdgeInsets.only(top: 30),
@@ -42,10 +43,22 @@ class _BattleResult_2State extends State<BattleResult_2> {
               style: const TextStyle(fontSize: 18),
             ),
           ),
-          Icon(
-            Icons.account_circle,
-            size: 80,
-          ),
+          if (image == '')
+            Padding(
+                padding: const EdgeInsets.fromLTRB(0, 5, 0, 10),
+                child: CircleAvatar(
+                  radius: 25,
+                  child: Text(name.substring(0, 1).toUpperCase(),
+                      style: const TextStyle(fontSize: 30)),
+                ))
+          else
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 5, 0, 10),
+              child: CircleAvatar(
+                backgroundImage: AssetImage('acssets/avatar/$image'),
+                radius: 30,
+              ),
+            ),
           Padding(
             padding: const EdgeInsets.only(top: 20, bottom: 20),
             child: Text(
@@ -72,130 +85,171 @@ class _BattleResult_2State extends State<BattleResult_2> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: Layout().background_image,
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          centerTitle: true,
-          title: const Text('Kết quả đối kháng'),
-        ),
-        backgroundColor: Colors.transparent,
-        body: Container(
-          margin: EdgeInsets.symmetric(
-              vertical: MediaQuery.of(context).size.height / 6, horizontal: 13),
-          width: MediaQuery.of(context).size.width / 1.1,
-          height: MediaQuery.of(context).size.height / 2.2,
-          decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.5),
-              border: Border.all(width: 3)),
-          child: StreamBuilder<QuerySnapshot>(
-            stream: _fireStore.collection('rooms')
-            .where('id',isEqualTo: widget.id).snapshots(),
-            builder: (context, snapshot) {
-              try{
-              var rooms = snapshot.data!.docs[0];
-              if(rooms['player_1.result']!=null && rooms['player_2.result']!=null && rooms['battling']){
-              String title='Chúc mừng bạn! Bạn đã thắng';
-                int money = 150;
-                int coin =300;
-                int rankScore =20;
-                int exp =200;
-                String rank= '+20';
-                Future.delayed(Duration.zero,()async{
-                  if(rooms['player_2.result']==0){
-                    title = 'Bạn đã thua. Hãy cố gắng lần sau';
-                    money=50;
-                    coin=100;
-                    rankScore=-10;
-                    exp = 100;
-                    rank = '-10';
-                }else if(rooms['player_2.result']==2){
-                  title = 'Hòa. Hãy cố nhé';
-                    money=100;
-                    coin=200;
-                    rankScore=10;
-                    exp = 150;
-                    rank = '+10';
-                }
-                await fireDb().updateRankBattle(rankScore,money,coin,exp);
-                  showDialog(context: context, builder: (context){
-                    return AlertDialog(
-                      title: Text(title),
-                      content: SizedBox(
-                        height: MediaQuery.of(context).size.width/3,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+     Future<bool> _willPopScopeCall()async{
+    return false;
+  }
+    return WillPopScope(
+      onWillPop: _willPopScopeCall,
+      child: Container(
+        decoration: Layout().background_image,
+        child: Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            centerTitle: true,
+            title: const Text('Kết quả đối kháng'),
+          ),
+          backgroundColor: Colors.transparent,
+          body: Container(
+            margin: EdgeInsets.symmetric(
+                vertical: MediaQuery.of(context).size.height / 6, horizontal: 13),
+            width: MediaQuery.of(context).size.width / 1.1,
+            height: MediaQuery.of(context).size.height / 2.2,
+            decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.5),
+                border: Border.all(width: 3)),
+            child: StreamBuilder<QuerySnapshot>(
+                stream: _fireStore
+                    .collection('rooms')
+                    .where('id', isEqualTo: widget.id)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  try {
+                    var rooms = snapshot.data!.docs[0];
+                    if (rooms['player_1.result'] != null &&
+                        rooms['player_2.result'] != null &&
+                        rooms['battling']) {
+                      String title = 'Chúc mừng bạn! Bạn đã thắng';
+                      int money = 150;
+                      int coin = 300;
+                      int rankScore = 20;
+                      int exp = 200;
+                      String rank = '+20';
+                      Future.delayed(Duration.zero, () async {
+                        if (rooms['player_2.result'] == 0) {
+                          title = 'Bạn đã thua. Hãy cố gắng lần sau';
+                          money = 50;
+                          coin = 100;
+                          rankScore = -10;
+                          exp = 100;
+                          rank = '-10';
+                        } else if (rooms['player_2.result'] == 2) {
+                          title = 'Hòa. Hãy cố nhé';
+                          money = 100;
+                          coin = 200;
+                          rankScore = 10;
+                          exp = 150;
+                          rank = '+10';
+                        }
+                        await fireDb()
+                            .updateRankBattle(rankScore, money, coin, exp);
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text(title),
+                                content: SizedBox(
+                                  height: MediaQuery.of(context).size.width / 3,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Text('+$money'),
+                                          const Icon(
+                                            Icons.diamond_rounded,
+                                            size: 30,
+                                            color: Colors.red,
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text('+$coin'),
+                                          const Icon(
+                                            Icons.monetization_on_rounded,
+                                            color: Colors.yellow,
+                                            size: 30,
+                                          ),
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 10),
+                                        child: Text('$rank điểm rank'),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 10),
+                                        child: Text('+$exp điểm kinh nghiệm'),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text('Ok'))
+                                ],
+                              );
+                            });
+                      });
+                    }
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Row(children: [
-                              Text('+$money'),
-                              const Icon(Icons.diamond_rounded,size: 30,color: Colors.red,),
-                            ],),
-                            Row(
-                              children: [
-                                Text('+$coin'),
-                              const Icon(Icons.monetization_on_rounded,color: Colors.yellow,size: 30,),
-                              ],
+                            user(rooms['player_1.score'], rooms['player_1.name'],
+                                rooms['player_1.userImages'],rooms['player_1.result']),
+                            Image(
+                              image: const AssetImage('acssets/vs.png'),
+                              width: MediaQuery.of(context).size.width / 6,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: Text('$rank điểm rank'),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: Text('+$exp điểm kinh nghiệm'),
-                            ),
+                            user(rooms['player_2.score'], rooms['player_2.name'],
+                                rooms['player_2.userImages'],rooms['player_2.result']),
                           ],
                         ),
-                      ),
-                      actions: [
-                        TextButton(onPressed: (){
-                          Navigator.pop(context);
-                        }, child: Text('Ok'))
+                        if (rooms['player_2.ready'] || rooms['player_1.ready'])
+                          Column(
+                            children: const [
+                              CircleAvatar(
+                                backgroundImage:
+                                    AssetImage('acssets/avatar/waiting.gif'),
+                                radius: 20,
+                              ),
+                              Text('Đang chờ')
+                            ],
+                          )
+                        else
+                          TextButton(
+                              onPressed: () async {
+                                if (rooms['battling']) {
+                                  await fireDb().deleteRoom(widget.id, false);
+                                } else {
+                                  await fireDb().deleteRoom(widget.id, true);
+                                }
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: ((context) => listRoom())),
+                                    (route) => false);
+                              },
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.blue)),
+                              child: const Text(
+                                'Trở về',
+                                style: TextStyle(color: Colors.white),
+                              ))
                       ],
                     );
-                  });
-                });
-                }
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                        user(rooms['player_1.score'], rooms['player_1.name'],rooms['player_1.result']),
-                      Image(
-                        image: const AssetImage('acssets/vs.png'),
-                        width: MediaQuery.of(context).size.width / 6,
-                      ),
-                        user(rooms['player_2.score'], rooms['player_2.name'], rooms['player_2.result']),
-                    ],
-                  ),
-                  if(rooms['player_2.ready'] || rooms['player_1.ready'])
-                          Column(children: const [
-                            CircleAvatar(backgroundImage: AssetImage('acssets/avatar/waiting.gif'),radius: 20,),
-                            Text('Đang chờ')
-                          ],)
-                  else
-                    TextButton(
-                      onPressed: ()async{
-                        if(rooms['battling']){
-                         await fireDb().deleteRoom(widget.id, false);
-                        }
-                        else{
-                          await fireDb().deleteRoom(widget.id, true);
-                        }
-                        Navigator.pushAndRemoveUntil(context,
-                        MaterialPageRoute(builder: ((context) => listRoom())), (route) => false);
-                      },
-                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue))
-                    , child: const Text('Trở về',style: TextStyle(color: Colors.white),))
-                ],
-              );
-            }catch(e){
-              return const Center(child: CircularProgressIndicator(),);
-            }
-            }
+                  } catch (e) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                }),
           ),
         ),
       ),
