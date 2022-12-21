@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:home_page/screens/Login/form_login_signup.dart';
 import 'package:home_page/screens/home.dart';
+import 'package:home_page/screens/home_profile.dart';
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         'welcome': (context) => HomePage_Login_SignUp(),
         'home': (context) => Home(),
       },
-      // home: AddQuestion(),
+      // home: PageProfile(),
     );
   }
 } 

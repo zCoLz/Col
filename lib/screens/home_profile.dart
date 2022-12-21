@@ -22,158 +22,161 @@ class _PageProfileState extends State<PageProfile> {
    final user = FirebaseFirestore.instance.collection('users')
   .where('email',isEqualTo: _auth.currentUser!.email)
   .snapshots();
-    return Container(
-      decoration: Layout().background_image,
-      child: StreamBuilder<QuerySnapshot>(
-        stream: user,//user,
-        builder: (context, snapshot) {
-          if(snapshot.hasData){ _name.text = snapshot.data!.docs[0]['name'].toString();
-            _account.text = snapshot.data!.docs[0]['email'].toString();
-            var imgae = snapshot.data!.docs[0]['userImages'].toString();
-          return Scaffold(
-            backgroundColor: Colors.transparent,
-              resizeToAvoidBottomInset: true,
-              appBar: AppBar(
-                centerTitle: true,
-                title: Text(""),
-                actions: [
-                  IconButton(
-                      onPressed: (() {}), icon: Icon(Icons.power_settings_new)),
-                ],
-              ),
-              drawer: PageDrawer(),
-              body: Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Container(
-                    child: Column(children: [
-                     if(imgae=='')
-                      CircleAvatar(child: Text(snapshot.data!.docs[0]['name'].toString().substring(0,1).toUpperCase(),
-                        style: TextStyle(fontSize: 25)),)else
-                        CircleAvatar(backgroundImage: AssetImage('acssets/avatar/$imgae'),maxRadius: 30,)
-                      ,
-                      Text(
-                        _name.text,
-                        style: TextStyle(fontSize: 30),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextField(
-                          controller: _name,
-                          keyboardType: TextInputType.text,
-                          style: TextStyle(fontSize: 20, color: Colors.black),
-                          decoration: InputDecoration(
-                              labelText: "Tên hiển thị",
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              )),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextField(
-                          controller: _account,
-                          keyboardType: TextInputType.text,
-                          style: TextStyle(fontSize: 20, color: Colors.black),
-                          decoration: InputDecoration(
-                              labelText: "Tài khoản",
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              )),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextField(
-                          controller: _pasword,
-                          keyboardType: TextInputType.text,
-                          style: TextStyle(fontSize: 20, color: Colors.black),
-                          decoration: InputDecoration(
-                              labelText: "Mật khẩu",
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              )),
-                        ),
-                      )
-                    ]),
-                  ),
+  
+    return SingleChildScrollView(
+      child: Container(
+        decoration: Layout().background_image,
+        child: StreamBuilder<QuerySnapshot>(
+          stream: user,//user,
+          builder: (context, snapshot) {
+            if(snapshot.hasData){ _name.text = snapshot.data!.docs[0]['name'].toString();
+              _account.text = snapshot.data!.docs[0]['email'].toString();
+              var imgae = snapshot.data!.docs[0]['userImages'].toString();
+            return Scaffold(
+              backgroundColor: Colors.transparent,
+                resizeToAvoidBottomInset: true,
+                appBar: AppBar(
+                  centerTitle: true,
+                  title: Text(""),
+                  actions: [
+                    IconButton(
+                        onPressed: (() {}), icon: Icon(Icons.power_settings_new)),
+                  ],
                 ),
-              )
-              //Column(children: [
-              //     Icon(Icons.account_circle),
-              //     Text("Quang Thiếu U"),
-              //     Container(
-              //         child: Padding(
-              //       padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
-              //       child: TextField(
-              //         obscureText: false,
-              //         textAlign: TextAlign.left,
-              //         decoration: InputDecoration(
-              //             border: OutlineInputBorder(),
-              //             hintText: 'Số điện thoại',
-              //             hintStyle: TextStyle(
-              //                 color: Colors.grey,
-              //                 fontSize: 16,
-              //                 fontStyle: FontStyle.italic,
-              //                 fontWeight: FontWeight.bold)),
-      
-              //       ),
-      
-              //     )),
-              //     Container(
-              //         child: Padding(
-              //       padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
-              //       child: TextField(
-              //         obscureText: false,
-              //         textAlign: TextAlign.left,
-              //         decoration: InputDecoration(
-              //             border: OutlineInputBorder(),
-              //             hintText: '0351511xxx',
-              //             hintStyle: TextStyle(
-              //                 color: Colors.grey,
-              //                 fontSize: 16,
-              //                 fontStyle: FontStyle.italic,
-              //                 fontWeight: FontWeight.bold)),
-              //       ),
-              //     )),
-              //     Container(
-              //         child: Padding(
-              //       padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
-              //       child: TextField(
-              //         obscureText: false,
-              //         textAlign: TextAlign.left,
-              //         decoration: InputDecoration(
-              //             border: OutlineInputBorder(),
-              //             hintText: 'Số điện thoại',
-              //             hintStyle: TextStyle(
-              //                 color: Colors.grey,
-              //                 fontSize: 16,
-              //                 fontStyle: FontStyle.italic,
-              //                 fontWeight: FontWeight.bold)),
-              //       ),
-              //     )),
-              //     Container(
-              //         child: Padding(
-              //       padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
-              //       child: TextField(
-              //         obscureText: false,
-              //         textAlign: TextAlign.left,
-              //         decoration: InputDecoration(
-              //             border: OutlineInputBorder(),
-              //             hintText: 'quangthieu@gmail',
-              //             hintStyle: TextStyle(
-              //                 color: Colors.grey,
-              //                 fontSize: 16,
-              //                 fontStyle: FontStyle.italic,
-              //                 fontWeight: FontWeight.bold)),
-              //       ),
-              //     )),
-              //   ]),
-              );
-        }else{
-          return Center(child: CircularProgressIndicator(),);
-        }
-        }
+                drawer: PageDrawer(),
+                body: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: Container(
+                      child: Column(children: [
+                       if(imgae=='')
+                        CircleAvatar(child: Text(snapshot.data!.docs[0]['name'].toString().substring(0,1).toUpperCase(),
+                          style: TextStyle(fontSize: 25)),)else
+                          CircleAvatar(backgroundImage: AssetImage('acssets/avatar/$imgae'),maxRadius: 30,)
+                        ,
+                        Text(
+                          _name.text,
+                          style: TextStyle(fontSize: 30),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextField(
+                            controller: _name,
+                            keyboardType: TextInputType.text,
+                            style: TextStyle(fontSize: 20, color: Colors.black),
+                            decoration: InputDecoration(
+                                labelText: "Tên hiển thị",
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                )),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextField(
+                            controller: _account,
+                            keyboardType: TextInputType.text,
+                            style: TextStyle(fontSize: 20, color: Colors.black),
+                            decoration: InputDecoration(
+                                labelText: "Tài khoản",
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                )),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextField(
+                            controller: _pasword,
+                            keyboardType: TextInputType.text,
+                            style: TextStyle(fontSize: 20, color: Colors.black),
+                            decoration: InputDecoration(
+                                labelText: "Mật khẩu",
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                )),
+                          ),
+                        )
+                      ]),
+                    ),
+                  ),
+                )
+                //Column(children: [
+                //     Icon(Icons.account_circle),
+                //     Text("Quang Thiếu U"),
+                //     Container(
+                //         child: Padding(
+                //       padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                //       child: TextField(
+                //         obscureText: false,
+                //         textAlign: TextAlign.left,
+                //         decoration: InputDecoration(
+                //             border: OutlineInputBorder(),
+                //             hintText: 'Số điện thoại',
+                //             hintStyle: TextStyle(
+                //                 color: Colors.grey,
+                //                 fontSize: 16,
+                //                 fontStyle: FontStyle.italic,
+                //                 fontWeight: FontWeight.bold)),
+        
+                //       ),
+        
+                //     )),
+                //     Container(
+                //         child: Padding(
+                //       padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                //       child: TextField(
+                //         obscureText: false,
+                //         textAlign: TextAlign.left,
+                //         decoration: InputDecoration(
+                //             border: OutlineInputBorder(),
+                //             hintText: '0351511xxx',
+                //             hintStyle: TextStyle(
+                //                 color: Colors.grey,
+                //                 fontSize: 16,
+                //                 fontStyle: FontStyle.italic,
+                //                 fontWeight: FontWeight.bold)),
+                //       ),
+                //     )),
+                //     Container(
+                //         child: Padding(
+                //       padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                //       child: TextField(
+                //         obscureText: false,
+                //         textAlign: TextAlign.left,
+                //         decoration: InputDecoration(
+                //             border: OutlineInputBorder(),
+                //             hintText: 'Số điện thoại',
+                //             hintStyle: TextStyle(
+                //                 color: Colors.grey,
+                //                 fontSize: 16,
+                //                 fontStyle: FontStyle.italic,
+                //                 fontWeight: FontWeight.bold)),
+                //       ),
+                //     )),
+                //     Container(
+                //         child: Padding(
+                //       padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                //       child: TextField(
+                //         obscureText: false,
+                //         textAlign: TextAlign.left,
+                //         decoration: InputDecoration(
+                //             border: OutlineInputBorder(),
+                //             hintText: 'quangthieu@gmail',
+                //             hintStyle: TextStyle(
+                //                 color: Colors.grey,
+                //                 fontSize: 16,
+                //                 fontStyle: FontStyle.italic,
+                //                 fontWeight: FontWeight.bold)),
+                //       ),
+                //     )),
+                //   ]),
+                );
+          }else{
+            return Center(child: CircularProgressIndicator(),);
+          }
+          }
+        ),
       ),
     );
   }

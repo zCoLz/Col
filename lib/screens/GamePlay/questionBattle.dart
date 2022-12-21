@@ -25,7 +25,7 @@ class _QuestionBattleState_1 extends State<QuestionBattle_1>
   List<Question> questions = [];
   List<Question> randomQuestion = [];
   //Khai bao bien _currenIndex
-  int _currentIndex = 9;
+  int _currentIndex = 0;
   bool isLock = false;
   int diem = 0;
   @override
