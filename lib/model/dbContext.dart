@@ -280,7 +280,7 @@ class fireDb{
       'rankScore' : rankScoreUser
     };
     await _firestore.collection('users').doc(_auth.currentUser!.uid).update(updateUser);
-    //setRank(updateUser['rankScore']!);
+    setRank(updateUser['rankScore']!);
     setLevel(updateUser['exp']!);
     }
     getImage(String email)async{

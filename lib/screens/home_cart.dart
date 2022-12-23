@@ -60,7 +60,7 @@ class _PageCartState extends State<PageCart> {
                                       ),
                                       Text(
                                        // _login.email.toString(),
-                                        snapshot.data!.docs[0]['coins'].toString(),
+                                        snapshot.data!.docs[0]['money'].toString(),
                                         overflow: TextOverflow.ellipsis,
                                         style: const TextStyle(
                                             fontSize: 18,
@@ -79,7 +79,7 @@ class _PageCartState extends State<PageCart> {
                                         color: Colors.yellow,
                                       ),
                                       Text(
-                                        snapshot.data!.docs[0]['money'].toString(),
+                                        snapshot.data!.docs[0]['coins'].toString(),
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                             fontSize: 18,

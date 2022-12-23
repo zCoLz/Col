@@ -162,7 +162,7 @@ int count=0;
                       exp = 150;
                       rank = '+10';
                   }
-                    await fireDb().updateRankBattle(rankScore,money,coin,exp);
+                  await fireDb().updateRankBattle(rankScore,money,coin,exp);
                     showDialog(context: context, builder: (context){
                       return AlertDialog(
                         title: Text(title),

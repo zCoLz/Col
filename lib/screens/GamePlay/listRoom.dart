@@ -18,7 +18,7 @@ class listRoom extends StatefulWidget{
 class _listRoomState extends State<listRoom>{
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
-   String rank='';
+   //String rank='';
   @override
   Widget build(BuildContext context) {
     TextEditingController txtSearchRoom = TextEditingController();
@@ -41,7 +41,7 @@ class _listRoomState extends State<listRoom>{
         builder: (context, snapshot) {
           if(snapshot.hasData){
           var user = snapshot.data!.docs;
-          if(rank==''){
+          /* if(rank==''){
             var rankOld = user[0];
                 Future.delayed(Duration.zero,()async{
                 rank = await fireDb().setRank(user[0]['rankScore']);
@@ -59,7 +59,7 @@ class _listRoomState extends State<listRoom>{
                     ));
                   }
                 });
-              }
+              } */
           return Container(
             decoration: Layout().background_image,
             child: Scaffold(
