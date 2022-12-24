@@ -127,8 +127,18 @@ class _BattleHistoryState extends State<BattleHistory> {
                     ],
                   ),
                   Padding(padding: const EdgeInsets.all(30),
-                      child: Text('Thời gian : ${user['created'].toString().substring(0,19)}',
-                      style: TextStyle(fontSize: 20),),)
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(right :8.0),
+                            child: Icon(Icons.alarm_outlined,size: 30,),
+                          ),
+                          Text(user['created'].toString().substring(0,19),
+                          style: TextStyle(fontSize: 20),),
+                        ],
+                      ),)
                 ],
               ),
             );
